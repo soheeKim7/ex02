@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.BoardMapper">
+
+	<!-- id는 메소드 이름!(해당 인터페이스에서) -->
+	<!-- resultType 은 마이바티스에서 제공하는 타입 String는 string 소문자로! -->
+	<!-- 객체 앞글자를 소문자로, 기본타입은 _추가 (마이바티스 데이터타입) -->
+	<select id="getList" resultType="org.zerock.domain.BoardVO">
+		select * from tbl_board
+	</select>	
+	<!-- 세미콜론 넣으면 에러!!!  -->
+	<!-- resultType은 select에서만 존재! -->
+	
+	<insert id="insert">
+		insert into tbl_board(bno,title,content,writer) 
+		values(seq_board.nextval,#{title},#{content},#{writer})
+	</insert>	
+	
+	<update id="update">
+		update tbl_board set title=#{title},content=#{content},
+		writer=#{writer},updatedate=sysdate where bno=#{bno}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+	
+	<select id="read" resultType="org.zerock.domain.BoardVO">
+		select * from tbl_board where bno=#{bno}
+	</select>	
+	
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_board.nextval from dual
+		</selectKey>
+	
+		insert into tbl_board(bno,title,content,writer) 
+		values(#{bno},#{title},#{content},#{writer})
+	</insert>	
+	
+	<select id="mySelectKey" resultType="long">
+		select seq_board.nextval from dual	
+	</select>
+	
+	<insert id="myInsert">
+		insert into tbl_board(bno,title,content,writer) 
+		values(#{bno},#{title},#{content},#{writer})
+	</insert>
+	
+	
+	
+	
+	
+</mapper>
