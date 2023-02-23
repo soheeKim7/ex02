@@ -39,7 +39,9 @@
 	
 	<!-- 이렇게 beans로 설정해놓은 것 자체가 java에서 context로 컴포넌트 지정해놓은것과 같음!
 		그래서 바로 @Autowired 주입 가능 -->	
-		
+	<!-- 이 scan은 일반 class 스캔하는것! 
+	<context:component-scan base-package="org.zerock.sample" />	
+	-->
 	<!-- mybatis 스프링 사용하기 위한 셋팅 -->	
 	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="aaa" />

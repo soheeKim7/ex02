@@ -34,5 +34,16 @@ public interface BoardMapper {
 	//bonus 확인된 글번호로 글 등록하기  //return int 등록된 글의 개수
 	int myInsert(BoardVO vo);
 	
+	//전체글 개수 확인
+	long count();
+	
+	//오늘의 게시글 목록 가져오기
+	List<BoardVO> getTodayList();
+	
+	//오늘의 게시글 갯수 가져오기
+	long countTodayList();
+	
+	//가장 많이 작성한 작성자 가져오기
+	String manyWriter();
 	
 }

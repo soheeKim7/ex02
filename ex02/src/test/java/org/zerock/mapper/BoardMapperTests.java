@@ -19,14 +19,15 @@ public class BoardMapperTests {
 	@Setter(onMethod_ = @Autowired )
 	BoardMapper mapper;
 	
+	//게시물 목록 가져오기
 	@Test
 	public void testGetList(){		
 //		for(BoardVO vo:mapper.getList()) 
 //			log.info(vo);		
 //		위와 동일한 의미
 		mapper.getList().forEach(vo -> log.info(vo));		
-	}
-	
+	}	
+	//게시글 등록
 	@Test
 	public void testInsert() {
 		BoardVO vo = new BoardVO();
@@ -35,8 +36,8 @@ public class BoardMapperTests {
 		vo.setWriter("newbie");
 //		mapper.insert(vo);
 		log.info("삽입된 행의 개수 : "+mapper.insert(vo));
-	}
-	
+	}	
+	//게시글 등록시 등록된 번호 알아서 글 등록하기
 	@Test
 	public void testInsertSelectKey() {
 		BoardVO vo = new BoardVO();
@@ -46,7 +47,7 @@ public class BoardMapperTests {
 		log.info("삽입된 행의 개수 : "+mapper.insertSelectKey(vo));
 		log.info(vo);
 	}
-	
+	//bonus 확인된 글번호로 글 등록하기
 	@Test
 	public void testmyInsert() {
 		BoardVO vo = new BoardVO();
@@ -57,7 +58,7 @@ public class BoardMapperTests {
 		log.info("삽입된 행의 개수 : "+mapper.myInsert(vo));
 		log.info(vo);
 	}
-	
+	//게시글 수정
 	@Test
 	public void testUpdate() {
 		BoardVO vo = new BoardVO();
@@ -68,15 +69,35 @@ public class BoardMapperTests {
 		log.info("수정된 행의 개수 : "+mapper.update(vo));
 		log.info(vo);
 	}
-	
+	//게시글 삭제
 	@Test
 	public void testDelete() {
 		log.info("삭제된 행의 개수 : "+mapper.delete(3L));
 	}
-	
+	//게시글 읽기(조회)
 	@Test
 	public void testRead() {
 		log.info("읽어온 행 : "+mapper.read(4L));
+	}
+	//전체글 개수 확인
+	@Test
+	public void testcount() {
+		log.info("전체 글 개수 : "+mapper.count());
+	}
+	//오늘의 게시글 목록 가져오기
+	@Test
+	public void testGetTodayList() {
+		mapper.getTodayList().forEach(vo -> log.info(vo));
+	}
+	//오늘의 게시글 갯수 가져오기
+	@Test
+	public void testCountTodayList() {
+		log.info("오늘의 게시글 개수 : "+mapper.countTodayList());
+	}
+	//가장 많이 작성한 작성자 가져오기
+	@Test
+	public void testManyWriter() {
+		log.info("가장 많이 작성한 사람 : "+mapper.manyWriter());
 	}
 	
 }
