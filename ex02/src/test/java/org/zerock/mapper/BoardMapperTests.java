@@ -46,6 +46,7 @@ public class BoardMapperTests {
 		vo.setWriter("newbie");
 		log.info("삽입된 행의 개수 : "+mapper.insertSelectKey(vo));
 		log.info(vo);
+		log.info("삽입된 bno : " +vo.getBno());
 	}
 	//bonus 확인된 글번호로 글 등록하기
 	@Test

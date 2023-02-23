@@ -12,14 +12,14 @@ public interface BoardMapper {
 	List<BoardVO> getList();  //게시물 목록 가져오기
 	//인터페이스는 생략해도 기본적으로 메소드 public!!
 	
-	//게시글 등록 return int 등록된 글의 개수
+	//게시글 등록            // return int 등록된 글의 개수
 //	void insert(BoardVO vo);
 	int insert(BoardVO vo); //삽입된 행의 개수!
 	
-	//게시글 수정
+	//게시글 수정            // return int 수정된 글의 개수
 	int update(BoardVO vo);
 	
-	//게시글 삭제
+	//게시글 삭제            // return int 삭제된 글의 개수
 	int delete(Long bno);
 	
 	//게시글 읽기(조회)
