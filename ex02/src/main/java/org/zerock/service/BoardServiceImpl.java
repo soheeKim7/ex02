@@ -16,20 +16,23 @@ public class BoardServiceImpl implements BoardService {
 	
 	//생성자 생성했기때문에 @Autowired생략가능(버전 4.3 이상) (단,생성자가 유일해야함!!!)
 	BoardMapper mapper;
-
+	
+	//1. 게시글 목록보여주기
 	@Override
 	public List<BoardVO> getlist() {
 		log.info("getList ... ");
 		mapper.getList().forEach(vo -> log.info(vo));
 		return mapper.getList();
 	}
-
+	
+	//2. 게시글 등록
 	@Override
 	public void register(BoardVO vo) {
 		log.info("register ..... "+vo);
 		mapper.insert(vo);
 	}
-
+	
+	//3. 게시글 삭제 (정상동작여부 확인) 
 	@Override
 	public boolean remove(Long bno) {
 		log.info("remove ..... "+bno);
@@ -42,23 +45,48 @@ public class BoardServiceImpl implements BoardService {
 // or		
 		return mapper.delete(bno)==1;
 	}
-
+	
+	//4. 게시글 수정 (정상동작여부 확인)
 	@Override
 	public boolean modify(BoardVO vo) {
 		log.info("modify ..... "+vo);
 		return mapper.update(vo)==1;
 	}
-
+	
+	//5. 게시글 읽기
 	@Override
 	public BoardVO get(Long bno) {
 		log.info("get ..... "+bno);
 		return mapper.read(bno);
 	}
-
+	
+	//보너스 - 전체글 개수를 알려주는 서비스
 	@Override
 	public Long count() {
 		log.info("count ..... ");
 		return mapper.count();
+	}
+	
+	//보너스 - 오늘의 게시글 목록 가져오기
+	@Override
+	public List<BoardVO> getTodayList() {
+		log.info("getTodayList ..... ");
+		mapper.getTodayList().forEach(vo -> log.info(vo));
+		return mapper.getTodayList();
+	}
+	
+	//보너스 - 오늘의 게시글 갯수 가져오기
+	@Override
+	public long countTodayList() {
+		log.info("countTodayList ..... ");
+		return mapper.countTodayList();
+	}
+	
+	//보너스 - 가장 많이 작성한 작성자 가져오기
+	@Override
+	public String manyWriter() {
+		log.info("manyWriter ..... ");
+		return mapper.manyWriter();
 	}
 	
 

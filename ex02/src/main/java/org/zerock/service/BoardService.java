@@ -24,4 +24,14 @@ public interface BoardService {
 	
 	//보너스 - 전체글 개수를 알려주는 서비스
 	Long count();
+	
+	//보너스 - 오늘의 게시글 목록 가져오기
+	List<BoardVO> getTodayList();
+	
+	//보너스 - 오늘의 게시글 갯수 가져오기
+	long countTodayList();
+	
+	//보너스 - 가장 많이 작성한 작성자 가져오기
+	String manyWriter();
+	
 }
