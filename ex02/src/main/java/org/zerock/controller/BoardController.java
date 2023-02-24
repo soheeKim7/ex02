@@ -51,16 +51,29 @@ public class BoardController {
 	
 	//3. 게시글 삭제 (정상동작여부 확인)
 	@PostMapping("remove")  //삭제
-	public void remove(Long bno) {
+	public String remove(Long bno,RedirectAttributes rttr) {
 		log.info("url remove.......");
 		service.remove(bno);
+		log.info("수정된 글번호"+bno);
+		rttr.addFlashAttribute("removebno",bno);
+		return "redirect:/board/list"; 
 	}
 	
 	//4. 게시글 수정 (정상동작여부 확인)
+	@GetMapping("modify")
+	public void modify(Long bno,Model model) {
+		//수정화면 출력 (글번호 받아서 조회한거 보내기)
+		model.addAttribute("board",service.get(bno));
+	}
+	
 	@PostMapping("modify")  //수정
-	public void modify(BoardVO vo) {
+	public String modify(BoardVO vo,RedirectAttributes rttr) {
 		log.info("url modify.......");
 		service.modify(vo);
+		log.info("수정된 글번호"+vo.getBno());
+		rttr.addFlashAttribute("modifybno",vo.getBno());
+		
+		return "redirect:/board/list"; 
 	}
 	
 	//5. 게시글 읽기

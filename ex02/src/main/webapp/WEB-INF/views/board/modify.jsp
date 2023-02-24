@@ -23,33 +23,29 @@
 			</button>
 		</div>
 		<div class="card-body">		
+			<form action="/board/modify" method="post">
+			<input type="hidden" name="bno" value="${board.bno }">
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<input type="text" class="form-control form-control-user"
-						name="title" value="${board.title }" readonly>
+						name="title" value="${board.title }" >
 				</div>
 				<div class="col-sm-6">
 					<input type="text" class="form-control form-control-user"
-						name="writer" value="${board.writer }" readonly>
+						name="writer" value="${board.writer }" >
 				</div>
 			</div>
 			<div class="form-group">
 				<textarea rows="10" class="form-control"
-					id="exampleInputEmail"name="content" readonly>${board.content }</textarea>
+					id="exampleInputEmail"name="content" >${board.content }</textarea>
 			</div>
-			<form action="/board/remove" method="post" id="removeForm">
-			<input type="hidden" name="bno" value="${board.bno }">
-			<button class="btn btn-danger" style="float:right" id="removeButton">
+			<button class="btn btn-primary" style="float:right">
 				<span class="icon text-white-50">
-				<img src="/resources/img/edit1.jpg" width="25"></span> 
-				<span class="text">삭제하기</span>
-			</button>		
-			</form>	
-			<button class="btn btn-primary" onclick="location.href='/board/modify?bno=${board.bno}'" style="float:right">
-				<span class="icon text-white-50">
-				<img src="/resources/img/edit1.jpg" width="25"></span> 
-				<span class="text">편집하기</span>
+				<img src="/resources/img/edit2.jpg" width="25"></span> 
+				<span class="text">수정하기</span>
 			</button>				
+			</form>
+		</div>
 	</div>
 
 </div>
@@ -59,19 +55,3 @@
 <!-- End of Main Content -->
 
 <%@include file="../includes/footer.jsp"%>
-<script>
-$(document).ready(function(){
-	$("#removeButton").on("click",function(e){
-		//1. 버튼 이벤트(submit)금지
-		e.preventDefault();
-		//2. 확인창 띄워서 확인받기
-		var check=confirm("정말 삭제하시겠습니까?")
-		//3. 확인되었으면 submit 처리
-		if(check){
-			$("#removeForm").submit();
-		}		
-	});	
-});
-
-
-</script>

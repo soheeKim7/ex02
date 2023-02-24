@@ -27,6 +27,7 @@
 				<table class="table table-bordered" width="100%" cellspacing="0">
 					<thead>
 						<tr>
+							<th>순번</th>
 							<th>글번호</th>
 							<th>제목</th>
 							<th>작성자</th>
@@ -41,6 +42,7 @@
 							<tr>
 								<td>${no=no+1}</td>
 								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>
+								<td>${board.bno}</td>
 								<td><a href="/board/get?bno=${board.bno }">${board.title }</a></td>
 								<td>${board.writer }</td>
 								<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
@@ -85,5 +87,13 @@
 	   num1===num2  이건 false 숫자와 문자 비교 
 	   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
 	*/	
+	var modifybno="${modifybno}";
+	console.log("수정한 글 번호 modifybno값 확인",modifybno);
+	if(modifybno)
+		alert(modifybno+"번 글이 수정되었습니다.");
+	var removebno="${removebno}";
+	console.log("수정한 글 번호 removebno값 확인",removebno);
+	if(removebno)
+		alert(removebno+"번 글이 삭제되었습니다.");
 </script>
 

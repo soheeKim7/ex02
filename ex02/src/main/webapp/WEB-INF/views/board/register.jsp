@@ -35,7 +35,7 @@
 				</div>
 				<button class="btn btn-primary" style="float:right">
 					<span class="icon text-white-50">
-					<img src="/resources/img/finger.jpg" width="25"></span> 
+					<img src="/resources/img/register.jpg" width="25"></span> 
 					<span class="text">등록하기</span>
 				</button>
 			</form>
