@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.service.BoardService;
 
@@ -27,10 +28,25 @@ public class BoardController {
 	}
 	
 	//2. 게시글 등록
+	@GetMapping("register")
+	public void register() {
+		
+	}	
+	
 	@PostMapping("register")  
-	public void register(BoardVO vo) {
+	public String register(BoardVO vo,RedirectAttributes rttr) {
 		log.info("url register....");
 		service.register(vo);
+		log.info("입력된 글번호"+vo.getBno());
+		rttr.addFlashAttribute("bno",vo.getBno()); //입력된 글번호 한번만 전송
+		
+		//목록으로 돌아가기
+		return "redirect:/board/list";  
+//		/board/list 이렇게 하면 직접적인 페이지를 여는것!  
+//		그래서 리다이렉트로 list인 url을 요청해야 컨트롤러에서 받아서 목록을 가지고 보여준다!
+//		model.addAttribute("list",service.getlist());
+//		return "/board/list";
+		//그렇다고 모델에 실어서 보내면 디스패쳐로 가서 주소가 register로 되어있어 계속 새로고침 누르면 도배되서 리스트에 추가된다!!
 	}
 	
 	//3. 게시글 삭제 (정상동작여부 확인)

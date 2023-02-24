@@ -25,11 +25,12 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getList();
 	}
 	
-	//2. 게시글 등록
+	//2. 게시글 등록 (게시글 번호 알아오려고 번호 알아오는 메소드로 이용)
 	@Override
 	public void register(BoardVO vo) {
 		log.info("register ..... "+vo);
-		mapper.insert(vo);
+//		mapper.insert(vo);
+		mapper.insertSelectKey(vo);   //입력한 글의 글번호가 vo의 bno에 들어온다
 	}
 	
 	//3. 게시글 삭제 (정상동작여부 확인) 
