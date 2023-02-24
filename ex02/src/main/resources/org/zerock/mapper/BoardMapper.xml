@@ -9,7 +9,7 @@
 	<!-- resultType 은 마이바티스에서 제공하는 타입 String는 string 소문자로! -->
 	<!-- 객체 앞글자를 소문자로, 기본타입은 _추가 (마이바티스 데이터타입) -->
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
-		select * from tbl_board
+		select * from tbl_board order by bno desc
 	</select>	
 	<!-- 세미콜론 넣으면 에러!!!  -->
 	<!-- resultType은 select에서만 존재! -->
