@@ -67,8 +67,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	//두가지 경우밖에 안되서, false에서 abc와 틀릴때, db오류일때 2가지 경우 발생!
 	
-	
-	
+		
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Override
 	public boolean modify(BoardVO vo) {

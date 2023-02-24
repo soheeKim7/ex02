@@ -21,17 +21,14 @@
 			<form class="user" action="/board/register" method="post">				
 				<div class="form-group row">
 					<div class="col-sm-6 mb-3 mb-sm-0">
-						<input type="text" class="form-control form-control-user"
-							placeholder="제목을 입력해주세요" name="title">
+						<input type="text" class="form-control form-control-user" placeholder="제목을 입력해주세요" name="title">
 					</div>
 					<div class="col-sm-6">
-						<input type="text" class="form-control form-control-user"
-							placeholder="작성자 명" name="writer">
+						<input type="text" class="form-control form-control-user" placeholder="작성자 명" name="writer">
 					</div>
 				</div>
 				<div class="form-group">
-					<textarea rows="10" class="form-control"
-						id="exampleInputEmail" placeholder="내용을 입력해 주세요." name="content"></textarea>
+					<textarea rows="10" class="form-control" placeholder="내용을 입력해 주세요." name="content"></textarea>
 				</div>
 				<button class="btn btn-primary" style="float:right">
 					<span class="icon text-white-50">
@@ -49,8 +46,8 @@
 				<span class="icon text-white-50">
 				<i class="bi bi-file-earmark-text"></i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-  				<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
- 			    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+	  				<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+	 			    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
 				</svg>
 				</span> 
 				<span class="text">목록으로 돌아가기</span>
