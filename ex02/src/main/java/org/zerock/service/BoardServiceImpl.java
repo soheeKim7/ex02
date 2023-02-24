@@ -2,20 +2,30 @@ package org.zerock.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
 import org.zerock.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@AllArgsConstructor //생성자 생성
+//@AllArgsConstructor //생성자 생성
+//String removeKey를 만들어주면 이것두 같이 생성자를 만들기때문에 mapper만 생성자 되게 @RequiredArgsConstructor이걸로
+//@RequiredArgsConstructor
 //@Component //이거 말고 서비스클래스라서 지원을 해줌 Service
 @Service
 public class BoardServiceImpl implements BoardService {
 	
-	//생성자 생성했기때문에 @Autowired생략가능(버전 4.3 이상) (단,생성자가 유일해야함!!!)
+//	@NonNull //생성자 생성했기때문에 @Autowired생략가능(버전 4.3 이상) (단,생성자가 유일해야함!!!)
+	@Autowired
 	BoardMapper mapper;
+	
+	@Value("${removeKey}")
+	String removeKey;
 	
 	//1. 게시글 목록보여주기
 	@Override
@@ -46,6 +56,18 @@ public class BoardServiceImpl implements BoardService {
 // or		
 		return mapper.delete(bno)==1;
 	}
+	
+	@Override
+	public boolean remove(Long bno, String removeKey) {
+		log.error("에러아님 확인된값 : "+this.removeKey);
+		if(removeKey.equals(this.removeKey))
+			return mapper.delete(bno)==1;
+		else		
+			return false;
+	}
+	//두가지 경우밖에 안되서, false에서 abc와 틀릴때, db오류일때 2가지 경우 발생!
+	
+	
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Override
@@ -89,6 +111,8 @@ public class BoardServiceImpl implements BoardService {
 		log.info("manyWriter ..... ");
 		return mapper.manyWriter();
 	}
+
+
 	
 
 }

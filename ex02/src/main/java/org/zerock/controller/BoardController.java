@@ -51,6 +51,18 @@ public class BoardController {
 	
 	//3. 게시글 삭제 (정상동작여부 확인)
 	@PostMapping("remove")  //삭제
+	public String remove(Long bno,RedirectAttributes rttr,String removeKey) {
+		log.info("url remove.......");
+		if(service.remove(bno,removeKey))
+			rttr.addFlashAttribute("removebno",bno);
+		else
+			rttr.addFlashAttribute("removebno",-1);
+		return "redirect:/board/list"; 
+	}
+	
+	
+	/*
+	@PostMapping("remove")  //삭제
 	public String remove(Long bno,RedirectAttributes rttr) {
 		log.info("url remove.......");
 		service.remove(bno);
@@ -58,6 +70,7 @@ public class BoardController {
 		rttr.addFlashAttribute("removebno",bno);
 		return "redirect:/board/list"; 
 	}
+	*/
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@GetMapping("modify")
@@ -69,6 +82,7 @@ public class BoardController {
 	@PostMapping("modify")  //수정
 	public String modify(BoardVO vo,RedirectAttributes rttr) {
 		log.info("url modify.......");
+		//db가 정상이니까 이렇게 한건데, 정확하게 하려면, 참일때만 값을 보내야함
 		service.modify(vo);
 		log.info("수정된 글번호"+vo.getBno());
 		rttr.addFlashAttribute("modifybno",vo.getBno());

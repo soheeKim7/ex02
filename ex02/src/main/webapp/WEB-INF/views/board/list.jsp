@@ -18,7 +18,12 @@
 			<h6 class="m-0 font-weight-bold text-primary">게시글 목록보기</h6>
 			<button class="btn btn-primary" onclick="location.href='/board/register'" style="float:right">
 				<span class="icon text-white-50">
-				<img src="/resources/img/write.jpg" width="25"></span> 
+				<i class="bi bi-pencil-square"></i>
+				<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  				<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+ 			    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+				</svg>
+				</span> 
 				<span class="text">글쓰기</span>
 			</button>
 		</div>
@@ -40,10 +45,10 @@
 						<%--페이지 영역에 변수 선언 --%>
 						<c:forEach items="${list }" var="board">
 							<tr>
-								<td>${no=no+1}</td>
+								<td><c:out value="${no=no+1}"></c:out></td>
 								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>
-								<td>${board.bno}</td>
-								<td><a href="/board/get?bno=${board.bno }">${board.title }</a></td>
+								<td><c:out value="${board.bno}"></c:out></td>
+								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }"></c:out></a></td>
 								<td>${board.writer }</td>
 								<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
 										value="${board.regdate }" /></td>
@@ -93,7 +98,11 @@
 		alert(modifybno+"번 글이 수정되었습니다.");
 	var removebno="${removebno}";
 	console.log("수정한 글 번호 removebno값 확인",removebno);
-	if(removebno)
-		alert(removebno+"번 글이 삭제되었습니다.");
+	if(removebno){
+		if(removebno==-1)
+			alert("키값이 다릅니다.")
+		else
+			alert(removebno+"번 글이 삭제되었습니다.");
+	}
 </script>
 
