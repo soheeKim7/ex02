@@ -30,12 +30,10 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th width ="50%">가장 최근에 작성된 글제목</th>
-							<th><c:out value="${last}"></c:out></th>
-						</tr>
-					</thead>
+					<tr>
+						<th width ="20%">가장 최근에 작성된 글제목</th>
+						<td><c:out value="${last}"></c:out></td>
+					</tr>
 				</table>
 			</div>
 		</div>

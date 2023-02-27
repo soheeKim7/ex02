@@ -58,8 +58,7 @@ public class BoardController {
 		else
 			rttr.addFlashAttribute("removebno",-1);
 		return "redirect:/board/list"; 
-	}
-	
+	}	
 	
 	/*
 	@PostMapping("remove")  //삭제
@@ -141,6 +140,39 @@ public class BoardController {
 		log.info("url last.......");
 		model.addAttribute("last", service.lastTitle());
 	}
+	
+	//관리자 모드 처리
+	@PostMapping("adminCheck")
+	public String adminCheck(RedirectAttributes rttr,String adminKey) {
+		log.info("url adminCheck.......");
+		if(service.adminCheck(adminKey))
+			rttr.addFlashAttribute("adminKey",adminKey);
+		else
+			rttr.addFlashAttribute("adminKey",-1);
+				
+		return "redirect:/board/admin"; 
+	}
+	//관리자 페이지 열기
+	@GetMapping("admin")   
+	public void admin(Model model) {
+		log.info("url admin....");
+		model.addAttribute("list",service.getlist());
+	}
+	
+	//관리자 편집페이지 열기
+	@GetMapping("adminEdit")
+	public void adminEdit(Model model) {
+		log.info("url adminEdit....");
+		model.addAttribute("list",service.getlist());
+		model.addAttribute("checkbno","checkbno");
+	}
+	
+	//관리자 삭제!
+	@PostMapping("adminRemove")
+	public void adminRemove() {
+		
+	}
+	
 	
 	
 }

@@ -24,7 +24,7 @@
 	<context:component-scan base-package="org.zerock.controller" />
 	
 	<!-- [스프링/Spring] properties 읽어오기 -->
-	<!-- 이렇게 파일로 값을 읽어오려면 넣어야하는 설정들!! 밑에 컴포넌트 스캔까지 넣어야함! -->
+	<!-- 이렇게 파일로 값을 읽어오려면 넣어야하는 설정들!! 밑에 컴포넌트 스캔까지 넣어야함! root-context가 아니라서 -->
 	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <beans:property name="location" value="/WEB-INF/config/config.properties"/>
         <beans:property name="fileEncoding" value="UTF-8" />

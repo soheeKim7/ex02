@@ -49,4 +49,7 @@ public interface BoardService {
 	//조회수 읽어오기
 	Long clickCount(Long bno);
 	
+	//관리자 모드 비밀번호 체크
+	boolean adminCheck(String adminKey);
+	
 }

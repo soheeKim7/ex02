@@ -58,6 +58,7 @@
 	    마이바티스에서 알아서 패키지 안에 인터페이스를 객체로 인식함
 	    그러니까 인터페이스 자체를 쓰려면 이 scan만 하고 쓸때 @Autowired 주입해서 바로 이용하면 됨!-->	
 	    
+    
 	<context:component-scan base-package="org.zerock.service" />    
 	<context:component-scan base-package="org.zerock.di" />    
 	    

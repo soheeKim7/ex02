@@ -79,19 +79,30 @@ $(document).ready(function(){
 	$("#modifyButton").on("click",function(e){
 		e.preventDefault();	
 		
-		var modifyTitle=$("#modifyTitle").val();
-		var modifyWriter=$("#modifyWriter").val();
-		var modifyContent=$("#modifyContent").val();
+		var modifyTitleB=$("#modifyTitle").val();
+		var modifyWriterB=$("#modifyWriter").val();
+		var modifyContentB=$("#modifyContent").val();
+		console.log("수정 변환전 title : ",modifyTitleB);
+		console.log("수정 변환전 writer : ",modifyWriterB);
+		console.log("수정 변환전 content : ",modifyContentB);
+		console.log("//////////////////////////////////////");
+		var modifyTitle=modifyTitleB.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+						.replace(/\"/g, "&#034;").replace(/\'/g,"&#39;").replace(/\n/g,"<br />");
+		var modifyWriter=modifyWriterB.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+						.replace(/\"/g, "&#034;").replace(/\'/g,"&#39;").replace(/\n/g,"<br />");
+		var modifyContent=modifyContentB.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+						.replace(/\"/g, "&#034;").replace(/\'/g,"&#39;").replace(/\n/g,"<br />");
+		// /n과 / 표시 
 		console.log("수정된 title : ",modifyTitle);
 		console.log("수정된 writer : ",modifyWriter);
 		console.log("수정된 content : ",modifyContent);
-		console.log("=====================================");
+		console.log("=========================================");
 		
 		if(originTitle == modifyTitle && originWriter==modifyWriter && originContent==modifyContent){
 			alert("수정된 데이터가 하나도 없습니다. 다시 수정해주세요.");
 		}else{
 			alert("확인");
-			//$("#modifyForm").submit();
+			$("#modifyForm").submit();
 		}
 	});
 });

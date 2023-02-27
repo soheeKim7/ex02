@@ -6,21 +6,18 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">스프링 게시판</h1>
-	<p class="mb-4">	
-		<form action="/board/adminCheck" method="post" id="adminForm">	
-			<input type="hidden" name="adminKey" id="adminKey">
-			<button class="btn btn-success" style="float:right" id="adminButton">
-				<span class="icon text-white-50">
-				<i class="bi bi-file-person"></i>			
-				<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-person" viewBox="0 0 16 16">
-				  <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
-				  <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-				</svg>
-				</span> 
-				<span class="text">관리자 모드로 이동하기</span>
-			</button>
-		</form>
+	<h1 class="h3 mb-2 text-gray-800">&lt;관리자 모드 페이지 입니다&gt;</h1>
+	<p class="mb-4">		
+		<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:right">
+			<span class="icon text-white-50">
+			<i class="bi bi-file-person"></i>			
+			<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-person" viewBox="0 0 16 16">
+			  <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+			  <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+			</svg>
+			</span> 
+			<span class="text">일반 모드로 이동하기</span>
+		</button>
 		코드로 배우는 스프링 웹 프로젝트(개정판) 책을 보고 똑같이 만들고 있어요. (교재내용 Part3 p164~) <br>
 		<a target="_blank" href="https://startbootstrap.com/theme/sb-admin-2">(참고한 템플릿)</a>
 	</p>
@@ -68,9 +65,10 @@
 						<%--페이지 영역에 변수 선언 --%>
 						<c:forEach items="${list }" var="board">
 							<tr>
-								<td><c:out value="${no=no+1} (${board.bno})" /></td>
-								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>	
-																					
+								<form action="/board/adminRemove" method="post">
+									<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no=no+1}' />" value="<c:out value='${board.bno }' />">
+									<label for="<c:out value='${checkbno}${no=no+1}' />"><c:out value="${no=no+1} (${board.bno})" /></label></td>
+								</form>													
 								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }" /></a></td>															
 								<td><c:out value="${board.writer }" /></td>
 								<td><c:out value="${board.click}" /></td>		
@@ -128,23 +126,17 @@
 		else
 			alert(removebno+"번 글이 삭제되었습니다.");
 	}
+	var adminKey="${adminKey}";
+	console.log("관리자키 비밀번호 성공여부 adminKey값 확인",adminKey);
+	if(adminKey){
+		if(adminKey==-1){
+			alert("비밀번호가 다릅니다.")
+			location.href="/board/list";
+		}else
+			alert("관리자 모드 페이지입니다.");
+	}
 	
-	$("#adminButton").on("click",function(e){
-		//1. 버튼 이벤트(submit)금지
-		e.preventDefault();
-		//2. 입력창으로 값을 받고		
-		var adminKey=prompt("관리자 모드를 위한 비밀번호를 입력해주세요.");
-		if(adminKey){
-			console.log(adminKey);
-			//3. 그 내용도 같이 보내준다.
-			$("#adminKey").val(adminKey);
-			console.log($("#adminKey").val());
-			$("#adminForm").submit();
-			//removekey 값을 보내면 처리는 서버에서
-		}
-	});	
-	
-	
+	console.log(${checkbno}${no=no+1});
 	
 </script>
 

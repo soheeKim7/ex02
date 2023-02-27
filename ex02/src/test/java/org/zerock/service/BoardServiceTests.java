@@ -39,6 +39,11 @@ public class BoardServiceTests {
 		log.info("성공여부"+service.remove(17L));
 	}
 	
+	@Test
+	public void testRemove2() {
+		log.info("성공여부 : "+service.remove(36L,"abc"));
+	}
+	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Test
 	public void testModify() {
@@ -102,6 +107,12 @@ public class BoardServiceTests {
 	@Test
 	public void clickCount() {
 		log.info("해당 글의 조회수 : "+service.clickCount(61L));
+	}
+	
+	//관리자 모드 비밀번호 체크
+	@Test
+	public void adminCheck() {
+		log.info("성공여부"+service.adminCheck("2222"));
 	}
 
 }

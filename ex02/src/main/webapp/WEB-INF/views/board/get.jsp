@@ -43,6 +43,7 @@
 				<textarea rows="10" class="form-control" name="content" readonly><c:out value='${board.content }'/></textarea>
 			</div>
 			<form action="/board/remove" method="post" id="removeForm">
+			
 				<input type="hidden" name="bno" value="${board.bno }">
 				<input type="hidden" name="removeKey" id="removeKey">
 				<button class="btn btn-danger" style="float:right" id="removeButton">
@@ -56,7 +57,7 @@
 					<span class="text">삭제하기</span>
 				</button>		
 			</form>	
-			<button class="btn btn-primary" onclick="location.href='/board/modify?bno=${board.bno}'" style="float:right;margin-right: 10px;">
+			<button class="btn btn-primary" onclick="location.href='/board/modify?bno=${board.bno}'" style="float:right; margin-right: 10px;">
 				<span class="icon text-white-50">
 				<i class="bi bi-pencil-square"></i>
 				<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -75,6 +76,7 @@
 <!-- End of Main Content -->
 
 <%@include file="../includes/footer.jsp"%>
+</script>
 <script>
 /* 확인창을 이용한 삭제처리
 $(document).ready(function(){
