@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">게시글 입력화면</h6>
+			<h4 class="m-0 font-weight-bold text-primary">게시글 입력화면</h4>
 		</div>
 		<div class="card-body">
 			<form class="user" action="/board/register" method="post">				

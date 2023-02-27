@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.RankVO;
 
 public interface BoardMapper {
 	
@@ -46,4 +47,15 @@ public interface BoardMapper {
 	//가장 많이 작성한 작성자 가져오기
 	String manyWriter();
 	
+	//가장 많이 작성한 작성자,글갯수 가져오기
+	List<RankVO> manyWirterCount();
+	
+	//가장 최근에 작성된 글제목 가져오기
+	String lastTitle();
+	
+	//해당 글의 조회수 읽어오기
+	Long clickCount(Long bno);
+	
+	//해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다
+	int click(Long bno);
 }

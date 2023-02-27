@@ -100,4 +100,18 @@ public class BoardControllerTests {
 	public void testManyWriter() throws Exception {
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/manywriter")).andReturn().getModelAndView().getModelMap());	
 	}	
+	
+	//23.02.27.월 - 가장 많이 작성한 작성자,갯수 가져오기
+	@Test
+	public void testManyWriterCount() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/rank")).andReturn().getModelAndView().getModelMap());	
+	}
+	
+	//23.02.27.월 - 가장 최근에 작성된 글제목 가져오기
+	@Test	
+	public void testLastTitle() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/last")).andReturn().getModelAndView().getModelMap());	
+	}
+	
+	
 }

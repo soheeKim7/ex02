@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">게시글 목록보기</h6>
+			<h4 class="m-0 font-weight-bold text-primary">게시글 목록보기</h4>
 			<button class="btn btn-primary" onclick="location.href='/board/register'" style="float:right">
 				<span class="icon text-white-50">
 				<i class="bi bi-pencil-square"></i>
@@ -26,16 +26,26 @@
 				</span> 
 				<span class="text">글쓰기</span>
 			</button>
+			<button class="btn btn-primary" onclick="location.href='/board/rank'" style="float:right;margin-right: 10px;">
+				<span class="icon text-white-50">
+				<i class="bi bi-list-ol"></i>                
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ol" viewBox="0 0 16 16">
+  					<path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
+  					<path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z"/>
+				</svg>
+				</span> 
+				<span class="text">작성자 게시글 순위보기</span>
+			</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>순번</th>
-							<th>글번호</th>
+							<th>순번 (글번호)</th>							
 							<th>제목</th>
 							<th>작성자</th>
+							<th>조회수</th>							
 							<th>작성일</th>
 							<th>수정일</th>
 						</tr>
@@ -45,11 +55,12 @@
 						<%--페이지 영역에 변수 선언 --%>
 						<c:forEach items="${list }" var="board">
 							<tr>
-								<td><c:out value="${no=no+1}"></c:out></td>
-								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>
-								<td><c:out value="${board.bno}"></c:out></td>
-								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }"></c:out></a></td>
-								<td>${board.writer }</td>
+								<td><c:out value="${no=no+1} (${board.bno})"></c:out></td>
+								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>	
+																					
+								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }"></c:out></a></td>															
+								<td><c:out value="${board.writer }"></c:out></td>
+								<td><c:out value="${board.click}"></c:out></td>		
 								<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
 										value="${board.regdate }" /></td>
 								<c:if test="${board.regdate==board.updatedate }">

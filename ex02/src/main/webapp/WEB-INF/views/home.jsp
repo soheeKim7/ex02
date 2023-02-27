@@ -15,6 +15,8 @@
 <P>  The time on the server is ${serverTime}. </P>
 <a href="/board/list">목록 보기 가기</a> <br>
 <a href="/board/register" method="post">등록 보러가기</a> <br>
+<a href="/board/rank" method="post">순위 보러가기</a> <br>
+<a href="/board/last" method="post">최근 작성글 보러가기</a> <br>
 
 
 </body>

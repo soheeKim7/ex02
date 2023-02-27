@@ -79,5 +79,29 @@ public class BoardServiceTests {
 	public void testManyWriter() {
 		log.info("가장 많이 작성한 사람 : "+service.manyWriter());
 	}
+	
+	//23.02.27.월 - 가장 많이 작성한 작성자,갯수 가져오기
+	@Test
+	public void testManyWirterCount() {
+		service.manyWirterCount().forEach(vo -> log.info(vo));
+	}
+	
+	//가장 최근에 작성된 글제목 가져오기
+	@Test
+	public void testLastTitle() {
+		log.info("가장 최근에 작성한 글제목 : "+service.lastTitle());
+	}
+	
+	//조회수 늘리기
+	@Test
+	public void click() {
+		log.info("성공여부 : "+service.click(71L));
+	}
+	
+	//해당 글 조회수 조회
+	@Test
+	public void clickCount() {
+		log.info("해당 글의 조회수 : "+service.clickCount(61L));
+	}
 
 }

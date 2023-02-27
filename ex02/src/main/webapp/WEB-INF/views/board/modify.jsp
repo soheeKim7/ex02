@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">게시글 확인화면</h6>
+			<h4 class="m-0 font-weight-bold text-primary">게시글 확인화면</h4>
 			<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:right">
 				<span class="icon text-white-50">
 				<i class="bi bi-file-earmark-text"></i>
@@ -68,16 +68,16 @@
 <%@include file="../includes/footer.jsp"%>
 <script>
 $(document).ready(function(){	
-	console.log("기존의 title : ","${board.title}");
-	console.log("기존의 writer : ","${board.writer}");
-	console.log("기존의 content : ","${board.content}");
+	var originTitle="<c:out value='${board.title }'/>";
+	var originWriter="<c:out value='${board.writer }'/>";
+	var originContent="<c:out value='${board.content }'/>";
+	console.log("기존의 originTitle : ",originTitle);
+	console.log("기존의 originWriter : ",originWriter);
+	console.log("기존의 originContent : ",originContent);
+	console.log("------------------------------------");
 	
 	$("#modifyButton").on("click",function(e){
-		e.preventDefault();
-		console.log("기존의 title : ","${board.title}");
-		console.log("기존의 writer : ","${board.writer}");
-		console.log("기존의 content : ","${board.content}");
-		console.log("------------------------------------");
+		e.preventDefault();	
 		
 		var modifyTitle=$("#modifyTitle").val();
 		var modifyWriter=$("#modifyWriter").val();
@@ -85,38 +85,14 @@ $(document).ready(function(){
 		console.log("수정된 title : ",modifyTitle);
 		console.log("수정된 writer : ",modifyWriter);
 		console.log("수정된 content : ",modifyContent);
+		console.log("=====================================");
 		
-		/*
-		if(${board.title eq modifyTitle}){
-			if("${board.writer eq modifyWriter}"){
-				if("${board.content eq modifyContent}"){
-					alert("수정된 데이터가 하나도 없습니다. 다시 수정해주세요.");
-				}else{
-					$("#modifyForm").submit();
-				}
-			}else{
-				$("#modifyForm").submit();
-			}			
-		}else{
-			$("#modifyForm").submit();
-		}
-		*/
-		
-		
-		if(${board.title eq modifyTitle}){
+		if(originTitle == modifyTitle && originWriter==modifyWriter && originContent==modifyContent){
 			alert("수정된 데이터가 하나도 없습니다. 다시 수정해주세요.");
 		}else{
-			$("#modifyForm").submit();
+			alert("확인");
+			//$("#modifyForm").submit();
 		}
-		
-		
-		/*
-		if(${board.title==modifyTitle && board.writer==modifyWriter && board.content==modifyContent}){
-			alert("수정된 데이터가 하나도 없습니다. 다시 수정해주세요.");
-		}else{
-			$("#modifyForm").submit();
-		}
-		*/
 	});
 });
 </script>

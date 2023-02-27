@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.RankVO;
 import org.zerock.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -109,6 +110,34 @@ public class BoardServiceImpl implements BoardService {
 	public String manyWriter() {
 		log.info("manyWriter ..... ");
 		return mapper.manyWriter();
+	}
+	
+	//23.02.27.월 - 가장 많이 작성한 작성자,갯수 가져오기
+	@Override
+	public List<RankVO> manyWirterCount() {
+		log.info("manyWirterCount ... ");
+		mapper.manyWirterCount().forEach(vo -> log.info(vo));
+		return mapper.manyWirterCount();
+	}
+	
+	//가장 최근에 작성된 글제목 가져오기
+	@Override
+	public String lastTitle() {
+		log.info("lastTitle ... ");
+		return mapper.lastTitle();
+	}
+	
+	//조회수 늘리기
+	@Override
+	public boolean click(Long bno) {
+		log.info("click......");
+		return mapper.click(bno)==1;
+	}
+
+	@Override
+	public Long clickCount(Long bno) {
+		log.info("clickCount....");
+		return mapper.clickCount(bno);
 	}
 
 

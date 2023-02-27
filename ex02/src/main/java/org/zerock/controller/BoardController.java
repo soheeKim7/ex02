@@ -94,7 +94,10 @@ public class BoardController {
 	@GetMapping("get") 
 	public void get(Long bno,Model model) {
 		log.info("url get.......");
-		model.addAttribute("board",service.get(bno));
+		model.addAttribute("board",service.get(bno));		
+		model.addAttribute("click",service.clickCount(bno)+1);
+		service.click(bno);
+		log.info(service.clickCount(bno)+1);
 	}
 		
 	//보너스 - 전체글 개수를 알려주는 서비스
@@ -124,5 +127,20 @@ public class BoardController {
 		log.info("url manywriter.......");
 		model.addAttribute("manywriter",service.manyWriter());
 	}
+	
+	//23.02.27.월 - 가장 많이 작성한 작성자,갯수 가져오기
+	@GetMapping("rank")
+	public void manyWirterCount(Model model) {
+		log.info("url manywritercount.......");
+		model.addAttribute("rank",service.manyWirterCount());
+	}
+	
+	//가장 최근에 작성된 글제목 가져오기
+	@GetMapping("last")
+	public void lastTitle(Model model) {
+		log.info("url last.......");
+		model.addAttribute("last", service.lastTitle());
+	}
+	
 	
 }

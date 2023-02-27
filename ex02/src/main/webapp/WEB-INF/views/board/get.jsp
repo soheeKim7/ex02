@@ -15,7 +15,8 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">게시글 확인화면</h6>
+			<h4 class="m-0 font-weight-bold text-primary">게시글 확인화면</h4> <br>
+			<h2class="m-0 font-weight-bold text-primary">조회수 <c:out value='${click}'/></h2>
 			<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:right">
 				<span class="icon text-white-50">
 				<i class="bi bi-file-earmark-text"></i>
@@ -55,7 +56,7 @@
 					<span class="text">삭제하기</span>
 				</button>		
 			</form>	
-			<button class="btn btn-primary" onclick="location.href='/board/modify?bno=${board.bno}'" style="float:right">
+			<button class="btn btn-primary" onclick="location.href='/board/modify?bno=${board.bno}'" style="float:right;margin-right: 10px;">
 				<span class="icon text-white-50">
 				<i class="bi bi-pencil-square"></i>
 				<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

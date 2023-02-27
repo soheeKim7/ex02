@@ -15,8 +15,8 @@
 	<!-- resultType은 select에서만 존재! -->
 	
 	<insert id="insert">
-		insert into tbl_board(bno,title,content,writer) 
-		values(seq_board.nextval,#{title},#{content},#{writer})
+		insert into tbl_board(bno,title,content,writer,click) 
+		values(seq_board.nextval,#{title},#{content},#{writer},0)
 	</insert>	
 	
 	<update id="update">
@@ -37,8 +37,8 @@
 			select seq_board.nextval from dual
 		</selectKey>
 	
-		insert into tbl_board(bno,title,content,writer) 
-		values(#{bno},#{title},#{content},#{writer})
+		insert into tbl_board(bno,title,content,writer,click) 
+		values(#{bno},#{title},#{content},#{writer},0)
 	</insert>	
 	
 	<select id="mySelectKey" resultType="long">
@@ -46,8 +46,8 @@
 	</select>
 	
 	<insert id="myInsert">
-		insert into tbl_board(bno,title,content,writer) 
-		values(#{bno},#{title},#{content},#{writer})
+		insert into tbl_board(bno,title,content,writer,click) 
+		values(#{bno},#{title},#{content},#{writer},0)
 	</insert>
 	
 	<select id="count" resultType="long">
@@ -76,6 +76,23 @@
 		(select writer,count(*) cn from tbl_board group by writer order by cn desc))
 		where rn=1
 	</select>	
+	
+	<select id="manyWirterCount" resultType="org.zerock.domain.RankVO">
+		select DENSE_RANK() OVER (ORDER BY count(*) DESC) as ranking,writer,count(*) as count from tbl_board 
+		group by writer order by count desc,writer asc
+	</select>
+	
+	<select id="lastTitle" resultType="string">
+		select title from tbl_board where regdate=(select max(regdate) from tbl_board) 
+	</select>
+	
+	<update id="click">
+		update tbl_board set click=(select click+1 as click from tbl_board where bno=#{bno}) where bno=#{bno}
+	</update>	
+	
+	<select id="clickCount" resultType="long">
+		select click from tbl_board where bno=#{bno}  
+	</select>
 	
 	
 	

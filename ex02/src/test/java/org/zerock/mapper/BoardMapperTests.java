@@ -111,4 +111,30 @@ public class BoardMapperTests {
 		log.info("가장 많이 작성한 사람 : "+mapper.manyWriter());
 	}
 	
+	//가장 많이 작성한 작성자,글갯수 가져오기
+	@Test
+	public void testManyWirterCount() {		
+		mapper.manyWirterCount().forEach(vo -> log.info(vo));
+	}
+	
+	//가장 최근에 작성된 글제목 가져오기
+	@Test
+	public void testLastTitle() {
+		log.info("가장 최근에 작성한 제목 : " +mapper.lastTitle());
+	}
+	
+	//해당 글의 조회수 읽어오기
+	@Test
+	public void testClickCount() {
+		log.info("해당 글의 조회수 : "+mapper.clickCount(61L));
+	}	
+	
+	//해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다
+	@Test
+	public void testClick() {
+		log.info("등록된 행의 개수 : "+mapper.click(61L));
+	}
+	
+	
+	
 }
