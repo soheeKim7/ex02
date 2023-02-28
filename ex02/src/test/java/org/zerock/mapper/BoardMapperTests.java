@@ -1,11 +1,15 @@
 package org.zerock.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -81,6 +85,15 @@ public class BoardMapperTests {
 		log.info("삭제된 행의 개수 : "+mapper.delete(3L));
 	}
 	
+	//체크된거 삭제
+	@Test
+	public void testCheckDelete() {
+		List<Long> list=new ArrayList<>();
+		list.add(19398587L);
+		list.add(19398586L);
+		log.info("삭제된 행의 개수 : "+mapper.checkDelete(list));
+	}
+	
 	//게시글 읽기(조회)
 	@Test
 	public void testRead() {
@@ -135,6 +148,10 @@ public class BoardMapperTests {
 		log.info("등록된 행의 개수 : "+mapper.click(61L));
 	}
 	
-	
+	//게시물 목록 가져오기 + 페이징 처리
+	@Test
+	public void testGetListWithPaging() {
+		mapper.getListWithPaging(new Criteria(2,10)).forEach( vo -> log.info(vo));
+	}
 	
 }

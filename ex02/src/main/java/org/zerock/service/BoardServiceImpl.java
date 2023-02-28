@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.RankVO;
 import org.zerock.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
@@ -32,12 +33,23 @@ public class BoardServiceImpl implements BoardService {
 //	String adminKey;
 	
 	//1. 게시글 목록보여주기
+	/*
 	@Override
 	public List<BoardVO> getlist() {
 		log.info("getList ... ");
 		mapper.getList().forEach(vo -> log.info(vo));
 		return mapper.getList();
 	}
+	*/
+	
+	@Override
+	public List<BoardVO> getlist(Criteria cri) {
+		log.info("getList ... ");
+		mapper.getListWithPaging(cri).forEach(vo -> log.info(vo));
+		return mapper.getListWithPaging(cri);
+	}
+	
+	
 	
 	//2. 게시글 등록 (게시글 번호 알아오려고 번호 알아오는 메소드로 이용)
 	@Override
@@ -71,6 +83,10 @@ public class BoardServiceImpl implements BoardService {
 			return false;
 	}
 	//두가지 경우밖에 안되서, false에서 abc와 틀릴때, db오류일때 2가지 경우 발생!
+	
+	
+	//체크된거 삭제
+	
 			
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Override

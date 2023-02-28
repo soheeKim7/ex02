@@ -61,13 +61,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:set var="no" value="0"></c:set>
+						<c:set var="no1" value="0"></c:set>
+						<c:set var="no2" value="0"></c:set>
+						<c:set var="no3" value="0"></c:set>
 						<%--페이지 영역에 변수 선언 --%>
 						<c:forEach items="${list }" var="board">
 							<tr>
 								<form action="/board/adminRemove" method="post">
-									<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no=no+1}' />" value="<c:out value='${board.bno }' />">
-									<label for="<c:out value='${checkbno}${no=no+1}' />"><c:out value="${no=no+1} (${board.bno})" /></label></td>
+									<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no1=no1+1}' />" value="<c:out value='${board.bno }' />">
+									<label for="<c:out value='${checkbno}${no2=no2+1}' />"><c:out value="${no3=no3+1} (${board.bno})" /></label></td>									
 								</form>													
 								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }" /></a></td>															
 								<td><c:out value="${board.writer }" /></td>

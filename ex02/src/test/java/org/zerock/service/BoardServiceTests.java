@@ -5,13 +5,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.zerock.controller.BoardControllerTests;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
 public class BoardServiceTests {
 	
 	@Autowired
@@ -20,7 +25,7 @@ public class BoardServiceTests {
 	//1. 게시글 목록보여주기
 	@Test
 	public void testGetList() {
-		service.getlist().forEach(vo -> log.info(vo));
+		service.getlist(new Criteria()).forEach(vo -> log.info(vo));
 	}
 	
 	//2. 게시글 등록
@@ -43,6 +48,8 @@ public class BoardServiceTests {
 	public void testRemove2() {
 		log.info("성공여부 : "+service.remove(36L,"abc"));
 	}
+	
+	//
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Test

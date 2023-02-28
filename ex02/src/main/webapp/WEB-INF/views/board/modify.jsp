@@ -68,9 +68,9 @@
 <%@include file="../includes/footer.jsp"%>
 <script>
 $(document).ready(function(){	
-	var originTitle="<c:out value='${board.title }'/>";
+	var originTitle=`<c:out value='${board.title }'/>`;
 	var originWriter="<c:out value='${board.writer }'/>";
-	var originContent="<c:out value='${board.content }'/>";
+	var originContent=`<c:out value='${board.content }'/>`;
 	console.log("기존의 originTitle : ",originTitle);
 	console.log("기존의 originWriter : ",originWriter);
 	console.log("기존의 originContent : ",originContent);

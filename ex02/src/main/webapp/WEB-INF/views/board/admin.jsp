@@ -111,40 +111,59 @@
 
 <%@include file="../includes/footer.jsp"%>
 <script>
-	var bno="${bno}";  //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
+	var bno="${bno}"; 										    //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
 	console.log("읽어온 쓴글 번호 bno값 확인",bno);
-	if(bno)
-		alert(bno+"번 글이 등록되었습니다.");	
-	//이거 뜨는 알람창 번호 순서 대로 에서 번호???
-	//자바스크립트에서 true 인식 : 값이 있을때 // 주의!! false=>0, null, 빈문자 일때 false!!!
-	//그래서 if(bno) 로 써도 됨 현재는!! 하지만 bno가 0일때는 false!! 주의!!	
-	//if(bno!="")
-	/* 자바스크립트에서!!만 === 쓸수 있음 타입까지 비교하는것
-	   var num1=3; var num2="3";
-	   num1===num2  이건 false 숫자와 문자 비교 
-	   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
-	*/	
 	var modifybno="${modifybno}";
 	console.log("수정한 글 번호 modifybno값 확인",modifybno);
-	if(modifybno)
-		alert(modifybno+"번 글이 수정되었습니다.");
 	var removebno="${removebno}";
-	console.log("수정한 글 번호 removebno값 확인",removebno);
-	if(removebno){
-		if(removebno==-1)
-			alert("키값이 다릅니다.")
-		else
-			alert(removebno+"번 글이 삭제되었습니다.");
-	}
+	console.log("삭제키 성공여부 removebno값 확인",removebno);
 	var adminKey="${adminKey}";
 	console.log("관리자키 비밀번호 성공여부 adminKey값 확인",adminKey);
-	if(adminKey){
-		if(adminKey==-1){
-			alert("비밀번호가 다릅니다.")
-			location.href="/board/list";
-		}else
-			alert("관리자 모드 페이지입니다.");
+	
+	//1. 뒤로가기로 왔는지 확인(history.state) 후, 경고창(alert) 출력여부 선택
+	// -> history.replaceState가 수행된 곳은 null 값이 아니다.
+	if(!history.state){   //(history.state==null)  
+		//history.state가 null일때 경고창을 띄어야 된다.
+		
+		//경고창 출력 부분
+		if(bno)
+			alert(bno+"번 글이 등록되었습니다.");	
+		//이거 뜨는 알람창 번호 순서 대로 에서 번호???
+		//자바스크립트에서 true 인식 : 값이 있을때 // 주의!! false=>0, null, 빈문자 일때 false!!!
+		//그래서 if(bno) 로 써도 됨 현재는!! 하지만 bno가 0일때는 false!! 주의!!	
+		//if(bno!="")
+		/* 자바스크립트에서!!만 === 쓸수 있음 타입까지 비교하는것
+		   var num1=3; var num2="3";
+		   num1===num2  이건 false 숫자와 문자 비교 
+		   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
+		*/	
+	
+		if(modifybno)
+			alert(modifybno+"번 글이 수정되었습니다.");
+		
+		if(removebno){
+			if(removebno==-1)
+				alert("키값이 다릅니다.")
+			else
+				alert(removebno+"번 글이 삭제되었습니다.");
+		}
+
+		if(adminKey){
+			if(adminKey==-1){
+				alert("비밀번호가 다릅니다.")
+				location.href="/board/list";
+			}else
+				alert("관리자 모드 페이지입니다.");
+		}
+		
 	}
+	
+	//2. 뒤로가기 확인을 위해 표시해 두기(history.replaceState( , , ))
+	history.replaceState({},null,null)
+	
+	
+	
+
 	
 	
 	

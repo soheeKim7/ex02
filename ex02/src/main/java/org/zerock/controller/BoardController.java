@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
+import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -20,11 +22,22 @@ public class BoardController {
 	
 	BoardService service;
 	
+	@GetMapping("")
+	public void all() {
+		
+	}
+	
 	//1. 게시글 목록보여주기
 	@GetMapping("list")   
-	public void list(Model model) {
+	public void list(Model model,Criteria cri) {
 		log.info("url list....");
-		model.addAttribute("list",service.getlist());
+		model.addAttribute("list",service.getlist(cri));
+		//페이지 정보 전달
+//		PageDTO pageDTO =new PageDTO(154, cri);
+//		log.info("페이지 정보"+pageDTO);
+//		model.addAttribute(pageDTO);  //이렇게 이름 안실어서 보내면 자동으로 보내지는 객체이름의 소문자로 즉 같은 이름인 pageDTO로 간다		
+		model.addAttribute(new PageDTO(service.count(), cri));
+//		model.addAttribute(new PageDTO(144L, cri));
 	}
 	
 	//2. 게시글 등록
@@ -154,16 +167,16 @@ public class BoardController {
 	}
 	//관리자 페이지 열기
 	@GetMapping("admin")   
-	public void admin(Model model) {
+	public void admin(Model model,Criteria cri) {
 		log.info("url admin....");
-		model.addAttribute("list",service.getlist());
+		model.addAttribute("list",service.getlist(cri));
 	}
 	
 	//관리자 편집페이지 열기
 	@GetMapping("adminEdit")
-	public void adminEdit(Model model) {
+	public void adminEdit(Model model,Criteria cri) {
 		log.info("url adminEdit....");
-		model.addAttribute("list",service.getlist());
+		model.addAttribute("list",service.getlist(cri));
 		model.addAttribute("checkbno","checkbno");
 	}
 	

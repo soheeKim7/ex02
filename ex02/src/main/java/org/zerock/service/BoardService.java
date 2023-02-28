@@ -3,13 +3,15 @@ package org.zerock.service;
 import java.util.List;
 
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.RankVO;
 
 public interface BoardService {
 	//이 메소드는 서비스 측면에서 생각
 	
 	//1. 게시글 목록보여주기
-	List<BoardVO> getlist();
+//	List<BoardVO> getlist();
+	List<BoardVO> getlist(Criteria cri);
 
 	//2. 게시글 등록
 	void register(BoardVO vo);
@@ -18,6 +20,9 @@ public interface BoardService {
 	boolean remove(Long bno);	
 	
 	boolean remove(Long bno,String removeKey);
+	
+	//체크된거 삭제
+	
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	boolean modify(BoardVO vo);

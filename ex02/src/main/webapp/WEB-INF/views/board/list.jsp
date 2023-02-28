@@ -51,7 +51,9 @@
 			</button>
 		</div>
 		<div class="card-body">
+			1번 여기??
 			<div class="table-responsive">
+				2번 여기???
 				<table class="table table-bordered" width="100%" cellspacing="0">
 					<thead>
 						<tr>
@@ -91,7 +93,226 @@
 						</c:forEach>
 					</tbody>
 				</table>
-			</div>
+			</div>			
+			<div>
+				<ul class="pagination" style="justify-content:center;">
+			  		
+			  		<c:if test="${pageDTO.prev }">
+						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum==num }"> 
+							    <li class="paginate_button page-item previous" style="margin-right:5px;">
+							    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
+								    <i class="bi bi-chevron-bar-left"></i>
+								    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
+									</svg>
+								</a></li>
+							</c:if>							
+						</c:forEach> 	
+					</c:if> 
+				  	<c:if test="${!pageDTO.prev }">
+					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+								<c:choose>
+									<c:when test="${num==1}">
+										<li class="paginate_button page-item previous disabled" style="margin-right:5px;">
+									    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
+										    <i class="bi bi-chevron-bar-left"></i>
+										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
+											</svg>
+										</a></li>
+									</c:when>
+									<c:otherwise>
+									    <li class="paginate_button page-item previous" style="margin-right:5px;">
+									    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
+										    <i class="bi bi-chevron-bar-left"></i>
+										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
+											</svg>
+										</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:if>													
+						</c:forEach> 
+					</c:if> 					  	
+				  
+				  	<c:if test="${pageDTO.prev }">
+					    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+					    <a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
+						    <i class="bi bi-chevron-double-left"></i>
+						    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+								<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+							</svg> 
+						</a></li>
+					</c:if> 
+					<c:if test="${!pageDTO.prev }">
+					    <li class="paginate_button page-item previous disabled"	style="margin-right:5px; margin-left:5px;">
+				    	<a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
+					    	<i class="bi bi-chevron-double-left"></i>
+					    	<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+								<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+							</svg> 	
+						</a></li>
+					</c:if>    		
+							
+					<c:if test="${pageDTO.prev }">
+						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+							    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+							    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
+								    <i class="bi bi-chevron-left"></i>
+								    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+									</svg>
+								</a></li>
+							</c:if>							
+						</c:forEach> 	
+					</c:if> 
+					<c:if test="${!pageDTO.prev }">
+					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+								<c:choose>
+									<c:when test="${num==1}">
+										<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
+									    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
+										    <i class="bi bi-chevron-left"></i>
+										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+											</svg>
+										</a></li>
+									</c:when>
+									<c:otherwise>
+									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+									    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
+										    <i class="bi bi-chevron-left"></i>
+										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+											</svg>
+										</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:if>													
+						</c:forEach> 
+					</c:if> 			
+						
+					<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+						<c:if test="${pageDTO.cri.pageNum ==num }"> 
+							<li class="paginate_button page-item active" style="margin-right:5px; margin-left:5px;">
+							<a href="/board/list?pageNum=${num}&amonut=${pageDTO.cri.amount}" class="page-link">
+							<b>${num}</b> </a></li>
+						</c:if>
+						<c:if test="${pageDTO.cri.pageNum !=num }">	
+							<li class="paginate_button page-item" style="margin-right:5px; margin-left:5px;">
+							<a href="/board/list?pageNum=${num}&amonut=${pageDTO.cri.amount}" class="page-link">
+							${num} </a></li>
+						</c:if>									
+					</c:forEach>  				
+					
+					<c:if test="${pageDTO.next }">	
+						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+							    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+							    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
+									<i class="bi bi-chevron-right"></i>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+								    </svg>							
+								</a></li>
+							</c:if>							
+						</c:forEach> 	
+					</c:if> 
+					<c:if test="${!pageDTO.next }">	
+					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+								<c:choose>
+									<c:when test="${num==pageDTO.lastPage}">
+										<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
+									    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
+											<i class="bi bi-chevron-right"></i>
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+										    </svg>
+										</a></li>
+									</c:when>
+									<c:otherwise>
+									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+									    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
+											<i class="bi bi-chevron-right"></i>
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+										    </svg>
+										</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:if>													
+						</c:forEach> 
+					</c:if> 					
+									
+					<c:if test="${pageDTO.next }">					
+						<li class="paginate_button page-item next" style="margin-right:5px; margin-left:5px; ">
+						<a href="/board/list?pageNum=${pageDTO.endPage+1}&amonut=${pageDTO.cri.amount}" class="page-link">
+						   <i class="bi bi-chevron-double-right"></i>
+						   <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+							   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+							   <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+						   </svg>  
+					    </a></li>						
+					</c:if>	
+					<c:if test="${!pageDTO.next }">					
+						<li class="paginate_button page-item next disabled" style="margin-right:5px; margin-left:5px;">
+						<a href="/board/list?pageNum=${pageDTO.endPage+1}&amonut=${pageDTO.cri.amount}" class="page-link">
+						   <i class="bi bi-chevron-double-right"></i>
+						   <svg xmlns="http://www.w3.org/2000/svg" width="20"  fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+							   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+							   <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+						   </svg>  
+					   </a></li>						
+					</c:if>
+					
+					<c:if test="${pageDTO.next }">	
+						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+							    <li class="paginate_button page-item previous" style="margin-left:5px;">
+							    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
+									<i class="bi bi-chevron-bar-right"></i>
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+									</svg>						
+								</a></li>
+							</c:if>							
+						</c:forEach> 	
+					</c:if> 
+					<c:if test="${!pageDTO.next }">	
+					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+								<c:choose>
+									<c:when test="${num==pageDTO.lastPage}">
+										<li class="paginate_button page-item previous disabled" style="margin-left:5px;">
+									    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
+											<i class="bi bi-chevron-bar-right"></i>
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+											</svg>	
+										</a></li>
+									</c:when>
+									<c:otherwise>
+									    <li class="paginate_button page-item previous" style="margin-left:5px;">
+									    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
+											<i class="bi bi-chevron-bar-right"></i>
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+											</svg>	
+										</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:if>													
+						</c:forEach> 
+					</c:if> 
+				</ul>
+			</div>				
 		</div>
 	</div>
 
@@ -103,31 +324,45 @@
 
 <%@include file="../includes/footer.jsp"%>
 <script>
-	var bno="${bno}";  //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
+	var bno="${bno}"; 										    //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
 	console.log("읽어온 쓴글 번호 bno값 확인",bno);
-	if(bno)
-		alert(bno+"번 글이 등록되었습니다.");	
-	//이거 뜨는 알람창 번호 순서 대로 에서 번호???
-	//자바스크립트에서 true 인식 : 값이 있을때 // 주의!! false=>0, null, 빈문자 일때 false!!!
-	//그래서 if(bno) 로 써도 됨 현재는!! 하지만 bno가 0일때는 false!! 주의!!	
-	//if(bno!="")
-	/* 자바스크립트에서!!만 === 쓸수 있음 타입까지 비교하는것
-	   var num1=3; var num2="3";
-	   num1===num2  이건 false 숫자와 문자 비교 
-	   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
-	*/	
 	var modifybno="${modifybno}";
 	console.log("수정한 글 번호 modifybno값 확인",modifybno);
-	if(modifybno)
-		alert(modifybno+"번 글이 수정되었습니다.");
 	var removebno="${removebno}";
-	console.log("수정한 글 번호 removebno값 확인",removebno);
-	if(removebno){
-		if(removebno==-1)
-			alert("키값이 다릅니다.")
-		else
-			alert(removebno+"번 글이 삭제되었습니다.");
+	console.log("삭제키 성공여부 removebno값 확인",removebno);
+	
+	//1. 뒤로가기로 왔는지 확인(history.state) 후, 경고창(alert) 출력여부 선택
+	// -> history.replaceState가 수행된 곳은 null 값이 아니다.
+	if(!history.state){   //(history.state==null)  
+		//history.state가 null일때 경고창을 띄어야 된다.
+		
+		//경고창 출력 부분
+		if(bno)
+			alert(bno+"번 글이 등록되었습니다.");	
+		//이거 뜨는 알람창 번호 순서 대로 에서 번호???
+		//자바스크립트에서 true 인식 : 값이 있을때 // 주의!! false=>0, null, 빈문자 일때 false!!!
+		//그래서 if(bno) 로 써도 됨 현재는!! 하지만 bno가 0일때는 false!! 주의!!	
+		//if(bno!="")
+		/* 자바스크립트에서!!만 === 쓸수 있음 타입까지 비교하는것
+		   var num1=3; var num2="3";
+		   num1===num2  이건 false 숫자와 문자 비교 
+		   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
+		*/	
+
+		if(modifybno)
+			alert(modifybno+"번 글이 수정되었습니다.");
+		
+		if(removebno){
+			if(removebno==-1)
+				alert("키값이 다릅니다.")
+			else
+				alert(removebno+"번 글이 삭제되었습니다.");
+		}		
 	}
+	
+	//2. 뒤로가기 확인을 위해 표시해 두기(history.replaceState( , , ))
+	history.replaceState({},null,null)
+	
 	
 	$("#adminButton").on("click",function(e){
 		//1. 버튼 이벤트(submit)금지

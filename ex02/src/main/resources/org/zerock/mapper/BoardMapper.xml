@@ -9,10 +9,30 @@
 	<!-- resultType 은 마이바티스에서 제공하는 타입 String는 string 소문자로! -->
 	<!-- 객체 앞글자를 소문자로, 기본타입은 _추가 (마이바티스 데이터타입) -->
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
-		select * from tbl_board order by bno desc
+		<!-- select * from tbl_board order by bno desc -->	
+		<![CDATA[		
+			select * from tbl_board where bno<40 order by bno desc
+		]]>
 	</select>	
 	<!-- 세미콜론 넣으면 에러!!!  -->
 	<!-- resultType은 select에서만 존재! -->
+	<!--
+		select bno,title,writer,regdate,updatedate 
+		from(select /*+INDEX_ASC(tbl_board tbl_board_index1)*/             
+		      rownum rn,bno,title,writer,regdate,updatedate from tbl_board where rownum<=20)
+		where rn>10 and rn<=20
+	-->
+	
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+		<!-- select * from tbl_board order by bno desc -->	
+		<![CDATA[		
+		select bno,title,writer,regdate,updatedate,click 
+		from(select /*+INDEX_ASC(tbl_board tbl_board_index1)*/             
+		      rownum rn,bno,title,writer,regdate,updatedate,click from tbl_board where rownum<=#{pageNum}*#{amount})
+		where rn>(#{pageNum}-1)*#{amount} 
+		]]>
+	</select>	
+	
 	
 	<insert id="insert">
 		insert into tbl_board(bno,title,content,writer,click) 
@@ -26,6 +46,13 @@
 	
 	<delete id="delete">
 		delete from tbl_board where bno=#{bno}
+	</delete>
+	
+	<delete id="checkDelete" parameterType="java.util.List">
+		delete from tbl_board where bno in
+		<foreach collection="list" item="bno"  open="(" close=")" separator=",">
+            #{bno}
+        </foreach>
 	</delete>
 	
 	<select id="read" resultType="org.zerock.domain.BoardVO">
@@ -51,7 +78,8 @@
 	</insert>
 	
 	<select id="count" resultType="long">
-		select count(*) from tbl_board
+		<!-- select count(*) from tbl_board -->
+		select /*+INDEX_FFS(tbl_board tbl_board_index1)*/ count(*) from tbl_board
 	</select>
 	
 	<select id="getTodayList" resultType="org.zerock.domain.BoardVO">

@@ -4749,11 +4749,12 @@ input[type="button"].btn-block {
   color: #858796;
 }
 
-.pagination {
+.pagination {	
   display: flex;
   padding-left: 0;
   list-style: none;
   border-radius: 0.35rem;
+  justify-content: center;
 }
 
 .page-link {

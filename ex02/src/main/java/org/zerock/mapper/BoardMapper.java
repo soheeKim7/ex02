@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.RankVO;
 
 public interface BoardMapper {
@@ -13,6 +14,9 @@ public interface BoardMapper {
 	List<BoardVO> getList();  //게시물 목록 가져오기
 	//인터페이스는 생략해도 기본적으로 메소드 public!!
 	
+	//게시물 목록 가져오기 + 페이징 처리
+	List<BoardVO> getListWithPaging(Criteria cri);
+		
 	//게시글 등록            // return int 등록된 글의 개수
 //	void insert(BoardVO vo);
 	int insert(BoardVO vo); //삽입된 행의 개수!
@@ -22,6 +26,9 @@ public interface BoardMapper {
 	
 	//게시글 삭제            // return int 삭제된 글의 개수
 	int delete(Long bno);
+	
+	//체크된거 삭제
+	int checkDelete(List<Long> list);
 	
 	//게시글 읽기(조회)
 	BoardVO read(Long bno);
