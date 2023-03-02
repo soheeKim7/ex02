@@ -46,6 +46,7 @@ public class BoardController {
 		model.addAttribute(new PageDTO(service.count(cri), cri));
 //		model.addAttribute(new PageDTO(144L, cri));
 	}
+		
 	
 	//2. 게시글 등록
 	@GetMapping("register")
@@ -184,20 +185,23 @@ public class BoardController {
 				
 		return "redirect:/board/admin"; 
 	}
+	
 	//관리자 페이지 열기
 	@GetMapping("admin")   
 	public void admin(Model model,Criteria cri) {
 		log.info("url admin....");
 		model.addAttribute("list",service.getlist(cri));
-	}
-	
-	//관리자 편집페이지 열기
-	@GetMapping("adminEdit")
-	public void adminEdit(Model model,Criteria cri) {
-		log.info("url adminEdit....");
-		model.addAttribute("list",service.getlist(cri));
+		model.addAttribute(new PageDTO(service.count(cri), cri));
 		model.addAttribute("checkbno","checkbno");
 	}
+	
+//	//관리자 편집페이지 열기
+//	@GetMapping("adminEdit")
+//	public void adminEdit(Model model,Criteria cri) {
+//		log.info("url adminEdit....");
+//		model.addAttribute("list",service.getlist(cri));
+//		model.addAttribute("checkbno","checkbno");
+//	}
 	
 	//관리자 삭제!
 	@PostMapping("adminRemove")
@@ -207,7 +211,7 @@ public class BoardController {
 		service.checkRemove(checkbno);
 		rttr.addFlashAttribute("checkbnoRemove",checkbno);
 		
-		return "redirect:/board/adminEdit";
+		return "redirect:/board/admin";
 	}
 	
 	

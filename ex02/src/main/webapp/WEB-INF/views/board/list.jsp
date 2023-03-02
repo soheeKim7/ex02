@@ -54,30 +54,31 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<div class="row" style="margin-bottom: 10px;">
-						<form action="/board/list" method="get">
-							<div class="col-sm-12 col-md-6">
-								<div class="dataTables_filter" style="float:left;">
-									<select class="form-control form-control-sm" id="searchList" name="type">																			
-										<option	value="T" <c:if test='${pageDTO.cri.type=="T" }'>selected</c:if>>제목</option>
-										<option	value="C" <c:if test='${pageDTO.cri.type=="C" }'>selected</c:if>>내용</option>
-										<option	value="W" <c:if test='${pageDTO.cri.type=="W" }'>selected</c:if>>작성자</option>
-										<option	value="TC" <c:if test='${pageDTO.cri.type=="TC" }'>selected</c:if>>제목or내용</option>
-										<option	value="TW" <c:if test='${pageDTO.cri.type=="TW" }'>selected</c:if>>제목or작성자</option>
-										<option	value="CW" <c:if test='${pageDTO.cri.type=="CW" }'>selected</c:if>>내용or작성자</option>
-										<option	value="TCW" <c:if test='${pageDTO.cri.type=="TCW" }'>selected</c:if>>제목or내용or작성자</option>									
-									</select> 
-								</div>
-								<div class="dataTables_filter" style="float:left;">
-									<input type="text" class="form-control form-control-sm" placeholder="검색어를 입력해주세요." name="keyword" value="${pageDTO.cri.keyword }">
-									<button class="btn btn-primary" type="submit" style="float:left;">
-										<i class="fas fa-search fa-sm"></i>
+					<div class="row" >					
+						<div class="col-sm-12 col-md-6">
+							<form action="/board/list" method="get">
+								<div class="dataTables_filter" style="float:left">
+									<label>
+										<select class="form-control form-control-sm" id="searchList" name="type" >																			
+											<option	value="T" <c:if test='${pageDTO.cri.type=="T" }'>selected</c:if>>제목</option>
+											<option	value="C" <c:if test='${pageDTO.cri.type=="C" }'>selected</c:if>>내용</option>
+											<option	value="W" <c:if test='${pageDTO.cri.type=="W" }'>selected</c:if>>작성자</option>
+											<option	value="TC" <c:if test='${pageDTO.cri.type=="TC" }'>selected</c:if>>제목or내용</option>
+											<option	value="TW" <c:if test='${pageDTO.cri.type=="TW" }'>selected</c:if>>제목or작성자</option>
+											<option	value="CW" <c:if test='${pageDTO.cri.type=="CW" }'>selected</c:if>>내용or작성자</option>
+											<option	value="TCW" <c:if test='${pageDTO.cri.type=="TCW" }'>selected</c:if>>제목or내용or작성자</option>									
+										</select>	
+									</label>			
+									<input type="text" class="form-control form-control-sm" placeholder="검색어를 입력해주세요."  size="50"
+										name="keyword" value="${pageDTO.cri.keyword }" >
+									<button class="btn btn-primary btn-circle btn-sm" type="submit" >										
+										<i class="fas fa-search fa-sm"></i>									
 									</button>
 								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 						<div class="col-sm-12 col-md-6">
-							<div style="float:right;">							
+							<div class="dataTables_length" style="float:right">							
 								<select name="viewPage"	class="form-control form-control-sm" id="amount" >																			
 									<option	value="10" <c:if test="${pageDTO.cri.amount==10}">selected</c:if>>
 										10개씩</option>
@@ -89,8 +90,8 @@
 										100개씩</option>
 								</select> 								
 							</div>
-						</div>						
-					</div>
+						</div>											
+					</div>					
 					
 					<div class="row">
 						<div class="col-sm-12">				

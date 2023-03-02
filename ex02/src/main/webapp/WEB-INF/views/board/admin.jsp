@@ -46,23 +46,24 @@
 				</span> 
 				<span class="text">작성자 게시글 순위보기</span>
 			</button>
-			<button class="btn btn-danger" onclick="location.href='/board/adminEdit'" style="float:right;margin-right: 10px;">
-				<span class="icon text-white-50">
-				<i class="bi bi-pencil-square"></i>
-				<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-	  				<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-	 			    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-				</svg>
-				</span>  
-				<span class="text">편집하기</span>
-			</button>
-			
+			<form action="/board/adminRemove" method="post">
+				<button class="btn btn-danger" style="float:right;margin-right: 10px;" id="adminRemoveButton">
+					<span class="icon text-white-50">
+					<i class="bi bi-file-earmark-x"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
+		  				<path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
+		  				<path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+					</svg>
+					</span> 
+					<span class="text">체크 한거 삭제하기</span>
+				</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" width="100%" cellspacing="0">
 					<thead>
 						<tr>
+							<th><input type="checkbox" name="allcheckbno" id="checkbno" onclick="selectAll(this)">
 							<th>순번 (글번호)</th>							
 							<th>제목</th>
 							<th>작성자</th>
@@ -75,10 +76,11 @@
 						<c:set var="no" value="0"></c:set>
 						<%--페이지 영역에 변수 선언 --%>
 						<c:forEach items="${list }" var="board">
-							<tr>
-								<td><c:out value="${no=no+1} (${board.bno})" /></td>
-								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>	
-																					
+							<tr>								
+								<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no=no+1}' />" 
+									value="<c:out value='${board.bno }' />" onclick="checkSelectAll()"></td>
+								<td><label for="<c:out value='${checkbno}${no}' />"> <c:out value="${no} (${board.bno})" /> </label></td>						
+															
 								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }" /></a></td>															
 								<td><c:out value="${board.writer }" /></td>
 								<td><c:out value="${board.click}" /></td>		
@@ -96,7 +98,8 @@
 								<%-- ${board.regdate eq board.updatedate } --%>
 								<%-- ${board.regdate not eq board.updatedate } --%>
 							</tr>
-						</c:forEach>
+						</c:forEach>						
+			</form>	
 					</tbody>
 				</table>
 			</div>
@@ -119,6 +122,8 @@
 	console.log("삭제키 성공여부 removebno값 확인",removebno);
 	var adminKey="${adminKey}";
 	console.log("관리자키 비밀번호 성공여부 adminKey값 확인",adminKey);
+	var checkbnoRemove="${checkbnoRemove}";
+	console.log("체크해서 삭제한 bno값들 checkbnoRemove : ",checkbnoRemove);
 	
 	//1. 뒤로가기로 왔는지 확인(history.state) 후, 경고창(alert) 출력여부 선택
 	// -> history.replaceState가 수행된 곳은 null 값이 아니다.
@@ -147,7 +152,7 @@
 			else
 				alert(removebno+"번 글이 삭제되었습니다.");
 		}
-
+	
 		if(adminKey){
 			if(adminKey==-1){
 				alert("비밀번호가 다릅니다.")
@@ -156,14 +161,37 @@
 				alert("관리자 모드 페이지입니다.");
 		}
 		
+		//if(checkbnoRemove)
+		//	alert(checkbnoRemove+"번 글들이 삭제되었습니다.")
+		
 	}
 	
 	//2. 뒤로가기 확인을 위해 표시해 두기(history.replaceState( , , ))
-	history.replaceState({},null,null)
+	history.replaceState({},null,null);
 	
-	
-	
+	function checkSelectAll()  {
+		  // 전체 체크박스
+		  const checkboxes = document.querySelectorAll('input[name="checkbno"]');
+		  // 선택된 체크박스
+		  const checked = document.querySelectorAll('input[name="checkbno"]:checked');
+		  // allcheckbno 체크박스
+		  const allcheckbno = document.querySelector('input[name="allcheckbno"]');
+		  
+		  if(checkboxes.length === checked.length)  {
+		    allcheckbno.checked = true;
+		  }else {
+		    allcheckbno.checked = false;
+		  }
 
+	};
+
+	function selectAll(selectAll)  {
+		const checkboxes = document.getElementsByName('checkbno');
+		  
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = selectAll.checked
+		})
+	};
 	
 	
 	
