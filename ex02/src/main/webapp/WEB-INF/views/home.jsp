@@ -20,6 +20,7 @@
 	<a href="/board/last" method="post">최근 작성글 보러가기</a>
 	<br>
 
+
 	<%--
 	<span class="testCenter" style="text-align: center"><h1>테스트중</h1></span>
 	 
