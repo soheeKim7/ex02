@@ -167,14 +167,22 @@
 					</form>
 
 					<!-- Topbar Search -->
-					<form
+					<form action="/board/list" method="get"
 						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-						<div class="input-group">
+						<div class="input-group">			
+							<select class="form-control bg-light border-0 small" id="searchSelect" name="type">																			
+								<option	value="T" <c:if test='${pageDTO.cri.type=="T" }'>selected</c:if>>제목</option>
+								<option	value="C" <c:if test='${pageDTO.cri.type=="C" }'>selected</c:if>>내용</option>
+								<option	value="W" <c:if test='${pageDTO.cri.type=="W" }'>selected</c:if>>작성자</option>
+								<option	value="TC" <c:if test='${pageDTO.cri.type=="TC" }'>selected</c:if>>제목or내용</option>
+								<option	value="TW" <c:if test='${pageDTO.cri.type=="TW" }'>selected</c:if>>제목or작성자</option>
+								<option	value="CW" <c:if test='${pageDTO.cri.type=="CW" }'>selected</c:if>>내용or작성자</option>
+								<option	value="TCW" <c:if test='${pageDTO.cri.type=="TCW" }'>selected</c:if>>제목or내용or작성자</option>						
+							</select> 				
 							<input type="text" class="form-control bg-light border-0 small"
-								placeholder="Search for..." aria-label="Search"
-								aria-describedby="basic-addon2">
+								placeholder="검색어를 입력해주세요." name="keyword" value="${pageDTO.cri.keyword }" >
 							<div class="input-group-append">
-								<button class="btn btn-primary" type="button">
+								<button class="btn btn-primary" type="submit">
 									<i class="fas fa-search fa-sm"></i>
 								</button>
 							</div>

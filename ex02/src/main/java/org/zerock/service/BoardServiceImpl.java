@@ -29,8 +29,8 @@ public class BoardServiceImpl implements BoardService {
 	@Value("${removeKey}")
 	String removeKey;
 	
-//	@Value("${adminKey}")
-//	String adminKey;
+	@Value("${adminKey}")
+	String adminKey;
 	
 	//1. 게시글 목록보여주기
 	/*
@@ -87,7 +87,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	//체크된거 삭제
 	@Override
-	public int checkRemove(List<Long> list) {
+	public int checkRemove(Long[] list) {
 		log.info("checkRemove ..... "+list);
 		return mapper.checkDelete(list);
 	}
@@ -107,10 +107,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	//보너스 - 전체글 개수를 알려주는 서비스
+//	@Override
+//	public Long count() {
+//		log.info("count ..... ");
+//		return mapper.count();
+//	}
+	
 	@Override
-	public Long count() {
+	public Long count(Criteria cri) {
 		log.info("count ..... ");
-		return mapper.count();
+		return mapper.count(cri);
 	}
 		
 	//보너스 - 오늘의 게시글 목록 가져오기
@@ -167,13 +173,17 @@ public class BoardServiceImpl implements BoardService {
 	//관리자 모드 비밀번호 체크
 	@Override
 	public boolean adminCheck(String adminKey) {
-		log.error("에러아님 확인된값 : "+this.removeKey);
+		log.error("에러아님 확인된값 : "+this.adminKey);
 		log.error("에러아님 입력된 값 : "+adminKey);
-		if(adminKey.equals(this.removeKey))
+		if(adminKey.equals(this.adminKey))
 			return true;
 		else		
 			return false;
 	}
+
+
+
+
 
 
 

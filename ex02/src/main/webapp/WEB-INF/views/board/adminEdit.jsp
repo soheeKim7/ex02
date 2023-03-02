@@ -78,7 +78,7 @@
 							<tr>								
 								<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no=no+1}' />" value="<c:out value='${board.bno }' />">
 								<label for="<c:out value='${checkbno}${no}' />"> <c:out value="${no} (${board.bno})" /> </label></td>									
-			</form>													
+															
 								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }" /></a></td>															
 								<td><c:out value="${board.writer }" /></td>
 								<td><c:out value="${board.click}" /></td>		
@@ -97,6 +97,8 @@
 								<%-- ${board.regdate not eq board.updatedate } --%>
 							</tr>
 						</c:forEach>
+						
+			</form>	
 					</tbody>
 				</table>
 			</div>

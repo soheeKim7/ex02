@@ -23,8 +23,11 @@
 		where rn>10 and rn<=20
 	-->
 	
+	<!-- select * from tbl_board order by bno desc -->	
+	
+	<!--
 	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
-		<!-- select * from tbl_board order by bno desc -->	
+		
 		<![CDATA[		
 		select bno,title,writer,regdate,updatedate,click 
 		from(select /*+INDEX_ASC(tbl_board tbl_board_index1)*/             
@@ -32,7 +35,46 @@
 		where rn>(#{pageNum}-1)*#{amount} 
 		]]>
 	</select>	
+	-->
 	
+	
+	<sql id="criteria">
+		<!-- (검색조건) and  -->  
+	   <trim prefix="(" suffix=") and" prefixOverrides="or">    <!-- trim 은 안에 내용이 있을때 적용!!  -->
+	  	  	<foreach collection="typeArr" item="type1">
+		  		<trim prefix="or">
+			  		<choose>
+			  			<when test='type1=="T"'>
+			  				title like '%'||#{keyword}||'%'	  			
+			  			</when>
+			  			<when test='type1=="C"'>
+			  				content like '%'||#{keyword}||'%'	  			
+			  			</when>
+			  			<when test='type1=="W"'>
+			  				writer like '%'||#{keyword}||'%'	  			
+			  			</when>	  		
+			  		</choose>
+		  		</trim>	  	
+		  	</foreach>      
+	   </trim> 	
+	</sql>
+	
+	
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	
+	<![CDATA[		
+	select bno,title,writer,regdate,updatedate,click 
+	from(select /*+INDEX_ASC(tbl_board tbl_board_index1)*/             
+	      rownum rn,bno,title,writer,regdate,updatedate,click from tbl_board where 
+	      ]]>
+	      
+	   		<include refid="criteria" />
+	   			      
+	      <![CDATA[
+	      rownum<=#{pageNum}*#{amount})
+	where rn>(#{pageNum}-1)*#{amount} 
+	]]>
+	</select>
 	
 	<insert id="insert">
 		insert into tbl_board(bno,title,content,writer,click) 
@@ -48,9 +90,9 @@
 		delete from tbl_board where bno=#{bno}
 	</delete>
 	
-	<delete id="checkDelete" parameterType="java.util.List">
+	<delete id="checkDelete" >  <!-- array 는 배열/ arraylist 는 어레이리스트 -->
 		delete from tbl_board where bno in
-		<foreach collection="list" item="bno"  open="(" close=")" separator=",">
+		<foreach collection="array" item="bno"  open="(" close=")" separator=",">
             #{bno}
         </foreach>
 	</delete>
@@ -79,7 +121,11 @@
 	
 	<select id="count" resultType="long">
 		<!-- select count(*) from tbl_board -->
-		select /*+INDEX_FFS(tbl_board tbl_board_index1)*/ count(*) from tbl_board
+		<!-- select /*+INDEX_FFS(tbl_board tbl_board_index1)*/ count(*) from tbl_board -->
+		
+		select count(*) from tbl_board where
+		<include refid="criteria" />		
+		bno>0
 	</select>
 	
 	<select id="getTodayList" resultType="org.zerock.domain.BoardVO">

@@ -22,7 +22,7 @@ public interface BoardService {
 	boolean remove(Long bno,String removeKey);
 	
 	//체크된거 삭제
-	int checkRemove(List<Long> list);
+	int checkRemove(Long[] list);
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	boolean modify(BoardVO vo);
@@ -31,7 +31,8 @@ public interface BoardService {
 	BoardVO get(Long bno);
 	
 	//보너스 - 전체글 개수를 알려주는 서비스
-	Long count();
+//	Long count();
+	Long count(Criteria cri);
 	
 	//보너스 - 오늘의 게시글 목록 가져오기
 	List<BoardVO> getTodayList();

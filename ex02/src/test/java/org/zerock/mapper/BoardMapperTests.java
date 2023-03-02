@@ -88,9 +88,13 @@ public class BoardMapperTests {
 	//체크된거 삭제
 	@Test
 	public void testCheckDelete() {
-		List<Long> list=new ArrayList<>();
-		list.add(19398587L);
-		list.add(19398586L);
+		Long[] list=new Long[2];
+		list[0]=1127L;
+		list[1]=1128L;		
+		log.info(list.length);
+//		List<Long> list = new ArrayList<>();
+//		list.add(1131L);
+//		list.add(1130L);
 		log.info("삭제된 행의 개수 : "+mapper.checkDelete(list));
 	}
 	
@@ -103,7 +107,8 @@ public class BoardMapperTests {
 	//전체글 개수 확인
 	@Test
 	public void testcount() {
-		log.info("전체 글 개수 : "+mapper.count());
+		Criteria cri=new Criteria();
+		log.info("전체 글 개수 : "+mapper.count(cri));
 	}
 	
 	//오늘의 게시글 목록 가져오기

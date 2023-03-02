@@ -28,7 +28,7 @@ public interface BoardMapper {
 	int delete(Long bno);
 	
 	//체크된거 삭제
-	int checkDelete(List<Long> list);
+	int checkDelete(Long[] aaa);
 	
 	//게시글 읽기(조회)
 	BoardVO read(Long bno);
@@ -43,7 +43,8 @@ public interface BoardMapper {
 	int myInsert(BoardVO vo);
 	
 	//전체글 개수 확인
-	long count();
+//	long count();
+	long count(Criteria cri);
 	
 	//오늘의 게시글 목록 가져오기
 	List<BoardVO> getTodayList();

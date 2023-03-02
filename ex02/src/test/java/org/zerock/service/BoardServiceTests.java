@@ -55,11 +55,9 @@ public class BoardServiceTests {
 	//체크된거 삭제
 	@Test
 	public void testCheckRemove() {
-		List<Long> list =new ArrayList<>();
-		list.add(19398670L);
-		list.add(19398669L);
-		list.add(19398668L);
-		list.add(19398667L);
+		Long[] list=new Long[2];
+		list[0]=1127L;
+		list[1]=1128L;		
 		log.info("삭제된 행의 개수 : "+service.checkRemove(list));		
 	}
 	
@@ -83,7 +81,8 @@ public class BoardServiceTests {
 	//보너스 - 전체글 개수를 알려주는 서비스
 	@Test
 	public void testCount() {
-		log.info("전체 게시글 개수"+service.count());
+		Criteria cri=new Criteria();
+		log.info("전체 게시글 개수"+service.count(cri));
 	}
 	
 	//보너스 - 오늘의 게시글 목록 가져오기

@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,29 +34,17 @@ public class BoardController {
 //	PageDTO pageDTO =new PageDTO(service.count(), new Criteria());
 	//1. 게시글 목록보여주기
 	@GetMapping("list")   
-	public void list(Model model,Criteria cri,Integer viewPage) {
+	public void list(Model model,Criteria cri) {
 		log.info("url list....");
-		log.info("현재 amount : "+cri.getAmount());
-		log.info("현재 viewPage : "+ viewPage);
-		if(viewPage!=null)
-			cri.setAmount(viewPage);
-		else
-			viewPage=10;
-		
-		log.info("널값시 viewPage 10셋팅 : "+ viewPage);
-		log.info("viewPage 받고 셋팅된 amount : "+cri.getAmount());
+		log.info("현재 amount : "+cri.getAmount());		
 
 		model.addAttribute("list",service.getlist(cri));
 		//페이지 정보 전달
-		PageDTO pageDTO =new PageDTO(service.count(), cri);
+//		PageDTO pageDTO =new PageDTO(service.count(), cri);
 //		log.info("페이지 정보"+pageDTO);
 //		model.addAttribute(pageDTO);  //이렇게 이름 안실어서 보내면 자동으로 보내지는 객체이름의 소문자로 즉 같은 이름인 pageDTO로 간다	
-		log.info("그대로 이어지나 테스트 처음1 amount : "+cri.getAmount());
-		model.addAttribute(pageDTO);
+		model.addAttribute(new PageDTO(service.count(cri), cri));
 //		model.addAttribute(new PageDTO(144L, cri));
-		log.info("그대로 이어지나 테스트 두번째2 amount : "+cri.getAmount());
-		model.addAttribute("viewPage", viewPage);
-		log.info("보내는 viewPage 값 : "+ viewPage);
 	}
 	
 	//2. 게시글 등록
@@ -136,11 +125,18 @@ public class BoardController {
 	}
 		
 	//보너스 - 전체글 개수를 알려주는 서비스
+//	@GetMapping("count")   
+//	public void count(Model model) {
+//		log.info("url count.......");
+//		model.addAttribute("count",service.count());
+//	}
+	
 	@GetMapping("count")   
-	public void count(Model model) {
+	public void count(Model model,Criteria cri) {
 		log.info("url count.......");
-		model.addAttribute("count",service.count());
+		model.addAttribute("count",service.count(cri));
 	}
+	
 	
 	//보너스 - 오늘의 게시글 목록 가져오기
 	@GetMapping("todaylist")   
@@ -205,10 +201,10 @@ public class BoardController {
 	
 	//관리자 삭제!
 	@PostMapping("adminRemove")
-	public String adminRemove(List<Long> checkbno,RedirectAttributes rttr) {
+	public String adminRemove(Long[] checkbno,RedirectAttributes rttr) {
 		log.info("url adminRemove.......");
 		log.info(checkbno);
-//		service.checkRemove(checkbno);
+		service.checkRemove(checkbno);
 		rttr.addFlashAttribute("checkbnoRemove",checkbno);
 		
 		return "redirect:/board/adminEdit";
