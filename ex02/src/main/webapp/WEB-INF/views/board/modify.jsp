@@ -16,7 +16,7 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">게시글 확인화면</h4>
-			<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:right">
+			<button class="btn btn-primary" onclick="location.href='/board/list?pageNum=${cri.pageNum}&amount=${cri.amount }'" style="float:right">
 				<span class="icon text-white-50">
 				<i class="bi bi-file-earmark-text"></i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
@@ -30,6 +30,8 @@
 		<div class="card-body">		
 			<form action="/board/modify" method="post" id="modifyForm">
 			<input type="hidden" name="bno" value="${board.bno }" >
+			<input type="hidden" name="pageNum" value="${cri.pageNum }" >
+			<input type="hidden" name="amount" value="${cri.amount }" >
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<input type="text" class="form-control form-control-user"
@@ -106,6 +108,16 @@ $(document).ready(function(){
 		}
 	});
 });
+//	//*****************************************************************
+//	//테스트 코드 (김소희님만을 코드) -수정시 비교
+//	var title1='<c:out value="${board.title }"/>';
+//	var title2=$("#title").val();
+//	//에이씨 변환시키자! 이러면 c:out도 비교가능! 
+//	var re_title2=title2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+//	console.log("보내온값",title1);
+//	console.log("수정한값",re_title2);  끝!
+//	//********************************************************************/
 </script>
 
 

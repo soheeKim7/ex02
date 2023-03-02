@@ -29,7 +29,7 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">게시글 목록보기</h4>
-			<button class="btn btn-primary" onclick="location.href='/board/register'" style="float:right">
+			<button class="btn btn-primary" onclick="location.href='/board/register?pageNum=${pageDTO.cri.pageNum}&amount=${pageDTO.cri.amount}'" style="float:right">
 				<span class="icon text-white-50">
 				<i class="bi bi-pencil-square"></i>
 				<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -50,80 +50,91 @@
 				<span class="text">작성자 게시글 순위보기</span>
 			</button>
 		</div>
+		
 		<div class="card-body">
-			1번 여기??
 			<div class="table-responsive">
-				2번 여기???
-				<table class="table table-bordered" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th>순번 (글번호)</th>							
-							<th>제목</th>
-							<th>작성자</th>
-							<th>조회수</th>							
-							<th>작성일</th>
-							<th>수정일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:set var="no" value="0"></c:set>
-						<%--페이지 영역에 변수 선언 --%>
-						<c:forEach items="${list }" var="board">
-							<tr>
-								<td><c:out value="${no=no+1} (${board.bno})" /></td>
-								<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>	
-																					
-								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }" /></a></td>															
-								<td><c:out value="${board.writer }" /></td>
-								<td><c:out value="${board.click}" /></td>		
-								<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
-										value="${board.regdate }" /></td>
-								<c:if test="${board.regdate==board.updatedate }">
-									<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
-											value="${board.updatedate }" /></td>
-								</c:if>
-								<c:if test="${board.regdate!=board.updatedate }">
-									<td style="color: red;"><fmt:formatDate
-											pattern="yy년MM월dd일 a hh:mm:ss" value="${board.updatedate }" /></td>
-								</c:if>
-								<%--HH=24시간제, hh=12시간제,a=오전오후 --%>
-								<%-- ${board.regdate eq board.updatedate } --%>
-								<%-- ${board.regdate not eq board.updatedate } --%>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>			
-			<div>
-				<ul class="pagination" style="justify-content:center;">
-			  		
-			  		<c:if test="${pageDTO.prev }">
-						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum==num }"> 
-							    <li class="paginate_button page-item previous" style="margin-right:5px;">
-							    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
-								    <i class="bi bi-chevron-bar-left"></i>
-								    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
-										<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
-									</svg>
-								</a></li>
-							</c:if>							
-						</c:forEach> 	
-					</c:if> 
-				  	<c:if test="${!pageDTO.prev }">
-					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
-								<c:choose>
-									<c:when test="${num==1}">
-										<li class="paginate_button page-item previous disabled" style="margin-right:5px;">
-									    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
-										    <i class="bi bi-chevron-bar-left"></i>
-										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
-												<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
-											</svg>
-										</a></li>
-									</c:when>
-									<c:otherwise>
+				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+					<div class="row">
+						<div class="col-sm-12 col-md-6">
+							<div class="dataTables_filter" style="float:left;">
+								<label>Search : 
+								<input type="search" class="form-control form-control-sm" >
+								</label>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<div style="float:right;">
+								<form action="/board/list">
+									<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+										<c:if test="${pageDTO.cri.pageNum==num }"> 
+									<select name="viewPage"	class="form-control form-control-sm" id="amount" onchange="page(${num })">	
+									<script>console.log("테스트중 num : ",${num}); </script>	
+									</c:if>
+									</c:forEach>											
+										<option	value="10" <c:if test="${pageDTO.cri.amount==10}">selected="selected"</c:if>>
+											10개씩</a></option>
+										<option	value="25" <c:if test="${pageDTO.cri.amount==25}">selected="selected"</c:if>>
+											25개씩</a></option>
+										<option	value="50" <c:if test="${pageDTO.cri.amount==50}">selected="selected"</c:if>>
+											50개씩</option>
+										<option	value="100" <c:if test="${pageDTO.cri.amount==100}">selected="selected"</c:if>>
+											100개씩</option>
+									</select> 
+								</form>
+							</div>
+						</div>						
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12">				
+							<table class="table table-bordered" width="100%" cellspacing="0">
+								<thead>
+									<tr>
+										<th>순번 (글번호)</th>							
+										<th>제목</th>
+										<th>작성자</th>
+										<th>조회수</th>							
+										<th>작성일</th>
+										<th>수정일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:set var="no" value="0"></c:set>
+									<%--페이지 영역에 변수 선언 --%>
+									<c:forEach items="${list }" var="board">
+										<tr>
+											<td><c:out value="${no=no+1} (${board.bno})" /></td>
+											<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>	
+																								
+											<td><a href="/board/get?bno=${board.bno }&pageNum=${pageDTO.cri.pageNum}&amount=${pageDTO.cri.amount}"><c:out value="${board.title }" /></a></td>															
+											<td><c:out value="${board.writer }" /></td>
+											<td><c:out value="${board.click}" /></td>		
+											<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
+													value="${board.regdate }" /></td>
+											<c:if test="${board.regdate==board.updatedate }">
+												<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
+														value="${board.updatedate }" /></td>
+											</c:if>
+											<c:if test="${board.regdate!=board.updatedate }">
+												<td style="color: red;"><fmt:formatDate
+														pattern="yy년MM월dd일 a hh:mm:ss" value="${board.updatedate }" /></td>
+											</c:if>
+											<%--HH=24시간제, hh=12시간제,a=오전오후 --%>
+											<%-- ${board.regdate eq board.updatedate } --%>
+											<%-- ${board.regdate not eq board.updatedate } --%>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>	
+						
+					<div class="row" style="justify-content:center;">
+						<ul class="pagination" >			
+							<!-- 맨 앞페이지 ㅣ< 이동 -->		  		
+					  		<c:if test="${pageDTO.prev }">
+								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-right:5px;">
 									    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
 										    <i class="bi bi-chevron-bar-left"></i>
@@ -131,60 +142,60 @@
 												<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
 											</svg>
 										</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:if>													
-						</c:forEach> 
-					</c:if> 					  	
-				  
-				  	<c:if test="${pageDTO.prev }">
-					    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-					    <a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
-						    <i class="bi bi-chevron-double-left"></i>
-						    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-								<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-								<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-							</svg> 
-						</a></li>
-					</c:if> 
-					<c:if test="${!pageDTO.prev }">
-					    <li class="paginate_button page-item previous disabled"	style="margin-right:5px; margin-left:5px;">
-				    	<a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
-					    	<i class="bi bi-chevron-double-left"></i>
-					    	<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-								<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-								<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-							</svg> 	
-						</a></li>
-					</c:if>    		
-							
-					<c:if test="${pageDTO.prev }">
-						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
+									</c:if>							
+								</c:forEach> 	
+							</c:if> 
+						  	<c:if test="${!pageDTO.prev }">
+							    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
+										<c:choose>
+											<c:when test="${num==1}">
+												<li class="paginate_button page-item previous disabled" style="margin-right:5px;">
+											    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
+												    <i class="bi bi-chevron-bar-left"></i>
+												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
+													</svg>
+												</a></li>
+											</c:when>
+											<c:otherwise>
+											    <li class="paginate_button page-item previous" style="margin-right:5px;">
+											    <a class="page-link" href="/board/list?pageNum=1&amonut=${pageDTO.cri.amount}">
+												    <i class="bi bi-chevron-bar-left"></i>
+												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
+													</svg>
+												</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:if>													
+								</c:forEach> 
+							</c:if> 					  	
+						  	<!-- 10페이지씩 ≪ 이동 -->
+						  	<c:if test="${pageDTO.prev }">
 							    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-							    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
-								    <i class="bi bi-chevron-left"></i>
-								    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-										<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-									</svg>
+							    <a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
+								    <i class="bi bi-chevron-double-left"></i>
+								    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+										<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+									</svg> 
 								</a></li>
-							</c:if>							
-						</c:forEach> 	
-					</c:if> 
-					<c:if test="${!pageDTO.prev }">
-					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
-								<c:choose>
-									<c:when test="${num==1}">
-										<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
-									    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
-										    <i class="bi bi-chevron-left"></i>
-										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-												<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-											</svg>
-										</a></li>
-									</c:when>
-									<c:otherwise>
+							</c:if> 
+							<c:if test="${!pageDTO.prev }">
+							    <li class="paginate_button page-item previous disabled"	style="margin-right:5px; margin-left:5px;">
+						    	<a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
+							    	<i class="bi bi-chevron-double-left"></i>
+							    	<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+										<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+									</svg> 	
+								</a></li>
+							</c:if>    		
+							<!-- 1페이지씩 < 이동 -->		
+							<c:if test="${pageDTO.prev }">
+								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
 									    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
 										    <i class="bi bi-chevron-left"></i>
@@ -192,130 +203,156 @@
 												<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
 											</svg>
 										</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:if>													
-						</c:forEach> 
-					</c:if> 			
-						
-					<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-						<c:if test="${pageDTO.cri.pageNum ==num }"> 
-							<li class="paginate_button page-item active" style="margin-right:5px; margin-left:5px;">
-							<a href="/board/list?pageNum=${num}&amonut=${pageDTO.cri.amount}" class="page-link">
-							<b>${num}</b> </a></li>
-						</c:if>
-						<c:if test="${pageDTO.cri.pageNum !=num }">	
-							<li class="paginate_button page-item" style="margin-right:5px; margin-left:5px;">
-							<a href="/board/list?pageNum=${num}&amonut=${pageDTO.cri.amount}" class="page-link">
-							${num} </a></li>
-						</c:if>									
-					</c:forEach>  				
-					
-					<c:if test="${pageDTO.next }">	
-						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
-							    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-							    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
-									<i class="bi bi-chevron-right"></i>
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-										<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-								    </svg>							
-								</a></li>
-							</c:if>							
-						</c:forEach> 	
-					</c:if> 
-					<c:if test="${!pageDTO.next }">	
-					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
-								<c:choose>
-									<c:when test="${num==pageDTO.lastPage}">
-										<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
-									    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
+									</c:if>							
+								</c:forEach> 	
+							</c:if> 
+							<c:if test="${!pageDTO.prev }">
+							    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
+										<c:choose>
+											<c:when test="${num==1}">
+												<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
+											    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
+												    <i class="bi bi-chevron-left"></i>
+												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+													</svg>
+												</a></li>
+											</c:when>
+											<c:otherwise>
+											    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+											    <a class="page-link" href="/board/list?pageNum=${num-1}&amonut=${pageDTO.cri.amount}">
+												    <i class="bi bi-chevron-left"></i>
+												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+													</svg>
+												</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:if>													
+								</c:forEach> 
+							</c:if> 			
+							<!-- 페이지 숫자 표기 -->	
+							<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+								<c:if test="${pageDTO.cri.pageNum ==num }"> 
+									<li class="paginate_button page-item active" style="margin-right:5px; margin-left:5px;">
+									<a href="/board/list?pageNum=${num}&amonut=${pageDTO.cri.amount}" class="page-link">
+									<b>${num}</b> </a></li>
+								</c:if>
+								<c:if test="${pageDTO.cri.pageNum !=num }">	
+									<li class="paginate_button page-item" style="margin-right:5px; margin-left:5px;">
+									<a href="/board/list?pageNum=${num}&amonut=${pageDTO.cri.amount}" class="page-link">
+									${num} </a></li>
+								</c:if>									
+							</c:forEach>  				
+							<!-- 1페이지씩 > 이동 -->
+							<c:if test="${pageDTO.next }">	
+								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
+									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">									  
+									    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}"">
 											<i class="bi bi-chevron-right"></i>
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-										    </svg>
+										    </svg>							
 										</a></li>
-									</c:when>
-									<c:otherwise>
-									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-									    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
-											<i class="bi bi-chevron-right"></i>
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-												<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-										    </svg>
-										</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:if>													
-						</c:forEach> 
-					</c:if> 					
-									
-					<c:if test="${pageDTO.next }">					
-						<li class="paginate_button page-item next" style="margin-right:5px; margin-left:5px; ">
-						<a href="/board/list?pageNum=${pageDTO.endPage+1}&amonut=${pageDTO.cri.amount}" class="page-link">
-						   <i class="bi bi-chevron-double-right"></i>
-						   <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-							   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-							   <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-						   </svg>  
-					    </a></li>						
-					</c:if>	
-					<c:if test="${!pageDTO.next }">					
-						<li class="paginate_button page-item next disabled" style="margin-right:5px; margin-left:5px;">
-						<a href="/board/list?pageNum=${pageDTO.endPage+1}&amonut=${pageDTO.cri.amount}" class="page-link">
-						   <i class="bi bi-chevron-double-right"></i>
-						   <svg xmlns="http://www.w3.org/2000/svg" width="20"  fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-							   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-							   <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-						   </svg>  
-					   </a></li>						
-					</c:if>
-					
-					<c:if test="${pageDTO.next }">	
-						<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
-							    <li class="paginate_button page-item previous" style="margin-left:5px;">
-							    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
-									<i class="bi bi-chevron-bar-right"></i>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
-										<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
-									</svg>						
-								</a></li>
-							</c:if>							
-						</c:forEach> 	
-					</c:if> 
-					<c:if test="${!pageDTO.next }">	
-					    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
-							<c:if test="${pageDTO.cri.pageNum ==num }"> 
-								<c:choose>
-									<c:when test="${num==pageDTO.lastPage}">
-										<li class="paginate_button page-item previous disabled" style="margin-left:5px;">
-									    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
-											<i class="bi bi-chevron-bar-right"></i>
-											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
-												<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
-											</svg>	
-										</a></li>
-									</c:when>
-									<c:otherwise>
+									</c:if>							
+								</c:forEach> 	
+							</c:if> 
+							<c:if test="${!pageDTO.next }">	
+							    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
+										<c:choose>
+											<c:when test="${num==pageDTO.lastPage}">
+												<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
+											    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
+													<i class="bi bi-chevron-right"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+												    </svg>
+												</a></li>
+											</c:when>
+											<c:otherwise>
+											    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
+											    <a class="page-link" href="/board/list?pageNum=${num+1}&amonut=${pageDTO.cri.amount}">
+													<i class="bi bi-chevron-right"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+												    </svg>
+												</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:if>													
+								</c:forEach> 
+							</c:if> 					
+							<!-- 10페이지씩 ≫ 이동 -->				
+							<c:if test="${pageDTO.next }">					
+								<li class="paginate_button page-item next" style="margin-right:5px; margin-left:5px; ">
+								<a href="/board/list?pageNum=${pageDTO.endPage+1}&amonut=${pageDTO.cri.amount}" class="page-link">
+								   <i class="bi bi-chevron-double-right"></i>
+								   <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+									   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+									   <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+								   </svg>  
+							    </a></li>						
+							</c:if>	
+							<c:if test="${!pageDTO.next }">					
+								<li class="paginate_button page-item next disabled" style="margin-right:5px; margin-left:5px;">
+								<a href="/board/list?pageNum=${pageDTO.endPage+1}&amonut=${pageDTO.cri.amount}" class="page-link">
+								   <i class="bi bi-chevron-double-right"></i>
+								   <svg xmlns="http://www.w3.org/2000/svg" width="20"  fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+									   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+									   <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+								   </svg>  
+							   </a></li>						
+							</c:if>
+							<!-- 맨 뒤페이지 >ㅣ 이동 -->
+							<c:if test="${pageDTO.next }">	
+								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-left:5px;">
 									    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
 											<i class="bi bi-chevron-bar-right"></i>
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
-											</svg>	
+											</svg>						
 										</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:if>													
-						</c:forEach> 
-					</c:if> 
-				</ul>
-			</div>				
-		</div>
+									</c:if>							
+								</c:forEach> 	
+							</c:if> 
+							<c:if test="${!pageDTO.next }">	
+							    <c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
+									<c:if test="${pageDTO.cri.pageNum ==num }"> 
+										<c:choose>
+											<c:when test="${num==pageDTO.lastPage}">
+												<li class="paginate_button page-item previous disabled" style="margin-left:5px;">
+											    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
+													<i class="bi bi-chevron-bar-right"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+													</svg>	
+												</a></li>
+											</c:when>
+											<c:otherwise>
+											    <li class="paginate_button page-item previous" style="margin-left:5px;">
+											    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amonut=${pageDTO.cri.amount}">
+													<i class="bi bi-chevron-bar-right"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+													</svg>	
+												</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:if>													
+								</c:forEach> 
+							</c:if> 
+						</ul>
+					</div>
+				</div>
+			</div>	
+		</div>			
 	</div>
-
+	
 </div>
 <!-- /.container-fluid -->
 
@@ -379,7 +416,23 @@
 		}
 	});	
 	
-	
+	function page(testId){
+		  var startPage = testId;
+		  var amount = $("#amount option:selected").val();
+		  console.log("테스트중 현재 설정한 페이지 양 amount",amount);
+		  
+		  if(amount == 10){
+			  var url="/board/list?pageNum="+startPage+"&amount="+amount;
+		  }else if(amount == 25){
+			  var url ="/board/list?pageNum="+startPage+"&amount="+amount;
+		  }else if(amount == 50){
+		      var url="/board/list?pageNum="+startPage+"&amount="+amount;		 
+		  }else{
+		      var url="/board/list?pageNum="+startPage+"&amount="+amount;		 
+		  }
+		  
+		  location.href = url;
+	}
 	
 </script>
 

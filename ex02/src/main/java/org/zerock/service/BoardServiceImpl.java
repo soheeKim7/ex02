@@ -86,7 +86,11 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 	//체크된거 삭제
-	
+	@Override
+	public int checkRemove(List<Long> list) {
+		log.info("checkRemove ..... "+list);
+		return mapper.checkDelete(list);
+	}
 			
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Override
@@ -170,6 +174,8 @@ public class BoardServiceImpl implements BoardService {
 		else		
 			return false;
 	}
+
+
 
 	
 

@@ -35,7 +35,7 @@
 <body id="page-top">
 
 	<!-- Page Wrapper -->
-	<div id="wrapper">
+	<div id="wrapper">   <!-- div 짤림 -->
 
 		<!-- Sidebar -->
 		<ul
@@ -149,10 +149,10 @@
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
-		<div id="content-wrapper" class="d-flex flex-column">
+		<div id="content-wrapper" class="d-flex flex-column">   <!-- div 짤림 -->
 
 			<!-- Main Content -->
-			<div id="content">
+			<div id="content">    <!-- div 짤림 -->
 
 				<!-- Topbar -->
 				<nav

@@ -1,5 +1,8 @@
 package org.zerock.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("board/*")
 @AllArgsConstructor
 public class BoardController {
-	
+//	@Autowired
 	BoardService service;
 	
 	@GetMapping("")
@@ -27,23 +30,38 @@ public class BoardController {
 		
 	}
 	
+//	PageDTO pageDTO =new PageDTO(service.count(), new Criteria());
 	//1. 게시글 목록보여주기
 	@GetMapping("list")   
-	public void list(Model model,Criteria cri) {
+	public void list(Model model,Criteria cri,Integer viewPage) {
 		log.info("url list....");
+		log.info("현재 amount : "+cri.getAmount());
+		log.info("현재 viewPage : "+ viewPage);
+		if(viewPage!=null)
+			cri.setAmount(viewPage);
+		else
+			viewPage=10;
+		
+		log.info("널값시 viewPage 10셋팅 : "+ viewPage);
+		log.info("viewPage 받고 셋팅된 amount : "+cri.getAmount());
+
 		model.addAttribute("list",service.getlist(cri));
 		//페이지 정보 전달
-//		PageDTO pageDTO =new PageDTO(154, cri);
+		PageDTO pageDTO =new PageDTO(service.count(), cri);
 //		log.info("페이지 정보"+pageDTO);
-//		model.addAttribute(pageDTO);  //이렇게 이름 안실어서 보내면 자동으로 보내지는 객체이름의 소문자로 즉 같은 이름인 pageDTO로 간다		
-		model.addAttribute(new PageDTO(service.count(), cri));
+//		model.addAttribute(pageDTO);  //이렇게 이름 안실어서 보내면 자동으로 보내지는 객체이름의 소문자로 즉 같은 이름인 pageDTO로 간다	
+		log.info("그대로 이어지나 테스트 처음1 amount : "+cri.getAmount());
+		model.addAttribute(pageDTO);
 //		model.addAttribute(new PageDTO(144L, cri));
+		log.info("그대로 이어지나 테스트 두번째2 amount : "+cri.getAmount());
+		model.addAttribute("viewPage", viewPage);
+		log.info("보내는 viewPage 값 : "+ viewPage);
 	}
 	
 	//2. 게시글 등록
 	@GetMapping("register")
-	public void register() {
-		
+	public void register(Criteria cri,Model model) {
+		model.addAttribute("cri",cri);
 	}	
 	
 	@PostMapping("register")  
@@ -64,15 +82,17 @@ public class BoardController {
 	
 	//3. 게시글 삭제 (정상동작여부 확인)
 	@PostMapping("remove")  //삭제
-	public String remove(Long bno,RedirectAttributes rttr,String removeKey) {
+	public String remove(Long bno,RedirectAttributes rttr,String removeKey,Criteria cri) {
 		log.info("url remove.......");
-		if(service.remove(bno,removeKey))
+		
+		
+		if(service.remove(bno,removeKey))    //삭제처리
 			rttr.addFlashAttribute("removebno",bno);
 		else
 			rttr.addFlashAttribute("removebno",-1);
-		return "redirect:/board/list"; 
+		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount(); 
 	}	
-	
+		
 	/*
 	@PostMapping("remove")  //삭제
 	public String remove(Long bno,RedirectAttributes rttr) {
@@ -83,31 +103,34 @@ public class BoardController {
 		return "redirect:/board/list"; 
 	}
 	*/
+		
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@GetMapping("modify")
-	public void modify(Long bno,Model model) {
+	public void modify(Long bno,Model model,Criteria cri) {
 		//수정화면 출력 (글번호 받아서 조회한거 보내기)
 		model.addAttribute("board",service.get(bno));
+		model.addAttribute("cri",cri);
 	}
 	
 	@PostMapping("modify")  //수정
-	public String modify(BoardVO vo,RedirectAttributes rttr) {
+	public String modify(BoardVO vo,RedirectAttributes rttr,Criteria cri) {
 		log.info("url modify.......");
 		//db가 정상이니까 이렇게 한건데, 정확하게 하려면, 참일때만 값을 보내야함
 		service.modify(vo);
 		log.info("수정된 글번호"+vo.getBno());
 		rttr.addFlashAttribute("modifybno",vo.getBno());
 		
-		return "redirect:/board/list"; 
+		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount(); 
 	}
 	
 	//5. 게시글 읽기
 	@GetMapping("get") 
-	public void get(Long bno,Model model) {
+	public void get(Long bno,Model model,Criteria cri) {
 		log.info("url get.......");
 		model.addAttribute("board",service.get(bno));		
 		model.addAttribute("click",service.clickCount(bno)+1);
+		model.addAttribute("cri",cri);                          //페이지 정보를 유지하기 위해 보냄
 		service.click(bno);
 		log.info(service.clickCount(bno)+1);
 	}
@@ -182,8 +205,13 @@ public class BoardController {
 	
 	//관리자 삭제!
 	@PostMapping("adminRemove")
-	public void adminRemove() {
+	public String adminRemove(List<Long> checkbno,RedirectAttributes rttr) {
+		log.info("url adminRemove.......");
+		log.info(checkbno);
+//		service.checkRemove(checkbno);
+		rttr.addFlashAttribute("checkbnoRemove",checkbno);
 		
+		return "redirect:/board/adminEdit";
 	}
 	
 	

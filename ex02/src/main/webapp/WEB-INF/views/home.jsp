@@ -19,7 +19,7 @@
 	<br>
 	<a href="/board/last" method="post">최근 작성글 보러가기</a>
 	<br>
-	
+
 	<%--
 	<span class="testCenter" style="text-align: center"><h1>테스트중</h1></span>
 	 
@@ -87,15 +87,18 @@
 	
 	
 	<c:if test="${!pageDTO.prev }">
-				    <li class="paginate_button page-item previous disabled"	style="margin-right:5px; margin-left:5px;">
-			    	<a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
-				    	<i class="bi bi-chevron-double-left"></i>
-				    	<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-							<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-							<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-						</svg> 	
-					</a></li>
-				</c:if>
+	    <li class="paginate_button page-item previous disabled"	style="margin-right:5px; margin-left:5px;">
+    	<a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amonut=${pageDTO.cri.amount}">
+	    	<i class="bi bi-chevron-double-left"></i>
+	    	<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+				<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+			</svg> 	
+		</a></li>
+	</c:if>
 	--%>
+
+
+
 </body>
 </html>

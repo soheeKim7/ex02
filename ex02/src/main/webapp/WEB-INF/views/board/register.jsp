@@ -42,7 +42,7 @@
 				</button>
 				
 			</form>
-			<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:left">
+			<button class="btn btn-primary" onclick="location.href='/board/list?pageNum=${cri.pageNum}&amount=${cri.amount }'" style="float:left">
 				<span class="icon text-white-50">
 				<i class="bi bi-file-earmark-text"></i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">

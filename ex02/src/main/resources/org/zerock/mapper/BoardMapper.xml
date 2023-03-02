@@ -11,7 +11,7 @@
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
 		<!-- select * from tbl_board order by bno desc -->	
 		<![CDATA[		
-			select * from tbl_board where bno<40 order by bno desc
+			select * from tbl_board where bno<70 order by bno desc
 		]]>
 	</select>	
 	<!-- 세미콜론 넣으면 에러!!!  -->

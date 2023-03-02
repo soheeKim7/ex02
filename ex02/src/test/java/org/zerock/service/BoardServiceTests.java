@@ -1,5 +1,8 @@
 package org.zerock.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +52,16 @@ public class BoardServiceTests {
 		log.info("성공여부 : "+service.remove(36L,"abc"));
 	}
 	
-	//
+	//체크된거 삭제
+	@Test
+	public void testCheckRemove() {
+		List<Long> list =new ArrayList<>();
+		list.add(19398670L);
+		list.add(19398669L);
+		list.add(19398668L);
+		list.add(19398667L);
+		log.info("삭제된 행의 개수 : "+service.checkRemove(list));		
+	}
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@Test

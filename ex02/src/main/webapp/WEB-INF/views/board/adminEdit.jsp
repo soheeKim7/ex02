@@ -46,6 +46,17 @@
 				</span> 
 				<span class="text">작성자 게시글 순위보기</span>
 			</button>
+			<form action="/board/adminRemove" method="post">
+				<button class="btn btn-danger" style="float:right;margin-right: 10px;" id="adminRemoveButton">
+					<span class="icon text-white-50">
+					<i class="bi bi-file-earmark-x"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
+		  				<path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
+		  				<path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+					</svg>
+					</span> 
+					<span class="text">체크 한거 삭제하기</span>
+				</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -61,16 +72,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:set var="no1" value="0"></c:set>
-						<c:set var="no2" value="0"></c:set>
-						<c:set var="no3" value="0"></c:set>
+						<c:set var="no" value="0"></c:set>
 						<%--페이지 영역에 변수 선언 --%>
 						<c:forEach items="${list }" var="board">
-							<tr>
-								<form action="/board/adminRemove" method="post">
-									<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no1=no1+1}' />" value="<c:out value='${board.bno }' />">
-									<label for="<c:out value='${checkbno}${no2=no2+1}' />"><c:out value="${no3=no3+1} (${board.bno})" /></label></td>									
-								</form>													
+							<tr>								
+								<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no=no+1}' />" value="<c:out value='${board.bno }' />">
+								<label for="<c:out value='${checkbno}${no}' />"> <c:out value="${no} (${board.bno})" /> </label></td>									
+			</form>													
 								<td><a href="/board/get?bno=${board.bno }"><c:out value="${board.title }" /></a></td>															
 								<td><c:out value="${board.writer }" /></td>
 								<td><c:out value="${board.click}" /></td>		
@@ -103,42 +111,64 @@
 
 <%@include file="../includes/footer.jsp"%>
 <script>
-	var bno="${bno}";  //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
+	var bno="${bno}"; 										    //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
 	console.log("읽어온 쓴글 번호 bno값 확인",bno);
-	if(bno)
-		alert(bno+"번 글이 등록되었습니다.");	
-	//이거 뜨는 알람창 번호 순서 대로 에서 번호???
-	//자바스크립트에서 true 인식 : 값이 있을때 // 주의!! false=>0, null, 빈문자 일때 false!!!
-	//그래서 if(bno) 로 써도 됨 현재는!! 하지만 bno가 0일때는 false!! 주의!!	
-	//if(bno!="")
-	/* 자바스크립트에서!!만 === 쓸수 있음 타입까지 비교하는것
-	   var num1=3; var num2="3";
-	   num1===num2  이건 false 숫자와 문자 비교 
-	   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
-	*/	
 	var modifybno="${modifybno}";
 	console.log("수정한 글 번호 modifybno값 확인",modifybno);
-	if(modifybno)
-		alert(modifybno+"번 글이 수정되었습니다.");
 	var removebno="${removebno}";
-	console.log("수정한 글 번호 removebno값 확인",removebno);
-	if(removebno){
-		if(removebno==-1)
-			alert("키값이 다릅니다.")
-		else
-			alert(removebno+"번 글이 삭제되었습니다.");
-	}
+	console.log("삭제키 성공여부 removebno값 확인",removebno);
 	var adminKey="${adminKey}";
 	console.log("관리자키 비밀번호 성공여부 adminKey값 확인",adminKey);
-	if(adminKey){
-		if(adminKey==-1){
-			alert("비밀번호가 다릅니다.")
-			location.href="/board/list";
-		}else
-			alert("관리자 모드 페이지입니다.");
+	var checkbnoRemove="${checkbnoRemove}";
+	console.log("체크해서 삭제한 bno값들 checkbnoRemove : ",checkbnoRemove);
+	
+	//1. 뒤로가기로 왔는지 확인(history.state) 후, 경고창(alert) 출력여부 선택
+	// -> history.replaceState가 수행된 곳은 null 값이 아니다.
+	if(!history.state){   //(history.state==null)  
+		//history.state가 null일때 경고창을 띄어야 된다.
+		
+		//경고창 출력 부분
+		if(bno)
+			alert(bno+"번 글이 등록되었습니다.");	
+		//이거 뜨는 알람창 번호 순서 대로 에서 번호???
+		//자바스크립트에서 true 인식 : 값이 있을때 // 주의!! false=>0, null, 빈문자 일때 false!!!
+		//그래서 if(bno) 로 써도 됨 현재는!! 하지만 bno가 0일때는 false!! 주의!!	
+		//if(bno!="")
+		/* 자바스크립트에서!!만 === 쓸수 있음 타입까지 비교하는것
+		   var num1=3; var num2="3";
+		   num1===num2  이건 false 숫자와 문자 비교 
+		   num1!==num2  숫자 같지 않거나 타입이 같지 않을때! 하나라도 같지 않을때!
+		*/	
+	
+		if(modifybno)
+			alert(modifybno+"번 글이 수정되었습니다.");
+		
+		if(removebno){
+			if(removebno==-1)
+				alert("키값이 다릅니다.")
+			else
+				alert(removebno+"번 글이 삭제되었습니다.");
+		}
+	
+		if(adminKey){
+			if(adminKey==-1){
+				alert("비밀번호가 다릅니다.")
+				location.href="/board/list";
+			}else
+				alert("관리자 모드 페이지입니다.");
+		}
+		
+		//if(checkbnoRemove)
+		//	alert(checkbnoRemove+"번 글들이 삭제되었습니다.")
+		
 	}
 	
-	console.log(${checkbno}${no=no+1});
+	//2. 뒤로가기 확인을 위해 표시해 두기(history.replaceState( , , ))
+	history.replaceState({},null,null)
+	
+	console.log(${checkbno}${no});
+	
+	
 	
 </script>
 
