@@ -459,11 +459,11 @@
 
 	};
 
-	function selectAll(selectAll)  {
+	function selectAll(allcheckbno)  {
 		const checkboxes = document.getElementsByName('checkbno');
 		  
 		checkboxes.forEach((checkbox) => {
-			checkbox.checked = selectAll.checked
+			checkbox.checked = allcheckbno.checked
 		});
 	};
 	/*

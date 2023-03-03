@@ -5,7 +5,10 @@
 <footer class="sticky-footer bg-white">
 	<div class="container my-auto">
 		<div class="copyright text-center my-auto">
-			<span>Copyright <a href="/board/admin">&copy;</a> Your Website 2020</span>
+			<span>Copyright <a href="javascript:goAdminCheck();" >&copy;</a> Your Website 2020</span>
+			<form action="/board/adminCheck" name="adminForm" method="post">
+				<input type="hidden" name="adminKey" id="adminKey">
+			</form>
 		</div>
 	</div>
 </footer>
@@ -56,6 +59,27 @@
 
 <!-- Page level custom scripts -->
 <script src="/resources/js/demo/datatables-demo.js"></script>
+
+<script>	
+	function goAdminCheck() {
+	    // name이 adminForm인 폼태그
+	    var f = document.adminForm;
+	    console.log("현재 폼에 adminKey 테스트 : ",f.adminKey.value);
+	    
+	    var adminKey=prompt("관리자 모드를 위한 비밀번호를 입력해주세요.");
+		
+	    if(adminKey){
+			console.log(adminKey);
+			f.adminKey.value = adminKey;
+			console.log("폼에 받은 adminKey 넣어주고 테스트 : ",adminKey);
+			 f.submit();
+		};	    	   
+    };
+
+</script>
+
+
+
 
 </body>
 

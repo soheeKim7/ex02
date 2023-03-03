@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Test;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class Test {
-	@org.junit.Test
+public class Test1 {
+	@Test
 	public void testList() {
 		List<String> list = new ArrayList<String>();
 		list.add("지금은");
@@ -25,7 +27,7 @@ public class Test {
 	}
 	
 	
-	@org.junit.Test
+	@Test
 	public void testMap() {
 		Map<String, String> map = new HashMap<>();  //키, 값
 		map.put("T", "TTTT");     //값 넣기
@@ -43,7 +45,7 @@ public class Test {
 		log.info(map);
 	}
 	
-	@org.junit.Test
+	@Test
 	public void testList2() {
 //		String[] list=null;
 		String[] list=new String[] {};
