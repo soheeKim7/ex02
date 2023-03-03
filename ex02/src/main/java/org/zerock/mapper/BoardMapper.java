@@ -66,4 +66,5 @@ public interface BoardMapper {
 	
 	//해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다
 	int click(Long bno);
+	
 }
