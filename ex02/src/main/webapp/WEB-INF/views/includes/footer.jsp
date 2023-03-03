@@ -72,7 +72,7 @@
 			console.log(adminKey);
 			f.adminKey.value = adminKey;
 			console.log("폼에 받은 adminKey 넣어주고 테스트 : ",adminKey);
-			 f.submit();
+			f.submit();
 		};	    	   
     };
 
