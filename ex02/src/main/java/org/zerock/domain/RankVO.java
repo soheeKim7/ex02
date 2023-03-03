@@ -7,5 +7,5 @@ public class RankVO {
 	private String writer;
 	private Long count;
 	private Long ranking;
-
+    
 }
