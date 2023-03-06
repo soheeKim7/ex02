@@ -2321,10 +2321,11 @@ a.btn.disabled, fieldset:disabled a.btn {
 	pointer-events: none
 }
 
+/* 기본 버튼 색깔 수정!! */
 .btn-primary {
 	color: #fff;
-	background-color: #4e73df;
-	border-color: #4e73df
+	background-color: #63CC63;
+	border-color: #63CC63;
 }
 
 .btn-primary:hover {

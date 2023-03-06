@@ -225,6 +225,10 @@ public class BoardController {
 		return "redirect:/board/admin";
 	}
 	
+	@GetMapping("chart")   // board/chart 요청
+	public void chart() {
+		//  /views/board/chart.jsp		
+	}
 	
 	
 }
