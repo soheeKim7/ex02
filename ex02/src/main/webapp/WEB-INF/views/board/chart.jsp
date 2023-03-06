@@ -33,7 +33,6 @@
 		
 		<div class="card-body">
 			<div class="chart-pie pt-4">
-				여기 차트 들어가면 되지? 맞제?
 				 <canvas id="myPieChart"></canvas>	
 			</div>	
 		</div>			
@@ -47,5 +46,17 @@
 
 <%@include file="../includes/footer.jsp"%>
 <script src="/resources/vendor/chart.js/Chart.min.js"></script>
+<script>
+console.log("작성자들 테스트중~ ",${mylabels});
+console.log("개수들 테스트중~ ",${mydata});
+
+var mylabels=${mylabels};
+var mydata=${mydata};
+</script>
+
 <script src="/resources/js/demo/chart-pie-demo.js"></script>
+<script>
+mychart();
+</script>
+
 

@@ -1,6 +1,7 @@
 package org.zerock.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.ChartWriterRank;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
@@ -226,9 +228,37 @@ public class BoardController {
 	}
 	
 	@GetMapping("chart")   // board/chart 요청
-	public void chart() {
+	public void chart(Model model) {
+		ChartWriterRank chartWriterRank=service.chartWriterRank();
+		String mylabels="[";
+		for(String labels : chartWriterRank.getMylabels()) {
+			mylabels += "\""+labels+"\",";
+		}
+		mylabels=mylabels.substring(0, mylabels.length()-1)+"]";
+		log.info("잘 만들어 졌나? : "+mylabels);
+		
+		model.addAttribute("mylabels",mylabels);
+		model.addAttribute("mydata", Arrays.toString(chartWriterRank.getMydata()));
+				
+//		model.addAttribute("chartdata",service.chartWriterRank());
 		//  /views/board/chart.jsp		
 	}
+	
+	@GetMapping("chart2")  //기본화면만 보내고 ajax로 처리하기
+	public void chart2(Model model) {
+//		ChartWriterRank chartWriterRank=service.chartWriterRank();
+//		String orginlabels="[";
+//		for(String labels : chartWriterRank.getMylabels()) {
+//			orginlabels += "\""+labels+"\",";
+//		}
+//		orginlabels=orginlabels.substring(0, orginlabels.length()-1)+"]";
+//		log.info("잘 만들어 졌나? : "+orginlabels);
+//		
+//		model.addAttribute("orginlabels",orginlabels);
+//		model.addAttribute("orgindata", Arrays.toString(chartWriterRank.getMydata()));		
+//		log.info("잘 만들어 졌나? : "+Arrays.toString(chartWriterRank.getMydata()));
+	}
+	
 	
 	
 }

@@ -13,7 +13,9 @@
 	<P>The time on the server is ${serverTime}.</P>
 	<a href="/board/list">목록 보기 가기</a>
 	<br>
-	<a href="/board/chart" >차트 보러가기</a>
+	<a href="/board/chart">차트 보러가기</a>
+	<br>
+	<a href="/board/chart2">차트 보러가기2</a>
 	<br>
 	<a href="/board/register" method="post">등록 보러가기</a>
 	<br>
