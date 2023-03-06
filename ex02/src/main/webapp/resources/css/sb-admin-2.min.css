@@ -153,14 +153,16 @@ sup {
 	top: -.5em
 }
 
+/* a링크 글씨 색깔 변경(글씨는 좀 진하게) */
 a {
-	color: #4e73df;
+	color: #40A940;
 	text-decoration: none;
 	background-color: transparent
 }
 
+/* a링크 호버했을때 진하게 색깔 변경 */
 a:hover {
-	color: #224abe;
+	color: #1E821E;
 	text-decoration: underline
 }
 
@@ -2325,13 +2327,13 @@ a.btn.disabled, fieldset:disabled a.btn {
 .btn-primary {
 	color: #fff;
 	background-color: #63CC63;
-	border-color: #63CC63;
+	border-color: #63CC63;	
 }
-
+/* 기본 버튼 가져가면 색깔 바뀜 */
 .btn-primary:hover {
 	color: #fff;
-	background-color: #2e59d9;
-	border-color: #2653d4
+	background-color: #41A541;
+	border-color: #41A541;	
 }
 
 .btn-primary.focus, .btn-primary:focus {
@@ -4749,21 +4751,21 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	list-style: none;
 	border-radius: .35rem
 }
-
+/* 페이지 넘버 글씨 색깔 변경 */
 .page-link {
 	position: relative;
 	display: block;
 	padding: .5rem .75rem;
 	margin-left: -1px;
 	line-height: 1.25;
-	color: #4e73df;
+	color: #63CC63;
 	background-color: #fff;
 	border: 1px solid #dddfeb
 }
-
+/* 페이지 넘버 글시 가져다되면 변경 */
 .page-link:hover {
 	z-index: 2;
-	color: #224abe;
+	color: #41A541;
 	text-decoration: none;
 	background-color: #eaecf4;
 	border-color: #dddfeb
@@ -4786,11 +4788,12 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	border-bottom-right-radius: .35rem
 }
 
+/* 페이지 넘버 색상 변경 */
 .page-item.active .page-link {
 	z-index: 3;
 	color: #fff;
-	background-color: #4e73df;
-	border-color: #4e73df
+	background-color: #63CC63;
+	border-color: #63CC63;
 }
 
 .page-item.disabled .page-link {
@@ -9247,8 +9250,9 @@ supports ((position:-webkit-sticky ) or (position:sticky )){ .
 	color: #fff !important
 }
 
+/* 기본 글씨 색상 변경 */
 .text-primary {
-	color: #4e73df !important
+	color: #40A940 !important
 }
 
 a.text-primary:focus, a.text-primary:hover {

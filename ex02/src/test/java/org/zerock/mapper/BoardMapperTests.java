@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.WriterRank;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -157,6 +158,13 @@ public class BoardMapperTests {
 	@Test
 	public void testGetListWithPaging() {
 		mapper.getListWithPaging(new Criteria(2,10)).forEach( vo -> log.info(vo));
+	}
+	
+	//5등까지 글쓴이, 등록글 가져오기
+	@Test
+	public void testWriterRank() {
+		mapper.writerRank().forEach(vo -> log.info(vo));
+		log.info(mapper.writerRank());
 	}
 	
 }

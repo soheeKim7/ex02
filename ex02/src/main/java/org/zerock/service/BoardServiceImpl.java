@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.ChartWriterRank;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.RankVO;
+import org.zerock.domain.WriterRank;
 import org.zerock.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -179,6 +181,41 @@ public class BoardServiceImpl implements BoardService {
 			return true;
 		else		
 			return false;
+	}
+	
+	//5등까지 글쓴이, 등록글 가져오기
+	@Override
+	public ChartWriterRank chartWriterRank() {
+		log.info("chartWriterRank....");
+		List<WriterRank> list=mapper.writerRank();
+		//리턴할 객체를 생성
+		ChartWriterRank chart=new ChartWriterRank();				
+		//리턴할 객체에 값 세팅
+		// 문자열 배열과, 숫자 배열 생성
+		String[] mylabels=new String[5];
+		int[] mydata=new int[5];
+		
+//		WriterRank vo=new WriterRank();
+//		for(int i=0;i<4;i++) {
+//			vo=list.get(i);
+//			mylabels[i]=vo.getWriter();
+//			mydata[i]=vo.getCn();
+//		}
+		
+		// 각각의 배열에 값 매핑후 리턴할 객체에 넣어줌
+		int i=0;
+		for(WriterRank vo:list) {
+			mylabels[i]=vo.getWriter();
+			mydata[i]=vo.getCn();
+			i++;
+		}
+		
+		log.info("작성자들 : "+mylabels);
+		log.info("개수들 : "+mydata);
+		chart.setMylabels(mylabels);
+		chart.setMydata(mydata);
+				
+		return chart;
 	}
 
 

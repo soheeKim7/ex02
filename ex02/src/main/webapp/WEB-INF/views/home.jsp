@@ -99,7 +99,6 @@
 			</svg> 	
 		</a></li>
 	</c:if>
-	--%>
 
 	<div class="card-body">
 		<div class="chart-pie pt-4">
@@ -120,7 +119,7 @@
 		<code>/js/demo/chart-pie-demo.js</code>
 		file.
 	</div>
-
+	--%>
 
 </body>
 </html>

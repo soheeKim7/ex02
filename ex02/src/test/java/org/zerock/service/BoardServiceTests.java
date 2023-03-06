@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.zerock.controller.BoardControllerTests;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.ChartWriterRank;
 import org.zerock.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
@@ -131,6 +132,15 @@ public class BoardServiceTests {
 	@Test
 	public void adminCheck() {
 		log.info("성공여부"+service.adminCheck("2222"));
+	}
+	
+	//5등까지 글쓴이, 등록글 가져오기
+	@Test
+	public void testChartWriterRank() {
+		ChartWriterRank chart=service.chartWriterRank();
+		log.info("작성자들 : "+chart.getMylabels());  //배열은 toString 안되어 있어서 주소값이 나옴
+		log.info("개수들 : "+chart.getMydata());      //배열은 toString 안되어 있어서 주소값이 나옴
+		log.info("만든 객체값 전부 확인 : "+chart);
 	}
 
 }

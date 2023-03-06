@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.RankVO;
+import org.zerock.domain.WriterRank;
 
 public interface BoardMapper {
 	
@@ -66,5 +67,8 @@ public interface BoardMapper {
 	
 	//해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다
 	int click(Long bno);
+	
+	//5등까지 글쓴이, 등록글 가져오기
+	List<WriterRank> writerRank();
 	
 }

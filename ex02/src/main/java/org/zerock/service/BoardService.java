@@ -3,8 +3,10 @@ package org.zerock.service;
 import java.util.List;
 
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.ChartWriterRank;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.RankVO;
+import org.zerock.domain.WriterRank;
 
 public interface BoardService {
 	//이 메소드는 서비스 측면에서 생각
@@ -57,5 +59,8 @@ public interface BoardService {
 	
 	//관리자 모드 비밀번호 체크
 	boolean adminCheck(String adminKey);
+	
+	//5등까지 글쓴이, 등록글 가져오기
+	ChartWriterRank chartWriterRank();
 	
 }
