@@ -90,8 +90,7 @@
 					</div>					
 					<div class="row">
 						<div class="col-sm-12">				
-							<form action="/board/adminRemove" method="post">
-								<input type="hidden" name="sendcheckbno" id="sendcheckbno">
+							<form action="/board/adminRemove" method="get" id="adminRemoveForm">
 								<button class="btn btn-danger" style="float:left;margin-bottom: 10px;" id="adminRemoveButton">
 									<span class="icon text-white-50">
 									<i class="bi bi-file-earmark-x"></i>
@@ -105,7 +104,7 @@
 								<table class="table table-bordered" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th><input type="checkbox" name="allcheckbno" id="checkbno" onclick="selectAll(this)">
+											<th><input type="checkbox" name="allcheckbno" id="checkbno" onclick="selectAll(this)"></th>
 											<th>순번 (글번호)</th>							
 											<th>제목</th>
 											<th>작성자</th>
@@ -122,7 +121,7 @@
 												<td><input type="checkbox" name="checkbno" id="<c:out value='${checkbno}${no=no+1}' />" 
 													value="<c:out value='${board.bno }' />" onclick="checkSelectAll()"> </td>
 												<td><label for="<c:out value='${checkbno}${no}' />"> <c:out value="${no} (${board.bno})" /> </label></td>
-																									
+																																				
 												<td><a href="/board/get?bno=${board.bno }&pageNum=${pageDTO.cri.pageNum}&amount=${pageDTO.cri.amount}"><c:out value="${board.title }" /></a></td>															
 												<td><c:out value="${board.writer }" /></td>
 												<td><c:out value="${board.click}" /></td>		
@@ -382,14 +381,18 @@
 <script>
 	var bno="${bno}"; 										    //꼭 "" 안에 ${bno} 써줘야 그 값이 없을때 에러가 안뜸!!! 주의!!!
 	console.log("읽어온 쓴글 번호 bno값 확인",bno);
+	
 	var modifybno="${modifybno}";
 	console.log("수정한 글 번호 modifybno값 확인",modifybno);
-	var removebno="${removebno}";
-	console.log("삭제키 성공여부 removebno값 확인",removebno);
+		
 	var adminKey="${adminKey}";
 	console.log("관리자키 비밀번호 성공여부 adminKey값 확인",adminKey);
+	
 	var checkbnoRemove="${checkbnoRemove}";
 	console.log("체크해서 삭제한 bno값들 checkbnoRemove : ",checkbnoRemove);
+	
+	var removeCount="${removeCount}";
+	console.log("removeCount 값 제대로 받아왔나??",removeCount);
 	
 	//1. 뒤로가기로 왔는지 확인(history.state) 후, 경고창(alert) 출력여부 선택
 	// -> history.replaceState가 수행된 곳은 null 값이 아니다.
@@ -412,13 +415,7 @@
 		if(modifybno)
 			alert(modifybno+"번 글이 수정되었습니다.");
 		
-		if(removebno){
-			if(removebno==-1)
-				alert("키값이 다릅니다.")
-			else
-				alert(removebno+"번 글이 삭제되었습니다.");
-		}
-	
+		
 		if(adminKey){
 			if(adminKey==-1){
 				alert("비밀번호가 다릅니다.")
@@ -427,14 +424,17 @@
 				alert("관리자 모드 페이지입니다.");
 		}
 		
-		//if(checkbnoRemove)
-		//	alert(checkbnoRemove+"번 글들이 삭제되었습니다.")
+		if(checkbnoRemove){
+			alert(checkbnoRemove+"번이 \n삭제되었습니다.")
+		}
 		
 	}
 	
 	//2. 뒤로가기 확인을 위해 표시해 두기(history.replaceState( , , ))
 	history.replaceState({},null,null);
 	
+	
+	//글 목록을 몇개씩 볼건지 설정한 amount, 클릭할시 그 양만큼 변환되게!
 	$("#amount").change(function(e){
 		//on("click",function(e){       })
 		//on("change",function(e){       })					
@@ -442,7 +442,8 @@
 		
 		location.href="/board/admin?pageNum=${pageDTO.cri.pageNum}&amount="+amount+"&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}";
 	});
-		
+	
+	//아래의 체크박스들이 전부 체크시, 맨위 체크박스 자동체크, 하나라도 아래 체크박스 해제시 맨위 체크박스 자동해제
 	function checkSelectAll()  {
 		  // 전체 체크박스
 		  const checkboxes = document.querySelectorAll('input[name="checkbno"]');
@@ -456,9 +457,9 @@
 		  }else {
 		    allcheckbno.checked = false;
 		  }
-
 	};
-
+	
+	//맨위의 전체 체크 선택시 전부 선택되고,해제시 전부 해제됨
 	function selectAll(allcheckbno)  {
 		const checkboxes = document.getElementsByName('checkbno');
 		  
@@ -466,15 +467,26 @@
 			checkbox.checked = allcheckbno.checked
 		});
 	};
-	/*
-	$('input:checkbox[name=checkbno]').each(function (index) {
-		if($(this).is(":checked")==true){
-	    	console.log("체크된 값들 함 봐보자! : ",$(this).val());
-	    	$("#sendcheckbno").val($(this).val());
-	    	console.log("제대로 값 전달됬나?? : ",$("#sendcheckbno").val());
-	    }
+	
+	//삭제 할때 한번더 삭제할건지 경고창 띄우기
+	
+	$("#adminRemoveButton").on("click",function(e){
+		e.preventDefault();
+		var checks = "";
+		$('input[type="checkbox"][name="checkbno"]:checked').each(function(){
+			checks+=$(this).val()+" ";			
+		})
+		console.log("여기서 체크된 값들 보면 어떻게 나오는지 봐보자 : "+checks+"번");
+		
+	    if (confirm(checks+"번을 \n정말로 삭제하겠습니까?") == true){    //확인
+        	$("#adminRemoveForm").submit();
+        }else{   //취소
+        	return false;
+        }
+		
 	});
-	*/
+	
+	
 	
 	
 </script>

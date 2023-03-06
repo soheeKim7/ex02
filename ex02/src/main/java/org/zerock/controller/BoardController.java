@@ -82,6 +82,8 @@ public class BoardController {
 			rttr.addFlashAttribute("removebno",-1);
 		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount(); 
 	}	
+	
+
 		
 	/*
 	@PostMapping("remove")  //삭제
@@ -204,12 +206,21 @@ public class BoardController {
 //	}
 	
 	//관리자 삭제!
-	@PostMapping("adminRemove")
-	public String adminRemove(Long[] checkbno,RedirectAttributes rttr) {
+//	@PostMapping("adminRemove")
+	@RequestMapping("adminRemove")
+	public String adminRemove(Long[] checkbno,RedirectAttributes rttr,Criteria cri) {
 		log.info("url adminRemove.......");
-		log.info(checkbno);
+		log.info("삭제된 bno들 봐보자 배열이 어떻게 찍히려나?"+checkbno);
+		String checkbnos="";
+		for(int i=0;i<checkbno.length-1;i++) {
+			checkbnos+=checkbno[i]+", ";
+		}
+		log.info("마지막 합치기 전 : "+checkbnos);
+		checkbnos+=checkbno[checkbno.length-1];
+		log.info("마지막 합체한 후! : "+checkbnos);		
+				
 		service.checkRemove(checkbno);
-		rttr.addFlashAttribute("checkbnoRemove",checkbno);
+		rttr.addFlashAttribute("checkbnoRemove",checkbnos);
 		
 		return "redirect:/board/admin";
 	}

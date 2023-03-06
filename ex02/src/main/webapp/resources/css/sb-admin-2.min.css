@@ -9551,9 +9551,10 @@ opacity
 	animation-timing-function: opacity cubic-bezier(0, 1, .4, 1)
 }
 
+/* 색상 수정함.. 근데 왜 적용이 안되지? ㅜㅜ */
 .bg-gradient-primary {
-	background-color: #4e73df;
-	background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+	background-color: #63CC63;
+	background-image: linear-gradient(180deg, #63CC63 25%, #006400 100%);
 	background-size: cover
 }
 
