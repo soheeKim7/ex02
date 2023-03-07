@@ -33,7 +33,7 @@
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
-				<button class="btn btn-primary" style="float:left; margin-right: 10px;" id="showtime1">
+				<button class="btn btn-primary" style="float:left; margin-right: 10px; display: none;" id="showtime1">
 					<span class="icon text-white-50">
 						<i class="bi bi-recycle"></i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
@@ -66,7 +66,7 @@
 
 		<div class="card-body">
 			<div class="table-responsive">
-				<button class="btn btn-primary" style="float:left; margin-right: 10px;" id="showtime2">
+				<button class="btn btn-primary" style="float:left; margin-right: 10px; display: none;" id="showtime2">
 					<span class="icon text-white-50">
 						<i class="bi bi-recycle"></i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
@@ -105,6 +105,7 @@
 
 <script>
 	$(document).ready(function() {
+		updateChart1();
 		$("#showtime1").on("click", function(e) {
 			console.log("갱신 실행");
 			e.preventDefault(); //버튼에 걸린 이벤트 처리 다 취소
@@ -113,10 +114,11 @@
 		$("#stop1").on("click", function(e) {
 			console.log("그만 멈춰!");
 			e.preventDefault();
+			$("#showtime1").show("slow");
 			//갱신 멈춤		
 			clearTimeout(timerID1); //타이머 중지
 		});
-		
+		updateChart2();
 		$("#showtime2").on("click", function(e) {
 			console.log("갱신 실행");
 			e.preventDefault(); //버튼에 걸린 이벤트 처리 다 취소
@@ -125,6 +127,7 @@
 		$("#stop2").on("click", function(e) {
 			console.log("그만 멈춰!");
 			e.preventDefault();
+			$("#showtime2").show("slow");
 			//갱신 멈춤		
 			clearTimeout(timerID2); //타이머 중지
 		});

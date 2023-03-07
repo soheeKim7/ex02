@@ -33,7 +33,7 @@
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
-				<button class="btn btn-primary" style="float:left; margin-right: 10px;" id="showtime1">
+				<button class="btn btn-primary" style="float:left; margin-right: 10px; display: none;" id="showtime">
 					<span class="icon text-white-50">
 						<i class="bi bi-recycle"></i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
@@ -42,7 +42,7 @@
 					</span> 
 					<span class="text">자동갱신</span>
 				</button>
-				<button class="btn btn-primary" style="float:left" id="stop1">
+				<button class="btn btn-primary" style="float:left" id="stop">
 					<span class="icon text-white-50">
 						<i class="bi bi-exclamation-triangle"></i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
@@ -72,15 +72,18 @@
 
 <script>
 	$(document).ready(function(){
-		$("#showtime1").click(function(e) {
+		updateChart();
+		
+		$("#showtime").click(function(e) {
 			console.log("갱신 실행");
 			e.preventDefault(); //버튼에 걸린 이벤트 처리 다 취소
 			updateChart();
 		});
 
-		$("#stop1").click(function(e) {
+		$("#stop").click(function(e) {
 			console.log("그만 멈춰!");
 			e.preventDefault();
+			$("#showtime").show("slow");
 			//갱신 멈춤		
 			clearTimeout(timerID); //타이머 중지
 		});
