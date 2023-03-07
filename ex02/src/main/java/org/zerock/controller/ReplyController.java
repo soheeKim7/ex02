@@ -1,5 +1,7 @@
 package org.zerock.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,14 +47,24 @@ public class ReplyController {
 		return service.modify(vo)==1 ? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR) ;   
 	}
 	
-//	//삭제
-//	@DeleteMapping("/{rno}")
-//	
-//	//댓글 1개 조회
-//	@GetMapping("{rno}")
-//		
-//	//해당글 댓글 리스트 조회
-//	@GetMapping("/pages/{bno}")
+	//삭제
+	@DeleteMapping(value="/{rno}", produces=MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> remove(@PathVariable("rno")Long rno){
+		return service.remove(rno)==1 ? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR) ;  
+	}	
+	
+	//댓글 1개 조회
+	@GetMapping("{rno}")    //produces 로 plain 안정해주면, 자동으로 json으로 읽음
+	public ReplyVO get(@PathVariable("rno")Long rno){		
+		return service.get(rno);
+	}	
+		
+	//해당글 댓글 리스트 조회
+	@GetMapping("/pages/{bno}")
+	public List<ReplyVO> getList(@PathVariable("bno")Long bno){		
+		return service.getList(bno);
+	}
+	
 	
 	
 }
