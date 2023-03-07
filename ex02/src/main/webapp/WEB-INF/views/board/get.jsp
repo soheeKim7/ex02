@@ -76,7 +76,7 @@
 			</div> <br>		
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h5 class="m-0 font-weight-bold text-primary">전체 댓글 10 개 
+					<h5 class="m-0 font-weight-bold text-primary">전체 댓글 <span id="replycount"></span>개 
 						<label>
 							<select class="form-control form-control-sm" >																			
 								<option>등록순</option>
@@ -137,6 +137,7 @@
 		replyService.getList(${board.bno},function(data){
 			//data에 댓글 내용 리스트
 			len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
+			
 			var htmlStr="";
 			for(var i=0;i<len;i++){				
 				htmlStr+="<div class='form-group row'>"+
@@ -162,6 +163,8 @@
 			console.log(data);
 			console.log("잘만들어졌나",htmlStr);
 			$("#reply").html(htmlStr);
+			
+			$("#replycount").text(len);
 			
 		});
 		
