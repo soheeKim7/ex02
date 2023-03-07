@@ -13,6 +13,8 @@
 	<P>The time on the server is ${serverTime}.</P>
 	<a href="/board/list">목록 보기 가기</a>
 	<br>
+	<a href="/board/barChart">바차트 보러가기</a>
+	<br>
 	<a href="/board/chart">차트 보러가기</a>
 	<br>
 	<a href="/board/chart2">차트 보러가기2</a>
@@ -121,6 +123,23 @@
 		<code>/js/demo/chart-pie-demo.js</code>
 		file.
 	</div>
+	
+	
+	
+	<div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+        </div>
+        <div class="card-body">
+            <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="myBarChart" width="521" height="320" style="display: block; width: 521px; height: 320px;" class="chartjs-render-monitor"></canvas>
+            </div>
+            <hr>
+            Styling for the bar chart can be found in the
+            <code>/js/demo/chart-bar-demo.js</code> file.
+        </div>
+    </div>
+	
 	--%>
 
 </body>

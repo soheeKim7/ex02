@@ -259,6 +259,11 @@ public class BoardController {
 //		log.info("잘 만들어 졌나? : "+Arrays.toString(chartWriterRank.getMydata()));
 	}
 	
+	@GetMapping("barChart")
+	public void barChart() {
+		
+	}
+	
 	
 	
 }

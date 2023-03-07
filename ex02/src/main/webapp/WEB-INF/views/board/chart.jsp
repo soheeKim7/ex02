@@ -29,8 +29,7 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">차트보기</h4>			
-		</div>
-		
+		</div>		
 		<div class="card-body">
 			<div class="chart-pie pt-4">
 				 <canvas id="myPieChart"></canvas>	
@@ -50,13 +49,13 @@
 console.log("작성자들 테스트중~ ",${mylabels});
 console.log("개수들 테스트중~ ",${mydata});
 
-var mylabels=${mylabels};
-var mydata=${mydata};
+var mylabels1=${mylabels};
+var mydata1=${mydata};
 </script>
 
 <script src="/resources/js/demo/chart-pie-demo.js"></script>
 <script>
-mychart();
+mychart1();
 </script>
 
 
