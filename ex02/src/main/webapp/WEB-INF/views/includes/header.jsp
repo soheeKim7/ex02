@@ -45,17 +45,37 @@
 					</svg>
 				</div>
 				<div class="sidebar-brand-text mx-3">
-					My Board <sup>SoHee</sup>
+					My Board <sup>So Hee</sup>
 				</div>
 			</a>
 
 			<!-- Divider -->
-			<hr class="sidebar-divider my-0">
+			<hr class="sidebar-divider">
 
-			<!-- Nav Item - Dashboard -->
+			<!-- Heading -->
+			<div class="sidebar-heading">Board</div>
+			
+			<!-- Nav Item - list -->
+			<!-- <li class="nav-item active">  클릭시 active 되게 굵은 글씨 표기-->
 			<li class="nav-item">
-				<a class="nav-link" href="/board/list">
-					<i class="fas fa-fw fa-tachometer-alt"></i> <span>게시글 목록</span>
+				<a class="nav-link" href="/board/list" >
+					<i class="bi bi-file-earmark-text"></i>
+	                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+		  				<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+		 			    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+					</svg>
+					<span>&nbsp;게시글 목록</span>
+				</a>
+			</li>
+			<!-- Nav Item - register -->
+			<li class="nav-item">
+				<a class="nav-link" href="/board/register" >
+					<i class="bi bi-pencil-square"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+		  				<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+		 			    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+					</svg>
+					<span>&nbsp;게시글 등록</span>
 				</a>
 			</li>
 
@@ -63,80 +83,103 @@
 			<hr class="sidebar-divider">
 
 			<!-- Heading -->
-			<div class="sidebar-heading">Interface</div>
+			<div class="sidebar-heading">Rank & Chart</div>
 
-			<!-- Nav Item - Pages Collapse Menu -->
+			<!-- Nav Item - rank -->
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> 
-					<i class="fas fa-fw fa-cog"></i> 
-					<span>Components</span>
+				<a class="nav-link" href="/board/rank" >
+					<i class="bi bi-list-ol"></i>                
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-list-ol" viewBox="0 0 16 16">
+	  					<path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
+	  					<path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z"/>
+					</svg>
+					<span>&nbsp;작성자 순위 목록</span>	
 				</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"	data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Custom Components:</h6>
-						<a class="collapse-item" href="buttons.html">Buttons</a> 
-						<a class="collapse-item" href="cards.html">Cards</a>
-					</div>
-				</div>
+			</li>	
+			<!-- Nav Item - Charts -->
+			<li class="nav-item">
+				<a class="nav-link" href="/board/chart" >
+					<i class="bi bi-bar-chart-line"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+						<path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+					</svg> 
+					<span>&nbsp;정적 도넛&막대 차트</span>	
+				</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/board/chart2" >
+					<i class="bi bi-graph-up-arrow"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"/>
+					</svg> 
+					<span>&nbsp;동적 도넛&막대 차트</span>	
+				</a>
+			</li>
+			
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">Issue</div>
+			
+			<!-- Nav Item - 오늘의 게시글 목록,개수/전체글개수 -->
+			<li class="nav-item">
+				<a class="nav-link" href="" > 
+					<i class="bi bi-table"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+						<path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+					</svg> 
+					<span>&nbsp;오늘의 게시글 목록</span> 
+				</a>
+			</li>
+			
+			<!-- Nav Item - last 최신 작성된 글제목 -->
+			<li class="nav-item">
+				<a class="nav-link" href="/board/last" > 
+					<i class="bi bi-table"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+						<path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+					</svg> 
+					<span>&nbsp;최신 작성된 글제목</span> 
+				</a>
+			</li>
+			
+			<!-- Divider -->
+			<hr class="sidebar-divider">			
+			
+			<!-- Nav Item - admin 관리자계정 -->
+			<li class="nav-item">
+				<a class="nav-link" href="javascript:goAdminCheck();" style="padding-bottom: 10px; padding-top: 10px;">
+					<i class="bi bi-gear"></i>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+						<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+						<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+					</svg> 
+					<span>&nbsp;관리자 모드</span>
+				</a>
+			</li>
+			
 
 			<!-- Nav Item - Utilities Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"	aria-expanded="true" aria-controls="collapseUtilities"> 
-				<i class="fas fa-fw fa-wrench"></i> 
-				<span>Utilities</span>
-			</a>
-				<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Custom Utilities:</h6>
-						<a class="collapse-item" href="utilities-color.html">Colors</a>
-						<a class="collapse-item" href="utilities-border.html">Borders</a>
-						<a class="collapse-item" href="utilities-animation.html">Animations</a>
-						<a class="collapse-item" href="utilities-other.html">Other</a>
-					</div>
-				</div>
+			<!--
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"	aria-expanded="true" aria-controls="collapseUtilities"> 
+					<i class="fas fa-fw fa-wrench"></i> 
+					<span>Utilities</span>
+				</a>				
 			</li>
-
-			<!-- Divider -->
-			<hr class="sidebar-divider">
-
-			<!-- Heading -->
-			<div class="sidebar-heading">Addons</div>
-
+			-->
+			
 			<!-- Nav Item - Pages Collapse Menu -->
+			<!--
 			<li class="nav-item">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages"> 
 					<i class="fas fa-fw fa-folder"></i> 
 					<span>Pages</span>
-				</a>
-				<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Login Screens:</h6>
-						<a class="collapse-item" href="login.html">Login</a>
-						<a class="collapse-item" href="register.html">Register</a>
-						<a class="collapse-item" href="forgot-password.html">Forgot	Password</a>
-						<div class="collapse-divider"></div>
-						<h6 class="collapse-header">Other Pages:</h6>
-						<a class="collapse-item" href="404.html">404 Page</a>
-						<a class="collapse-item" href="blank.html">Blank Page</a>
-					</div>
-				</div>
+				</a>				
 			</li>
-
-			<!-- Nav Item - Charts -->
-			<li class="nav-item">
-				<a class="nav-link" href="charts.html">
-					<i class="fas fa-fw fa-chart-area"></i> 
-					<span>Charts</span>	
-				</a>
-			</li>
-
-			<!-- Nav Item - Tables -->
-			<li class="nav-item active">
-				<a class="nav-link" href="tables.html"> 
-					<i class="fas fa-fw fa-table"></i> 
-					<span>Tables</span> 
-				</a>
-			</li>
+			-->
+			
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">

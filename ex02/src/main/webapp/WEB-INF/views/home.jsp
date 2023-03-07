@@ -11,20 +11,9 @@
 	<h1>Hello world!</h1>
 
 	<P>The time on the server is ${serverTime}.</P>
-	<a href="/board/list">목록 보기 가기</a>
+	<h4><a href="/board/list">목록 보기 가기</a></h4>
 	<br>
 	<a href="/board/barChart">바차트 보러가기</a>
-	<br>
-	<a href="/board/chart">차트 보러가기</a>
-	<br>
-	<a href="/board/chart2">차트 보러가기2</a>
-	<br>
-	<a href="/board/register" method="post">등록 보러가기</a>
-	<br>
-	<a href="/board/rank" method="post">순위 보러가기</a>
-	<br>
-	<a href="/board/last" method="post">최근 작성글 보러가기</a>
-	<br>
 
 
 	<%--
@@ -174,7 +163,32 @@
 	<hr>
 	
 	
-		
+	관리자 모드로 이동하기
+	<form action="/board/adminCheck" method="post" id="adminForm">	
+		<input type="hidden" name="adminKey" id="adminKey">
+		<button class="btn btn-success" style="float:right" id="adminButton">
+			<span class="icon text-white-50">
+				<i class="bi bi-file-person"></i>			
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-person" viewBox="0 0 16 16">
+				  <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+				  <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				</svg>
+			</span> 
+			<span class="text">관리자 모드로 이동하기</span>
+		</button>
+	</form>
+	
+	작성자 게시글 순위보기
+	<button class="btn btn-primary" onclick="location.href='/board/rank'" style="float:right;margin-right: 10px;">
+		<span class="icon text-white-50">
+			<i class="bi bi-list-ol"></i>                
+			<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-list-ol" viewBox="0 0 16 16">
+ 					<path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
+ 					<path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z"/>
+			</svg>
+			</span> 
+		<span class="text">작성자 게시글 순위보기</span>
+	</button>	
 				
 	
 	--%>

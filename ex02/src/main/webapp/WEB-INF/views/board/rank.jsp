@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h4 class="m-0 font-weight-bold text-primary">게시글 목록보기</h4>
+			<h4 class="m-0 font-weight-bold text-primary">작성자 순위보기</h4>
 			<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:right">
 				<span class="icon text-white-50">
 				<i class="bi bi-file-earmark-text"></i>
