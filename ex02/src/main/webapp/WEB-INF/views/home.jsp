@@ -140,6 +140,43 @@
         </div>
     </div>
 	
+	
+	댓글 삭제하기 버튼
+	<button class="btn btn-danger">
+			<span class="icon text-white-50">
+			<i class="bi bi-chat-left"></i>
+			<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
+				<path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+			</svg>
+			</span>
+			<span class="text">댓글 삭제하기</span>
+	</button>
+	
+	
+	댓글 목록
+	<div class="form-group row">
+		<div class="col-sm-1-5">
+			버튼 비교해보쟈
+		</div>
+		<div class="col-sm-7">
+			댓글 내용 입력중이거덩? 근데 이쁘게 보였으면 좋겠거덩?? 어떻게 해야 이쁘려나?? 테스트 중이야!!
+		</div>
+		<div class="col-sm-3-5">
+			23년03월08일 오전 00:50:07
+			<button class="btn btn-danger" style="float:right">
+				<span class="text">삭제</span>
+			</button>
+			<button class="btn btn-primary" style="margin-right: 10px; float:right">
+				<span class="text">수정</span>
+			</button>
+		</div>			
+	</div>
+	<hr>
+	
+	
+		
+				
+	
 	--%>
 
 </body>

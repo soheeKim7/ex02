@@ -69,12 +69,49 @@
 						<span class="text">삭제하기</span>
 					</button>		
 				</form>	
-			</div>	<br>
-			<div class="card-body">
-			여기 아닐까
-			</div>		
+			</div> <br><br><br>		
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h5 class="m-0 font-weight-bold text-primary">전체 댓글 10 개</h5>
+				</div>
+				<div class="card-body">							
+		           <span id="reply"></span>			
+		        </div>
+				<%-- <b>1. 테스트하고 잇는데??</b> -작성자(20년3월7일 4시31분) <button class="btn btn-success btn-circle">수정</button><br>   --%>        	
+			</div>
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h5 class="m-0 font-weight-bold text-primary">댓글 등록</h5>
+				</div>
+				<div class="card-body">		
+					<div class="form-group row">
+						<div class="col-sm-6" >
+							<input type="text" class="form-control form-control-user" placeholder="닉네임">
+						</div>
+						<div class="col-sm-6" >
+							<input type="text" class="form-control form-control-user" placeholder="비밀번호">
+						</div>
+					</div>
+					<div class="form-group">
+						<textarea rows="2" class="form-control" name="reply" placeholder="댓글 내용을 써주세요."></textarea>
+					</div>
+					<button class="btn btn-primary"style="margin-right: 10px; float:right">
+						<span class="icon text-white-50">
+							<i class="bi bi-chat-left-text"></i>
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
+								<path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+								<path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+							</svg>
+						</span> 
+						<span class="text">댓글 등록하기</span>
+					</button>
+				</div>
+			</div>
+		</div>
 	</div>
-
+	
+	
+	
 </div>
 <!-- /.container-fluid -->
 
@@ -84,69 +121,133 @@
 <%@include file="../includes/footer.jsp"%>
 <script src="/resources/js/reply.js?ver=1"></script>
 
+<script> 
+	$(document).ready(function(){
+		replyService.getList(${board.bno},function(data){
+			//data에 댓글 내용 리스트
+			len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
+			var htmlStr="";
+			for(var i=0;i<len;i++){				
+				htmlStr+="<div class='form-group row'>"+
+							"<div class='col-sm-1-5'>"+
+								(i+1)+". &nbsp;&nbsp;"+data[i].replyer +
+							"</div>"+
+							"<div class='col-sm-7'>"+
+								data[i].reply +
+							"</div>"+
+							"<div class='col-sm-3-5'>"+
+								data[i].updatedate +
+								"<button class='btn btn-danger' style='float:right'>"+									
+									"<span class='text'>삭제</span>"+
+								"</button>"+
+								"<button class='btn btn-primary' style='margin-right: 10px; float:right'>"+									
+									"<span class='text'>수정</span>"+
+								"</button>"+
+							"</div>"+			
+						"</div>"+
+						"<hr>";				
+			}
+			
+			console.log(data);
+			console.log("잘만들어졌나",htmlStr);
+			$("#reply").html(htmlStr);
+			
+		});
+		
+		
+		
+		
+	});
+
+
+</script>
+
+
+
+
 <script>
 	//댓글등록 테스트
 	/*
 	replyService.add({reply:"테스트...내용..",replyer:"작성자...",bno:1184},function(data){   
 		alert("결과 확인 : "+data);
 	});
-	*/
+	
 	
 	replyService.mytest(3,4);    //콘솔로그에 합은 7이다
-
-
-
+	
+	//해당 글의 댓글 목록 리스트
+	replyService.getList(1182,function(data){
+		alert("댓글 목록 리스트 성공");
+		console.log("목록",data);
+	});
+	
+	//하나의 댓글
+	replyService.get(52,function(data){
+		alert("하나 댓글 성공");
+		console.log("52번 댓글",data);
+	});
+	
+	//댓글 수정
+	replyService.modify({rno:52,reply:"4교시",replyer:"오호라"},function(data){
+		alert("댓글 수정 성공");
+		console.log("52번 댓글 수정",data);
+	});
+	
+	//댓글 삭제
+	replyService.remove(51,function(data){
+		alert("댓글 삭제 성공",data);
+	});
+	*/
 
 
 </script>
 
 </script>
 <script>
-/* 확인창을 이용한 삭제처리
-$(document).ready(function(){
-	$("#removeButton").on("click",function(e){
-		//1. 버튼 이벤트(submit)금지
-		e.preventDefault();
-		//2. 확인창 띄워서 확인받기
-		var check=confirm("정말 삭제하시겠습니까?")
-		//3. 확인되었으면 submit 처리
-		if(check){
-			$("#removeForm").submit();
-		}		
-	});	
-});
-*/
-/*
-$(document).ready(function(){
-	$("#removeButton").on("click",function(e){
-		//1. 버튼 이벤트(submit)금지
-		e.preventDefault();
-		//2. 입력창으로 값을 받고 같다면 삭제처리		
-		var removekey=prompt("삭제를 위한 키값을 입력해주세요.")
-		//3. 확인되었으면 submit 처리
-		if(removekey==1234){
-			$("#removeForm").submit();
-		}else{
-			alert("키값이 틀렸습니다.")
-		}
-	});	
-});
-*/
-$(document).ready(function(){
-	$("#removeButton").on("click",function(e){
-		//1. 버튼 이벤트(submit)금지
-		e.preventDefault();
-		//2. 입력창으로 값을 받고		
-		var removeKey=prompt("삭제를 위한 키값을 입력해주세요.");
-		if(removeKey){
-			//3. 그 내용도 같이 보내준다.
-			$("#removeKey").val(removeKey);
-			$("#removeForm").submit();
-			//removekey 값을 보내면 처리는 서버에서
-		}
-	});	
-});
-
+	/* 확인창을 이용한 삭제처리
+	$(document).ready(function(){
+		$("#removeButton").on("click",function(e){
+			//1. 버튼 이벤트(submit)금지
+			e.preventDefault();
+			//2. 확인창 띄워서 확인받기
+			var check=confirm("정말 삭제하시겠습니까?")
+			//3. 확인되었으면 submit 처리
+			if(check){
+				$("#removeForm").submit();
+			}		
+		});	
+	});
+	*/
+	/*
+	$(document).ready(function(){
+		$("#removeButton").on("click",function(e){
+			//1. 버튼 이벤트(submit)금지
+			e.preventDefault();
+			//2. 입력창으로 값을 받고 같다면 삭제처리		
+			var removekey=prompt("삭제를 위한 키값을 입력해주세요.")
+			//3. 확인되었으면 submit 처리
+			if(removekey==1234){
+				$("#removeForm").submit();
+			}else{
+				alert("키값이 틀렸습니다.")
+			}
+		});	
+	});
+	*/
+	$(document).ready(function(){
+		$("#removeButton").on("click",function(e){
+			//1. 버튼 이벤트(submit)금지
+			e.preventDefault();
+			//2. 입력창으로 값을 받고		
+			var removeKey=prompt("삭제를 위한 키값을 입력해주세요.");
+			if(removeKey){
+				//3. 그 내용도 같이 보내준다.
+				$("#removeKey").val(removeKey);
+				$("#removeForm").submit();
+				//removekey 값을 보내면 처리는 서버에서
+			}
+		});	
+	});
 
 
 </script>

@@ -5,9 +5,9 @@ console.log("댓글관련 자바스크립트를 실행합니다.");
 
 var replyService=(function(){
 	
-	//댓글 등록
+	//댓글 등록 (필요한건 댓글정보(객체))
 	function add(reply,callback,error){
-		console.log("리플등록 js 실행");
+		console.log("댓글 등록 js 실행");
 		$.ajax({  
 			type: "post" ,
 			url: "/replies/new" ,
@@ -20,24 +20,92 @@ var replyService=(function(){
 			error: function(xhr,status,er){   //xhr,status,er
 				if(error)
 					error();
-			}
-			
+			}			
 		});
 	};
 	
-	function mytest(num1,num2){
-		console.log("합은 "+(num1+num2)+"이다");
+	//댓글 수정 (필요한건 댓글정보)
+	function modify(reply,callback,error){
+		console.log("댓글 수정 js 실행");
+		$.ajax({  
+			type: "put" ,
+			url: "/replies/"+reply.rno ,
+			data: JSON.stringify(reply) ,
+			contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)          
+					callback(data);         
+			} ,
+			error: function(xhr,status,er){  
+				if(error)
+					error();
+			}			
+		});
+	};
 		
+	//댓글 삭제
+	function remove(rno,callback,error){
+		console.log("댓글 삭제 js 실행");
+		$.ajax({  
+			type: "delete" ,
+			url: "/replies/"+rno ,
+			//data: 보내는 데이터 없음
+			//contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)            
+					callback(data);         
+			} ,
+			error: function(xhr,status,er){   
+				if(error)
+					error();
+			}			
+		});
+	};		
+	
+	//하나의 댓글 가져오기 (필요한건 댓글번호)
+	function get(rno,callback,error){
+		console.log("하나의 댓글가져오기 js 실행");
+		$.ajax({  
+			type: "get" ,
+			url: "/replies/"+rno ,
+			//data: 보내는 데이터 없음
+			//contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)            
+					callback(data);         
+			} ,
+			error: function(xhr,status,er){   
+				if(error)
+					error();
+			}			
+		});
+	};	
+	
+	//해당글의 댓글목록 가져오기 (필요한건 글번호)
+	function getList(bno,callback,error){
+		console.log("댓글 목록가져오기 js 실행");
+		$.ajax({  
+			type: "get" ,
+			url: "/replies/pages/"+bno ,
+			//data: 보내는 데이터 없음
+			//contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)           
+					callback(data);       
+			} ,
+			error: function(xhr,status,er){  
+				if(error)
+					error();
+			}			
+		});
+	};
+		
+	
+	function mytest(num1,num2){
+		console.log("합은 "+(num1+num2)+"이다");		
 	};
 	
-	
-	
-	
-	function get(){};
-	
-	
-	
-	return {add:add, get:get, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
+	return {add:add, getList:getList, get:get, modify:modify, remove:remove, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
 })();
 
 //replyService.add(reply,callback,error);   //callback함수
