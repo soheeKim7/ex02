@@ -99,13 +99,42 @@ var replyService=(function(){
 			}			
 		});
 	};
+	
+	function displayTime( boardDateStr,replyDateStr ){
+		var boardDate=new Date(boardDateStr);
+		//console.log("게시글 작성시간",boardDate);
+		var replyDate=new Date(replyDateStr);
+		var gap=replyDate-boardDate;
+		//console.log("시간차 : ",gap);
+				//시*분*초*ms
+		if(gap < 24*60*60*1000){  //24시간 이내라면
+			//오전 11:38:30
+			var hh=replyDate.getHours();  //24시간 단위
+			var hh12= hh>12 ? hh-12: hh;
+			var ampm= hh>=12 ? '오후 ' : '오전 ';
+			var mi=replyDate.getMinutes();
+			var ss=replyDate.getSeconds();
+			//var value=hh+":"+mi+":"+ss;
+			//var value=(hh>9? '':'0')+hh+":"+(mi>9? '':'0')+mi+":"+(ss>9? '':'0')+ss;
+			//var value= ampm+(hh12>9? '':'0')+hh12+":"+mi+":"+(ss>9? '':'0')+ss;
+			var value=[ampm,(hh12>9? '':'0'),hh12,":",mi,":",(ss>9? '':'0'),ss].join('');
+			//var value2=value.join('');  // join 메소드는 배열의 요소를 합쳐서 문자열로!
+										// ''파라미터는 합칠때 사이에 넣어줄 문자 (아무것도 없으니까 그냥 합친거!)
+			return value;
+		}else{
+			//var day=["일","월","화","수","목","금","토"];
+			var day = new Array('일', '월', '화', '수', '목', '금', '토');
+			return [replyDate.getFullYear(),"/", replyDate.getMonth()>10? '':0,replyDate.getMonth()+1,"/",
+			replyDate.getDate()>9? '':0,replyDate.getDate(),"/",day[replyDate.getDay()] ].join('');		
+		}
+	};
 		
 	
 	function mytest(num1,num2){
 		console.log("합은 "+(num1+num2)+"이다");		
 	};
 	
-	return {add:add, getList:getList, get:get, modify:modify, remove:remove, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
+	return {add:add, getList:getList, get:get, modify:modify, remove:remove, time:displayTime, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
 })();
 
 //replyService.add(reply,callback,error);   //callback함수

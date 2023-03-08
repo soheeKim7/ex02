@@ -83,9 +83,12 @@
 								<option>최신순</option>									
 							</select>	
 						</label>
+						<button class="btn btn-primary" style="margin-left: 5px;" id="newreply">
+							<span class="text">새로고침</span>
+						</button>
 					</h5>
 				</div>
-				<div class="card-body">							
+				<div class="card-body" id="replylist">						
 		           <span id="reply"></span>			
 		        </div>
 				<%-- <b>1. 테스트하고 잇는데??</b> -작성자(20년3월7일 4시31분) <button class="btn btn-success btn-circle">수정</button><br>   --%>        	
@@ -140,32 +143,38 @@
 			replyService.getList(${board.bno},function(data){
 				//data에 댓글 내용 리스트
 				len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
+				//console.log("게시글 작성시간 확인","${board.regdate}");
 				
 				var htmlStr="";
-				for(var i=0;i<len;i++){				
+				for(var i=0;i<len;i++){			
 					htmlStr+="<div class='form-group row'>"+
-								"<div class='col-sm-1-5'>"+
-									(i+1)+". &nbsp;&nbsp;"+data[i].replyer +
+								"<div class='col-sm-2'>"+								
+									"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
 								"</div>"+
-								"<div class='col-sm-7'>"+
-									data[i].reply +
+								"<div class='col-sm-7-7'>"+
+									"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+										data[i].reply +
+									"</textarea>"+
 								"</div>"+
-								"<div class='col-sm-3-5'>"+
-									data[i].updatedate +
-									"<button class='btn btn-danger' style='float:right'>"+									
-										"<span class='text'>삭제</span>"+
-									"</button>"+
-									"<button class='btn btn-primary' style='margin-right: 10px; float:right'>"+									
+								"<div class='col-sm-2-3' style='text-align: right;'>"+								
+									"<span style='margin-right: 10px;' >"+
+										replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
+									"</span>"+
+									"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"'>"+									
 										"<span class='text'>수정</span>"+
+									"</button>"+
+									"<button class='btn btn-danger replyremove' value='" +data[i].rno+ "'>"+									
+										"<span class='text'>삭제</span>"+
 									"</button>"+
 								"</div>"+			
 							"</div>"+
 							"<hr>";				
-				}
+				}				
 				
-				console.log(data);
-				console.log("잘만들어졌나",htmlStr);
+				//console.log(data);
+				//console.log("잘만들어졌나",htmlStr);
 				$("#reply").html(htmlStr);
+				//$("#replyerdataModify1").attr("readonly", false);
 				
 				$("#replycount").text(len);			
 			});
@@ -178,7 +187,7 @@
 			var replyerdata=$("#replyerdata").val();			
 			var replydata=$("#replydata").val();
 			var replypwdata=$("#replypwdata").val();
-			console.log("댓글입력값",replydata,replyerdata);
+			//console.log("댓글입력값",replydata,replyerdata);
 			if(replyerdata && replydata && replypwdata){      //작성한 내용이 있을때만 댓글 등록 가능하게!
 				replyService.add({bno:bnodata,reply:replydata,replyer:replyerdata},function(data){
 					//alert(data);
@@ -192,12 +201,98 @@
 			}else{
 				alert("닉네임, 비밀번호, 댓글 내용을 모두 입력해주세요.")
 			};
-			//show();  //이렇게 콜백함수 밖에있으면 ajax는 실행이 길어지면 show먼저 보여줄수도 있어!
-			
-			
+			//show();  //이렇게 콜백함수 밖에있으면 ajax는 실행이 길어지면 show먼저 보여줄수도 있어!			
 		});
 		
 		
+		//수정 버튼 클릭했을때 수행하는 작업
+		// 1. 일단 그 해당 댓글의 readonly 해제 하기
+		$("#replylist").on("click",".replymodify",function(){
+			console.log($(this).attr('id'));  //수정버튼의 ID이름 => replyModifyBn1		
+			//console.log("누른 버튼의 부모 html~~~~~~",$(this).parent().html());
+			var order=$(this).attr('id').charAt($(this).attr('id').length-1);   //몇번째 인지, 숫자값
+			console.log(order);
+			
+			replyService.getList(${board.bno},function(data){
+				//data에 댓글 내용 리스트
+				len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
+				
+				var htmlStr="";
+				for(var i=0;i<len;i++){			
+					htmlStr+="<div class='form-group row'>"+
+								"<div class='col-sm-2'>"+								
+									"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
+								"</div>"+
+								"<div class='col-sm-7-7'>"+
+									"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+										data[i].reply +
+									"</textarea>"+
+								"</div>"+
+								"<div class='col-sm-2-3' style='text-align: right;'>"+								
+									"<span style='margin-right: 10px;' >"+
+										replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
+									"</span>"+
+									"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+								
+										"<span class='text'>수정</span>"+
+									"</button>"+
+									"<button class='btn btn-danger replyremove' value='" +data[i].rno+ "'>"+									
+										"<span class='text'>삭제</span>"+
+									"</button>"+
+								"</div>"+			
+							"</div>"+
+							"<hr>";				
+				}			
+				//console.log(data);
+				//console.log("잘만들어졌나",htmlStr);
+				$("#reply").html(htmlStr);
+				
+				$("#replyerdataModify"+order).attr("readonly", false);				
+				$("#replydataModify"+order).attr("readonly", false);
+				
+				$("#replycount").text(len);			
+			});	
+			
+			console.log("함수 밖인데 아직두 order가 살아 있나아아아??",order);
+			
+			console.log("밖에  입력된 값~~~작성자~~~",$("#replyerdataModify"+order).val());
+			console.log("밖에  입력된 값~~~~내용~~~",$("#replydataModify"+order).val());		
+			
+		});
+		
+			console.log("이게 찐 밖밖 밖인데 아직두 order가 살아 있나아아아??",order);
+			//2. 그 해당 내용을 수정하기
+			$("#replyModifyBn"+order).on("click",function(){
+				var rno=$(this).val();
+				console.log("버튼 클릭될때 나오는 댓글번호",rno);
+				var replyerdataModify=$("#replyerdataModify"+order).val();			
+				var replydataModify=$("#replydataModify"+order).val();
+				console.log("입력된 값~~~작성자~~~",$("#replyerdataModify"+order).val());
+				console.log("입력된 값~~~~내용~~~",$("#replydataModify"+order).val());
+				
+				replyService.modify({rno:rno,reply:replydataModify,replyer:replyerdataModify},function(data){
+					alert("수정 됐나?"); 
+					//console.log(removerno,"번 삭제 완료");
+				});			
+			});
+		
+				
+		
+		
+		//삭제 버튼 클릭했을때
+		$("#replylist").on("click",".replyremove",function(){			
+			var removerno=$(this).val();
+			console.log(removerno);  
+			replyService.remove(removerno,function(){
+				//alert("삭제 성공!!");
+				console.log(removerno,"번 삭제 완료");
+				show();			
+			});
+		});
+		
+		//새로고침 버튼 클릭했을때
+		$("#newreply").on("click",function(){
+			show();			
+		});
 		
 	});
 

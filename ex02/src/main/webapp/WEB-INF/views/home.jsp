@@ -161,7 +161,45 @@
 		</div>			
 	</div>
 	<hr>
+	댓글 목록2
+	<div class="form-group row">
+		<div class="col-sm-2">
+			모양 이쁘게 테스트~
+		</div>
+		<div class="col-sm-7-7">
+			댓글 내용 입력중이거덩? 근데 이쁘게 보였으면 좋겠거덩?? 어떻게 해야 이쁘려나?? 테스트 중이야!!
+		</div>
+		<div class="col-sm-2-3">
+			<button class="btn btn-danger" style="float:right">
+				<span class="text">삭제</span>
+			</button>
+			<button class="btn btn-primary" style="margin-right: 10px; float:right">
+				<span class="text">수정</span>
+			</button>
+			<span style="margin-right: 10px; float:right;" >오후 12:43:41</span>
+		</div>			
+	</div>
+	<hr>
 	
+	댓글 목록3 완성!!
+	<div class="form-group row">
+		<div class="col-sm-2">
+			모양 이쁘게 테스트~
+		</div>
+		<div class="col-sm-7-7">
+			댓글 내용 입력중이거덩? 근데 이쁘게 보였으면 좋겠거덩?? 어떻게 해야 이쁘려나?? 테스트 중이야!!
+		</div>
+		<div class="col-sm-2-3" style="text-align: right;">
+			<span style="margin-right: 5px;" >오후 12:43:41</span>
+			<button class="btn btn-primary" style="margin-right: 5px; ">
+				<span class="text">수정</span>
+			</button>
+			<button class="btn btn-danger" >
+				<span class="text">삭제</span>
+			</button>
+		</div>			
+	</div>
+	<hr>	
 	
 	관리자 모드로 이동하기
 	<form action="/board/adminCheck" method="post" id="adminForm">	
@@ -189,7 +227,104 @@
 			</span> 
 		<span class="text">작성자 게시글 순위보기</span>
 	</button>	
+	
+	댓글 html 
+	htmlStr+="<div class='form-group row'>"+
+			"<div class='col-sm-2'>"+
+				(i+1)+". &nbsp;&nbsp;"+data[i].replyer +
+			"</div>"+
+			"<div class='col-sm-7'>"+
+				data[i].reply +
+			"</div>"+
+			"<div class='col-sm-3'>"+
+				data[i].updatedate +
+				"<button class='btn btn-danger' style='float:right'>"+									
+					"<span class='text'>삭제</span>"+
+				"</button>"+
+				"<button class='btn btn-primary' style='margin-right: 10px; float:right'>"+									
+					"<span class='text'>수정</span>"+
+				"</button>"+
+			"</div>"+			
+		"</div>"+
+		"<hr>";	
+		
+		
+		htmlStr+="<div class='form-group row'>"+
+					"<div class='col-sm-2'>"+
+						(i+1)+". &nbsp;&nbsp;"+data[i].replyer +									
+					"</div>"+
+					"<div class='col-sm-7-7'>"+
+						data[i].reply +
+					"</div>"+
+					"<div class='col-sm-2-3' style='text-align: right;'>"+								
+						"<span style='margin-right: 10px;' >"+
+							replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
+						"</span>"+
+						"<button class='btn btn-primary' style='margin-right: 10px; '>"+									
+							"<span class='text'>수정</span>"+
+						"</button>"+
+						"<button class='btn btn-danger'>"+									
+							"<span class='text'>삭제</span>"+
+						"</button>"+
+					"</div>"+			
+				"</div>"+
+				"<hr>";	
 				
+				span 추가 
+				htmlStr+="<div class='form-group row'>"+
+								"<div class='col-sm-2'>"+
+									"<span>"+
+										(i+1)+". &nbsp;&nbsp;"+data[i].replyer +		
+									"</span>"+
+								"</div>"+
+								"<div class='col-sm-7-7'>"+
+									"<span>"+
+										data[i].reply +
+									"</span>"+
+								"</div>"+
+								"<div class='col-sm-2-3' style='text-align: right;'>"+								
+									"<span style='margin-right: 10px;' >"+
+										replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
+									"</span>"+
+									"<button class='btn btn-primary' style='margin-right: 10px; '>"+									
+										"<span class='text'>수정</span>"+
+									"</button>"+
+									"<button class='btn btn-danger'>"+									
+										"<span class='text'>삭제</span>"+
+									"</button>"+
+								"</div>"+			
+							"</div>"+
+							"<hr>";	
+	
+	html완성!!!!			
+	htmlStr+="<div class='form-group row'>"+
+					"<div class='col-sm-2'>"+								
+						"<input type='text' class='form-control form-control-user' id='replyermodify' value='"+ data[i].replyer +"' readonly>"+
+					"</div>"+
+					"<div class='col-sm-7-7'>"+
+						"<textarea class='form-control' id='replymodify' style='height: 38px;' readonly>"+
+							data[i].reply +
+						"</textarea>"+
+					"</div>"+
+					"<div class='col-sm-2-3' style='text-align: right;'>"+								
+						"<span style='margin-right: 10px;' >"+
+							replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
+						"</span>"+
+						"<button class='btn btn-primary' style='margin-right: 10px; '>"+									
+							"<span class='text'>수정</span>"+
+						"</button>"+
+						"<button class='btn btn-danger'>"+									
+							"<span class='text'>삭제</span>"+
+						"</button>"+
+					"</div>"+			
+				"</div>"+
+				"<hr>";			
+				
+			
+				
+				
+	//"<fmt:formatDate pattern='yy년MM월dd일 a hh:mm:ss' value="+ day +"/>"
+	
 	
 	--%>
 

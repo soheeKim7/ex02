@@ -580,8 +580,8 @@ pre code {
 	.col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2,
 	.col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8,
 	.col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-1-5, .col-sm-10, .col-sm-11,
-	.col-sm-12, .col-sm-2, .col-sm-3, .col-sm-3-5, .col-sm-4, .col-sm-5, .col-sm-6,
-	.col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1,
+	.col-sm-12, .col-sm-2, .col-sm-2-3, .col-sm-2-5, .col-sm-3, .col-sm-3-5, .col-sm-4, .col-sm-5, .col-sm-6,
+	.col-sm-7, .col-sm-7-5, .col-sm-7-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1,
 	.col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4,
 	.col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
 	position: relative;
@@ -844,6 +844,16 @@ pre code {
 		flex: 0 0 16.66667%;
 		max-width: 16.66667%
 	}
+	/* 2.3 추가!! */
+	.col-sm-2-3 {
+		flex: 0 0 19.16667%;
+		max-width: 19.16667%
+	}	
+	/* 2.5 추가!! */
+	.col-sm-2-5 {
+		flex: 0 0 20.83334%;
+		max-width: 20.83334%
+	}
 	.col-sm-3 {
 		flex: 0 0 25%;
 		max-width: 25%
@@ -868,6 +878,16 @@ pre code {
 	.col-sm-7 {
 		flex: 0 0 58.33333%;
 		max-width: 58.33333%
+	}
+	/* 7.5 추가!! */
+	.col-sm-7-5 {
+	flex: 0 0 62.5%;
+	max-width: 62.5%
+	}
+	/* 7.7 추가!! */
+	.col-sm-7-7 {
+	flex: 0 0 64.16667%;
+	max-width: 64.16667%
 	}
 	.col-sm-8 {
 		flex: 0 0 66.66667%;

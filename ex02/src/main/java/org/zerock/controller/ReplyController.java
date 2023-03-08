@@ -60,7 +60,7 @@ public class ReplyController {
 	}	
 		
 	//해당글 댓글 리스트 조회
-	@GetMapping("/pages/{bno}")
+	@GetMapping("/pages/{bno}")  //produces=MediaType.APPLICATION_JSON_VALUE    json타입!
 	public List<ReplyVO> getList(@PathVariable("bno")Long bno){		
 		return service.getList(bno);
 	}
