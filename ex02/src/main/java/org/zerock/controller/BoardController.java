@@ -145,16 +145,18 @@ public class BoardController {
 	
 	//보너스 - 오늘의 게시글 목록 가져오기
 	@GetMapping("todaylist")   
-	public void todaylist(Model model) {
+	public void todaylist(Model model,Criteria cri) {
 		log.info("url todaylist....");
 		model.addAttribute("todaylist",service.getTodayList());
+		model.addAttribute(new PageDTO(service.countTodayList(cri), cri));
 	}
+	
 	
 	//보너스 - 오늘의 게시글 갯수 가져오기
 	@GetMapping("counttodaylist")   
-	public void countTodayList(Model model) {
+	public void countTodayList(Model model,Criteria cri) {
 		log.info("url counttodaylist.......");
-		model.addAttribute("counttodaylist",service.countTodayList());
+		model.addAttribute("counttodaylist",service.countTodayList(cri));
 	}
 	
 	//보너스 - 가장 많이 작성한 작성자 가져오기

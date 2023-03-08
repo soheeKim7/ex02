@@ -40,7 +40,8 @@ public interface BoardService {
 	List<BoardVO> getTodayList();
 	
 	//보너스 - 오늘의 게시글 갯수 가져오기
-	long countTodayList();
+//	long countTodayList();
+	long countTodayList(Criteria cri);
 	
 	//보너스 - 가장 많이 작성한 작성자 가져오기
 	String manyWriter();

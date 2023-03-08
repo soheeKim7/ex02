@@ -133,7 +133,9 @@
 	</select>	
 	
 	<select id="countTodayList" resultType="long">
-		select count(*) from tbl_board where to_char(regdate, 'yyyy-mm-dd')=(select to_char(sysdate, 'yyyy-mm-dd') from dual)
+		select count(*) from tbl_board where 
+		<include refid="criteria" />		
+		to_char(regdate, 'yyyy-mm-dd')=(select to_char(sysdate, 'yyyy-mm-dd') from dual)
 	</select>	
 	
 	<select id="manyWriter" resultType="string">	

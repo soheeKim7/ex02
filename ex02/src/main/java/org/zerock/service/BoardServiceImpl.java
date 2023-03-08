@@ -131,9 +131,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	//보너스 - 오늘의 게시글 갯수 가져오기
 	@Override
-	public long countTodayList() {
+	public long countTodayList(Criteria cri) {
 		log.info("countTodayList ..... ");
-		return mapper.countTodayList();
+		return mapper.countTodayList(cri);
 	}
 	
 	//보너스 - 가장 많이 작성한 작성자 가져오기

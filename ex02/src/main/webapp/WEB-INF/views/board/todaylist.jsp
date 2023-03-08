@@ -15,17 +15,17 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h4 class="m-0 font-weight-bold text-primary">게시글 목록보기</h4>
-			<button class="btn btn-primary" onclick="location.href='/board/register?pageNum=${pageDTO.cri.pageNum}&amount=${pageDTO.cri.amount}'" style="float:right">
+			<h4 class="m-0 font-weight-bold text-primary">오늘의 게시글 목록보기</h4>
+			<button class="btn btn-primary" onclick="location.href='/board/list'" style="float:right">
 				<span class="icon text-white-50">
-					<i class="bi bi-pencil-square"></i>
-					<svg xmlns="http://www.w3.org/2000/svg" width="25"  fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-		  				<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-		 			    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-					</svg>
-					</span> 
-				<span class="text">게시글 등록하기</span>
-			</button>			
+				<i class="bi bi-file-earmark-text"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+	  				<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+	 			    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+				</svg>
+				</span> 
+				<span class="text">목록으로 돌아가기</span>
+			</button>		
 		</div>
 		
 		<div class="card-body">
@@ -72,21 +72,21 @@
 					
 					<div class="row">
 						<div class="col-sm-12">				
-							<table class="table table-bordered" width="100%" cellspacing="0" style="text-align: center;">
+							<table class="table table-bordered" width="100%" cellspacing="0">
 								<thead>
 									<tr>
-										<th width="8%">순번 (글번호)</th>							
+										<th>순번 (글번호)</th>							
 										<th>제목</th>
-										<th width="9%">작성자</th>
-										<th width="5%">조회수</th>							
-										<th width="15%">작성일</th>
-										<th width="15%">수정일</th>
+										<th>작성자</th>
+										<th>조회수</th>							
+										<th>작성일</th>
+										<th>수정일</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:set var="no" value="0"></c:set>
 									<%--페이지 영역에 변수 선언 --%>
-									<c:forEach items="${list }" var="board">
+									<c:forEach items="${todaylist }" var="board">
 										<tr>
 											<td><c:out value="${no=no+1} (${board.bno})" /></td>
 											<%-- ++no 이건 증감연산자 el tag는 지원 안함! --%>	
@@ -121,7 +121,7 @@
 								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
 									<c:if test="${pageDTO.cri.pageNum==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-right:5px;">
-									    <a class="page-link" href="/board/list?pageNum=1&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+									    <a class="page-link" href="/board/todaylist?pageNum=1&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 										    <i class="bi bi-chevron-bar-left"></i>
 										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
@@ -136,7 +136,7 @@
 										<c:choose>
 											<c:when test="${num==1}">
 												<li class="paginate_button page-item previous disabled" style="margin-right:5px;">
-											    <a class="page-link" href="/board/list?pageNum=1&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=1&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 												    <i class="bi bi-chevron-bar-left"></i>
 												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
@@ -145,7 +145,7 @@
 											</c:when>
 											<c:otherwise>
 											    <li class="paginate_button page-item previous" style="margin-right:5px;">
-											    <a class="page-link" href="/board/list?pageNum=1&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=1&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 												    <i class="bi bi-chevron-bar-left"></i>
 												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-left" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M11.854 3.646a.5.5 0 0 1 0 .708L8.207 8l3.647 3.646a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0zM4.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
@@ -159,7 +159,7 @@
 						  	<!-- 10페이지씩 ≪ 이동 -->
 						  	<c:if test="${pageDTO.prev }">
 							    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-							    <a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+							    <a class="page-link" href="/board/todaylist?pageNum=${pageDTO.startPage-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 								    <i class="bi bi-chevron-double-left"></i>
 								    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
 										<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -169,7 +169,7 @@
 							</c:if> 
 							<c:if test="${!pageDTO.prev }">
 							    <li class="paginate_button page-item previous disabled"	style="margin-right:5px; margin-left:5px;">
-						    	<a class="page-link" href="/board/list?pageNum=${pageDTO.startPage-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+						    	<a class="page-link" href="/board/todaylist?pageNum=${pageDTO.startPage-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 							    	<i class="bi bi-chevron-double-left"></i>
 							    	<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
 										<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -182,7 +182,7 @@
 								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
 									<c:if test="${pageDTO.cri.pageNum ==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-									    <a class="page-link" href="/board/list?pageNum=${num-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+									    <a class="page-link" href="/board/todaylist?pageNum=${num-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 										    <i class="bi bi-chevron-left"></i>
 										    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -197,7 +197,7 @@
 										<c:choose>
 											<c:when test="${num==1}">
 												<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
-											    <a class="page-link" href="/board/list?pageNum=${num-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=${num-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 												    <i class="bi bi-chevron-left"></i>
 												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -206,7 +206,7 @@
 											</c:when>
 											<c:otherwise>
 											    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-											    <a class="page-link" href="/board/list?pageNum=${num-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=${num-1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 												    <i class="bi bi-chevron-left"></i>
 												    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -221,12 +221,12 @@
 							<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
 								<c:if test="${pageDTO.cri.pageNum ==num }"> 
 									<li class="paginate_button page-item active" style="margin-right:5px; margin-left:5px;">
-									<a href="/board/list?pageNum=${num}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
+									<a href="/board/todaylist?pageNum=${num}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
 									<b>${num}</b> </a></li>
 								</c:if>
 								<c:if test="${pageDTO.cri.pageNum !=num }">	
 									<li class="paginate_button page-item" style="margin-right:5px; margin-left:5px;">
-									<a href="/board/list?pageNum=${num}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
+									<a href="/board/todaylist?pageNum=${num}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
 									${num} </a></li>
 								</c:if>									
 							</c:forEach>  				
@@ -235,7 +235,7 @@
 								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
 									<c:if test="${pageDTO.cri.pageNum ==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">									  
-									    <a class="page-link" href="/board/list?pageNum=${num+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+									    <a class="page-link" href="/board/todaylist?pageNum=${num+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 											<i class="bi bi-chevron-right"></i>
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -250,7 +250,7 @@
 										<c:choose>
 											<c:when test="${num==pageDTO.lastPage}">
 												<li class="paginate_button page-item previous disabled" style="margin-right:5px; margin-left:5px;">
-											    <a class="page-link" href="/board/list?pageNum=${num+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=${num+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 													<i class="bi bi-chevron-right"></i>
 													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -259,7 +259,7 @@
 											</c:when>
 											<c:otherwise>
 											    <li class="paginate_button page-item previous" style="margin-right:5px; margin-left:5px;">
-											    <a class="page-link" href="/board/list?pageNum=${num+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=${num+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 													<i class="bi bi-chevron-right"></i>
 													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -273,7 +273,7 @@
 							<!-- 10페이지씩 ≫ 이동 -->				
 							<c:if test="${pageDTO.next }">					
 								<li class="paginate_button page-item next" style="margin-right:5px; margin-left:5px; ">
-								<a href="/board/list?pageNum=${pageDTO.endPage+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
+								<a href="/board/todaylist?pageNum=${pageDTO.endPage+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
 								   <i class="bi bi-chevron-double-right"></i>
 								   <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
 									   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -283,7 +283,7 @@
 							</c:if>	
 							<c:if test="${!pageDTO.next }">					
 								<li class="paginate_button page-item next disabled" style="margin-right:5px; margin-left:5px;">
-								<a href="/board/list?pageNum=${pageDTO.endPage+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
+								<a href="/board/todaylist?pageNum=${pageDTO.endPage+1}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}" class="page-link">
 								   <i class="bi bi-chevron-double-right"></i>
 								   <svg xmlns="http://www.w3.org/2000/svg" width="20"  fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
 									   <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -296,7 +296,7 @@
 								<c:forEach begin="${pageDTO.startPage }" end="${pageDTO.endPage }" var="num">					
 									<c:if test="${pageDTO.cri.pageNum ==num }"> 
 									    <li class="paginate_button page-item previous" style="margin-left:5px;">
-									    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+									    <a class="page-link" href="/board/todaylist?pageNum=${pageDTO.lastPage}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 											<i class="bi bi-chevron-bar-right"></i>
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
@@ -311,7 +311,7 @@
 										<c:choose>
 											<c:when test="${num==pageDTO.lastPage}">
 												<li class="paginate_button page-item previous disabled" style="margin-left:5px;">
-											    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=${pageDTO.lastPage}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 													<i class="bi bi-chevron-bar-right"></i>
 													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
@@ -320,7 +320,7 @@
 											</c:when>
 											<c:otherwise>
 											    <li class="paginate_button page-item previous" style="margin-left:5px;">
-											    <a class="page-link" href="/board/list?pageNum=${pageDTO.lastPage}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
+											    <a class="page-link" href="/board/todaylist?pageNum=${pageDTO.lastPage}&amount=${pageDTO.cri.amount}&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}">
 													<i class="bi bi-chevron-bar-right"></i>
 													<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chevron-bar-right" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M4.146 3.646a.5.5 0 0 0 0 .708L7.793 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0zM11.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
@@ -390,7 +390,7 @@
 					//on("change",function(e){       })					
 		var amount = $("#amount").val();
 		
-		location.href="/board/list?pageNum=${pageDTO.cri.pageNum}&amount="+amount+"&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}";
+		location.href="/board/todaylist?pageNum=${pageDTO.cri.pageNum}&amount="+amount+"&type=${pageDTO.cri.type}&keyword=${pageDTO.cri.keyword}";
 	});
 	
 	

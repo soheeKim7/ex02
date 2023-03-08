@@ -16,7 +16,7 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">게시글 확인화면</h4> <br>
-			<h5 class="m-0 font-weight-bold text-primary">조회수 <c:out value='${click}'/>번</h5>		
+			<h5 class="m-0 font-weight-bold text-primary">조회수 <c:out value='${click}'/> 회</h5>		
 		</div>
 		<div class="card-body">		
 			<div class="form-group row">

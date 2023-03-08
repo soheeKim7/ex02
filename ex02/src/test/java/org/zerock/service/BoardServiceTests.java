@@ -95,7 +95,8 @@ public class BoardServiceTests {
 	//보너스 - 오늘의 게시글 갯수 가져오기
 	@Test
 	public void testCountTodayList() {
-		log.info("오늘의 게시글 개수"+service.countTodayList());
+		Criteria cri=new Criteria();
+		log.info("오늘의 게시글 개수"+service.countTodayList(cri));
 	}
 	
 	//보너스 - 가장 많이 작성한 작성자 가져오기
