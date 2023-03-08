@@ -97,16 +97,16 @@
 				<div class="card-body">		
 					<div class="form-group row">
 						<div class="col-sm-6" >
-							<input type="text" class="form-control form-control-user" placeholder="닉네임">
+							<input type="text" class="form-control form-control-user" placeholder="닉네임" id="replyerdata">
 						</div>
 						<div class="col-sm-6" >
-							<input type="text" class="form-control form-control-user" placeholder="비밀번호">
+							<input type="password" class="form-control form-control-user" placeholder="비밀번호" id="replypwdata">
 						</div>
 					</div>
 					<div class="form-group">
-						<textarea rows="2" class="form-control" name="reply" placeholder="댓글 내용을 써주세요."></textarea>
+						<textarea rows="2" class="form-control" name="reply" placeholder="댓글 내용을 써주세요." id="replydata"></textarea>
 					</div>
-					<button class="btn btn-primary"style="margin-right: 10px; float:right">
+					<button class="btn btn-primary"style="margin-right: 10px; float:right" id="replyInsert">
 						<span class="icon text-white-50">
 							<i class="bi bi-chat-left-text"></i>
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
@@ -134,40 +134,68 @@
 
 <script> 
 	$(document).ready(function(){
-		replyService.getList(${board.bno},function(data){
-			//data에 댓글 내용 리스트
-			len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
-			
-			var htmlStr="";
-			for(var i=0;i<len;i++){				
-				htmlStr+="<div class='form-group row'>"+
-							"<div class='col-sm-1-5'>"+
-								(i+1)+". &nbsp;&nbsp;"+data[i].replyer +
+		show();
+		function show(){
+			//댓글목록을 가져와서 화면에 뿌리기
+			replyService.getList(${board.bno},function(data){
+				//data에 댓글 내용 리스트
+				len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
+				
+				var htmlStr="";
+				for(var i=0;i<len;i++){				
+					htmlStr+="<div class='form-group row'>"+
+								"<div class='col-sm-1-5'>"+
+									(i+1)+". &nbsp;&nbsp;"+data[i].replyer +
+								"</div>"+
+								"<div class='col-sm-7'>"+
+									data[i].reply +
+								"</div>"+
+								"<div class='col-sm-3-5'>"+
+									data[i].updatedate +
+									"<button class='btn btn-danger' style='float:right'>"+									
+										"<span class='text'>삭제</span>"+
+									"</button>"+
+									"<button class='btn btn-primary' style='margin-right: 10px; float:right'>"+									
+										"<span class='text'>수정</span>"+
+									"</button>"+
+								"</div>"+			
 							"</div>"+
-							"<div class='col-sm-7'>"+
-								data[i].reply +
-							"</div>"+
-							"<div class='col-sm-3-5'>"+
-								data[i].updatedate +
-								"<button class='btn btn-danger' style='float:right'>"+									
-									"<span class='text'>삭제</span>"+
-								"</button>"+
-								"<button class='btn btn-primary' style='margin-right: 10px; float:right'>"+									
-									"<span class='text'>수정</span>"+
-								"</button>"+
-							"</div>"+			
-						"</div>"+
-						"<hr>";				
-			}
+							"<hr>";				
+				}
+				
+				console.log(data);
+				console.log("잘만들어졌나",htmlStr);
+				$("#reply").html(htmlStr);
+				
+				$("#replycount").text(len);			
+			});
+		};
+		
+		//댓글등록 버튼을 클릭했을때 수행하는 작업(1.댓글등록 2.댓글목록 가져오기)
+		$("#replyInsert").on("click",function(){ 
+			console.log("댓글 등록 버튼 클릭");	
+			var bnodata=${board.bno};
+			var replyerdata=$("#replyerdata").val();			
+			var replydata=$("#replydata").val();
+			var replypwdata=$("#replypwdata").val();
+			console.log("댓글입력값",replydata,replyerdata);
+			if(replyerdata && replydata && replypwdata){      //작성한 내용이 있을때만 댓글 등록 가능하게!
+				replyService.add({bno:bnodata,reply:replydata,replyer:replyerdata},function(data){
+					//alert(data);
+					show();         //위치가 여기인 이유 : 자바스크립트가 ajax,time 관련해서는 비동기처리되기 때문
+									//그래서 콜백함수안에서 다끝내고 show 보여주기 위해서!
+				});				//콜백함수
+				//작성된 내용 지우기
+				$("#replyerdata").val("");
+				$("#replydata").val("");
+				$("#replypwdata").val("");
+			}else{
+				alert("닉네임, 비밀번호, 댓글 내용을 모두 입력해주세요.")
+			};
+			//show();  //이렇게 콜백함수 밖에있으면 ajax는 실행이 길어지면 show먼저 보여줄수도 있어!
 			
-			console.log(data);
-			console.log("잘만들어졌나",htmlStr);
-			$("#reply").html(htmlStr);
-			
-			$("#replycount").text(len);
 			
 		});
-		
 		
 		
 		

@@ -29,7 +29,7 @@
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-bordered" width="100%" cellspacing="0">
+				<table class="table-1 table-bordered" width="100%" cellspacing="0" style="text-align:center; mragin:auto;">
 					<thead>
 						<tr>
 							<th>순위</th>

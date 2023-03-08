@@ -72,15 +72,15 @@
 					
 					<div class="row">
 						<div class="col-sm-12">				
-							<table class="table table-bordered" width="100%" cellspacing="0">
+							<table class="table table-bordered" width="100%" cellspacing="0" style="text-align: center;">
 								<thead>
 									<tr>
-										<th>순번 (글번호)</th>							
+										<th width="8%">순번 (글번호)</th>							
 										<th>제목</th>
-										<th>작성자</th>
-										<th>조회수</th>							
-										<th>작성일</th>
-										<th>수정일</th>
+										<th width="9%">작성자</th>
+										<th width="5%">조회수</th>							
+										<th width="15%">작성일</th>
+										<th width="15%">수정일</th>
 									</tr>
 								</thead>
 								<tbody>
