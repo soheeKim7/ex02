@@ -81,12 +81,31 @@ var replyService=(function(){
 		});
 	};	
 	
-	//해당글의 댓글목록 가져오기 (필요한건 글번호)
+	//해당글의 댓글목록 가져오기 (필요한건 글번호) /(등록순)
 	function getList(bno,callback,error){
-		console.log("댓글 목록가져오기 js 실행");
+		console.log("댓글 목록가져오기 등록순 js 실행");
 		$.ajax({  
 			type: "get" ,
 			url: "/replies/pages/"+bno ,
+			//data: 보내는 데이터 없음
+			//contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)           
+					callback(data);       
+			} ,
+			error: function(xhr,status,er){  
+				if(error)
+					error();
+			}			
+		});
+	};
+	
+	//해당글의 댓글목록 가져오기 (필요한건 글번호) /(최신순)
+	function getList2(bno,callback,error){
+		console.log("댓글 목록가져오기 최신순 js 실행");
+		$.ajax({  
+			type: "get" ,
+			url: "/replies/pages2/"+bno ,
 			//data: 보내는 데이터 없음
 			//contentType: "application/json; charset=UTF-8" ,
 			success: function(data){   
@@ -134,7 +153,7 @@ var replyService=(function(){
 		console.log("합은 "+(num1+num2)+"이다");		
 	};
 	
-	return {add:add, getList:getList, get:get, modify:modify, remove:remove, time:displayTime, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
+	return {add:add, getList:getList, getList2:getList2, get:get, modify:modify, remove:remove, time:displayTime, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
 })();
 
 //replyService.add(reply,callback,error);   //callback함수

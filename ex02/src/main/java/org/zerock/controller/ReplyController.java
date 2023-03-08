@@ -59,12 +59,17 @@ public class ReplyController {
 		return service.get(rno);
 	}	
 		
-	//해당글 댓글 리스트 조회
+	//해당글 댓글 리스트 조회 (등록순)
 	@GetMapping("/pages/{bno}")  //produces=MediaType.APPLICATION_JSON_VALUE    json타입!
 	public List<ReplyVO> getList(@PathVariable("bno")Long bno){		
 		return service.getList(bno);
 	}
 	
+	//해당글 댓글 리스트 조회 (최신순)
+	@GetMapping("/pages2/{bno}")  //produces=MediaType.APPLICATION_JSON_VALUE    json타입!
+	public List<ReplyVO> getList2(@PathVariable("bno")Long bno){		
+		return service.getList2(bno);
+	}
 	
 	
 }

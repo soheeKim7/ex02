@@ -26,6 +26,7 @@ public class ReplyMapperTests {
 		vo.setBno(1L);
 		vo.setReply("댓글내용~");
 		vo.setReplyer("나는 댓글맨");
+		vo.setReplypw("1111");
 //		mapper.insert(vo);
 		log.info("삽입된 행의 개수 : "+mapper.insert(vo));
 	}
@@ -40,6 +41,7 @@ public class ReplyMapperTests {
 			vo.setBno(bnoArr[i%5]);  //글번호 선택
 			vo.setReply("댓글내용~"+(i+1));
 			vo.setReplyer("나는 댓글맨"+(i+1));
+			vo.setReplypw("1111");
 			log.info("삽입된 행의 개수 : "+mapper.insert(vo));
 		}
 		
@@ -48,6 +50,7 @@ public class ReplyMapperTests {
 			vo.setBno(bnoArr[i%5]);  //글번호 선택
 			vo.setReply("댓글내용~"+(i+1));
 			vo.setReplyer("나는 댓글맨"+(i+1));
+			vo.setReplypw("1111");
 			mapper.insert(vo);			
 		});		
 	}
@@ -69,7 +72,8 @@ public class ReplyMapperTests {
 	@Test
 	public void testReadgetList() {
 		log.info("읽은 댓글 내용 : "+mapper.read(26L));		//하나의 댓글 읽기
-		mapper.getList(1183L).forEach(vo->log.info(vo));	//하나의 글에 대응하는 댓글 목록 읽기		
+		mapper.getList(1183L).forEach(vo->log.info(vo));	//하나의 글에 대응하는 댓글 목록 읽기 (등록순)	
+		mapper.getList2(1183L).forEach(vo->log.info(vo));	//하나의 글에 대응하는 댓글 목록 읽기 (최신순)
 	}
 	
 	@Test

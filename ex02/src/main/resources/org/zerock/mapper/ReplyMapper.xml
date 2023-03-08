@@ -6,7 +6,7 @@
 <mapper namespace="org.zerock.mapper.ReplyMapper">
 
 	<insert id="insert">
-		insert into tbl_reply(bno,reply,replyer) values(#{bno},#{reply},#{replyer})	
+		insert into tbl_reply(bno,reply,replyer,replypw) values(#{bno},#{reply},#{replyer},${replypw})	
 	</insert>
 	
 	<update id="update">
@@ -23,6 +23,10 @@
 	
 	<select id="getList" resultType="org.zerock.domain.ReplyVO">
 		select * from tbl_reply where bno=#{bno} order by rno
+	</select>
+	
+	<select id="getList2" resultType="org.zerock.domain.ReplyVO">
+		select * from tbl_reply where bno=#{bno} order by rno desc
 	</select>	
 	
 	<select id="testMybatis" resultType="org.zerock.domain.ReplyVO">

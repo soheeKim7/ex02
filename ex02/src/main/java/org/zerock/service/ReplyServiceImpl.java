@@ -39,4 +39,9 @@ public class ReplyServiceImpl implements ReplyService {
 		return mapper.getList(bno);
 	}
 
+	@Override
+	public List<ReplyVO> getList2(Long bno) {
+		return mapper.getList2(bno);
+	}
+
 }

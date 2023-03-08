@@ -321,7 +321,32 @@
 				"<hr>";			
 				
 			
+	수정버튼 처음 눌렀을때 html 주소값 변경 전 value
+	htmlStr+="<div class='form-group row'>"+
+				"<div class='col-sm-2'>"+								
+					"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
+				"</div>"+
+				"<div class='col-sm-7-7'>"+
+					"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+						data[i].reply +
+					"</textarea>"+
+				"</div>"+
+				"<div class='col-sm-2-3' style='text-align: right;'>"+								
+					"<span style='margin-right: 10px;' >"+
+						replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
+					"</span>"+
+					"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+								
+						"<span class='text'>수정</span>"+
+					"</button>"+
+					"<button class='btn btn-danger replyremove' value='" +data[i].rno+ "'>"+									
+						"<span class='text'>삭제</span>"+
+					"</button>"+
+				"</div>"+			
+			"</div>"+
+			"<hr>";		
+			
 				
+	"<input type='hidden' id='inputrno"+(i+1)+"' value='" +data[i].rno+ "'>"+			
 				
 	//"<fmt:formatDate pattern='yy년MM월dd일 a hh:mm:ss' value="+ day +"/>"
 	
