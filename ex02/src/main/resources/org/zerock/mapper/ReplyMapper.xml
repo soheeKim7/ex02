@@ -6,7 +6,7 @@
 <mapper namespace="org.zerock.mapper.ReplyMapper">
 
 	<insert id="insert">
-		insert into tbl_reply(bno,reply,replyer,replypw) values(#{bno},#{reply},#{replyer},${replypw})	
+		insert into tbl_reply(bno,reply,replyer,replypw) values(#{bno},#{reply},#{replyer},#{replypw})	
 	</insert>
 	
 	<update id="update">
@@ -36,6 +36,13 @@
 	<select id="testMybatis" resultType="org.zerock.domain.ReplyVO">
 		select * from tbl_reply where rno in (#{reply.rno},#{rno2})
 	</select>	
-
+	
+	<insert id="tx1">
+		insert into tbl_board(bno,writer,content,title,click) values(1242,'안됨','불가','에러',0)
+	</insert>
+	
+	<insert id="tx2">
+		insert into tbl_board(bno,writer,content,title,click) values(seq_board.nextval,'성공','가능','축하',0)
+	</insert>
 
 </mapper>

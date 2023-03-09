@@ -557,13 +557,13 @@
 		//alert("결과 확인 : "+data);
 //	});
 	
-	replyService.add({bno:1142,reply:"테스트 내용~~~",replyer:"작성자 테스트~~",replypw:"rksk111"},function(data){
+	/*
+	replyService.add({bno:1242,reply:"테스트 내용~~~",replyer:"작성자 테스트~~",replypw:"rksk111"},function(data){
 		console.log("데이터값 다 잘 가져오나 다 보자",data)
 		alert("댓글이 등록되었습니다.");
 		show();         //위치가 여기인 이유 : 자바스크립트가 ajax,time 관련해서는 비동기처리되기 때문
 						//그래서 콜백함수안에서 다끝내고 show 보여주기 위해서!
 	});	
-	/*
 	
 	
 	replyService.mytest(3,4);    //콘솔로그에 합은 7이다

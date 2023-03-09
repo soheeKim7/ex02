@@ -129,7 +129,7 @@
 	</select>
 	
 	<select id="getTodayList" resultType="org.zerock.domain.BoardVO">
-		select * from tbl_board where to_char(regdate, 'yyyy-mm-dd')=(select to_char(sysdate, 'yyyy-mm-dd') from dual)
+		select * from tbl_board where to_char(regdate, 'yyyy-mm-dd')=(select to_char(sysdate, 'yyyy-mm-dd') from dual) order by bno desc
 	</select>	
 	
 	<select id="countTodayList" resultType="long">

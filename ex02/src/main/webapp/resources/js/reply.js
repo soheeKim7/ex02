@@ -135,8 +135,8 @@ var replyService=(function(){
 			var ss=replyDate.getSeconds();
 			//var value=hh+":"+mi+":"+ss;
 			//var value=(hh>9? '':'0')+hh+":"+(mi>9? '':'0')+mi+":"+(ss>9? '':'0')+ss;
-			//var value= ampm+(hh12>9? '':'0')+hh12+":"+mi+":"+(ss>9? '':'0')+ss;
-			var value=[ampm,(hh12>9? '':'0'),hh12,":",mi,":",(ss>9? '':'0'),ss].join('');
+			//var value= ampm+(hh12>9? '':'0')+hh12+":"+(mi>9?'':'0')+mi+":"+(ss>9? '':'0')+ss;
+			var value=[ampm,(hh12>9? '':'0'),hh12,":",(mi>9?'':'0'),mi,":",(ss>9? '':'0'),ss].join('');
 			//var value2=value.join('');  // join 메소드는 배열의 요소를 합쳐서 문자열로!
 										// ''파라미터는 합칠때 사이에 넣어줄 문자 (아무것도 없으니까 그냥 합친거!)
 			return value;

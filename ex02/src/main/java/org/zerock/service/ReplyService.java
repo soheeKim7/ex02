@@ -20,4 +20,7 @@ public interface ReplyService {
 	
 	//해당 댓글의 비밀번호 맞는지 여부 (rno,replypw 넣어서 데이터 가져오는 메소드 이용)
 	boolean replypwCheck(ReplyVO vo);
+	
+	//트랜잭션 테스트용
+	void txTest();
 }

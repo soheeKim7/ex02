@@ -29,4 +29,8 @@ public interface ReplyMapper {
 										//rno
 	public List<ReplyVO> testMybatis(@Param("reply")ReplyVO reply, @Param("rno2")Long rno2);
 	
+	//트랜잭션 처리테스트용
+	public void tx1();
+	public void tx2();
+	
 }
