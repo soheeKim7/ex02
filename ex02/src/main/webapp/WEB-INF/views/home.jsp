@@ -201,6 +201,55 @@
 	</div>
 	<hr>	
 	
+	현재 댓글 목록4 완성
+	<div class='form-group row'>
+		<div class='col-sm-2'>
+			<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
+		</div>
+		<div class='col-sm-7-7'>
+			<textarea class='form-control' style='height: 38px;' readonly id='replydataModify0'>
+				테스트 댓글이야~~ 이제 수정버튼 누르고 수정취소 하는것도 만들거야~ 수정취소버튼 디자인 보자~!!!
+			</textarea>
+		</div>
+		<div class='col-sm-2-3' style='text-align: right;'>
+			<span style='margin-right: 10px;' id='replydate0'>오후 12:43:41</span>
+			<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn0' value='글번호rno'>
+				<span class='text'>수정</span>
+			</button>
+			<button class='btn btn-danger replyremove' id='replyRemoveBn0' value='글번호rno'>
+				<span class='text'>삭제</span>
+			</button>
+		</div>			
+	</div>
+	<hr>	
+	
+	수정취소버튼추가 댓글목록5 완성
+	<div class='form-group row'>
+		<div class='col-sm-2'>
+			<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
+		</div>
+		<div class='col-sm-7-7'>
+			<textarea class='form-control' style='height: 38px;' readonly id='replydataModify0'>
+				테스트 댓글이야~~ 이제 수정버튼 누르고 수정취소 하는것도 만들거야~ 수정취소버튼 디자인 보자~!!!
+			</textarea>
+		</div>
+		<div class='col-sm-2-3' style='text-align: right;'>
+			<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn0' value='글번호rno'>
+				<span class='text'>수정</span>
+			</button>
+			<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;' id='replyModifyCancelBn0' value='글번호rno'>
+				<span class='text'>수정취소</span>
+			</button>
+			<button class='btn btn-danger replyremove' id='replyRemoveBn0' value='글번호rno'>
+				<span class='text'>삭제</span>
+			</button>
+		</div>			
+	</div>
+	<hr>
+	
+	
+	
+	
 	관리자 모드로 이동하기
 	<form action="/board/adminCheck" method="post" id="adminForm">	
 		<input type="hidden" name="adminKey" id="adminKey">
@@ -344,6 +393,8 @@
 				"</div>"+			
 			"</div>"+
 			"<hr>";		
+			
+			
 			
 				
 	"<input type='hidden' id='inputrno"+(i+1)+"' value='" +data[i].rno+ "'>"+			

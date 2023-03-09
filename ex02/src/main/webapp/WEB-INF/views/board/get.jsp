@@ -155,11 +155,14 @@
 									"</textarea>"+
 								"</div>"+
 								"<div class='col-sm-2-3' style='text-align: right;'>"+								
-									"<span style='margin-right: 10px;' >"+
+									"<span style='margin-right: 10px;' id='replydate"+(i+1)+"'>"+
 										replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
 									"</span>"+
 									"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
 										"<span class='text'>수정</span>"+
+									"</button>"+
+									"<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;display: none;' id='replyModifyCancelBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
+										"<span class='text'>수정취소</span>"+
 									"</button>"+
 									"<button class='btn btn-danger replyremove'  id='replyRemoveBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
 										"<span class='text'>삭제</span>"+
@@ -167,6 +170,7 @@
 								"</div>"+			
 							"</div>"+
 							"<hr>";				
+							
 				}				
 				//console.log(data);
 				//console.log("잘만들어졌나",htmlStr);
@@ -257,12 +261,15 @@
 										"</textarea>"+
 									"</div>"+
 									"<div class='col-sm-2-3' style='text-align: right;'>"+								
-										"<span style='margin-right: 10px;' >"+
+										"<span style='margin-right: 10px;' id='replydate"+(i+1)+"'>"+
 											replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
 										"</span>"+
 										"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+							
 											"<span class='text'>수정</span>"+
-										"</button>"+									
+										"</button>"+	
+										"<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;display: none;' id='replyModifyCancelBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
+											"<span class='text'>수정취소</span>"+
+										"</button>"+
 										"<button class='btn btn-danger replyremove'  id='replyRemoveBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
 											"<span class='text'>삭제</span>"+
 										"</button>"+
@@ -284,6 +291,9 @@
 							show();
 						}						
 					});								
+					
+					$("#replyModifyCancelBn"+order).show("fast");
+					$("#replydate"+order).hide("fast");
 					
 					console.log("클래스명 변경하기 전에~~~ 클래스명 봐보자!!",$("#replyModifyBn"+order).attr("class"));
 					$(".replymodify").attr("class","btn btn-primary modifydisplay");
@@ -331,12 +341,15 @@
 										"</textarea>"+
 									"</div>"+
 									"<div class='col-sm-2-3' style='text-align: right;'>"+								
-										"<span style='margin-right: 10px;' >"+
+										"<span style='margin-right: 10px;' id='replydate"+(i+1)+"'>"+
 											replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
 										"</span>"+
 										"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+							
 											"<span class='text'>수정</span>"+
-										"</button>"+									
+										"</button>"+						
+										"<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;display: none;' id='replyModifyCancelBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
+											"<span class='text'>수정취소</span>"+
+										"</button>"+
 										"<button class='btn btn-danger replyremove'  id='replyRemoveBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
 											"<span class='text'>삭제</span>"+
 										"</button>"+
@@ -357,7 +370,10 @@
 							alert("비밀번호가 틀립니다.")
 							show2();
 						}						
-					});								
+					});							
+					
+					$("#replyModifyCancelBn"+order).show("fast");
+					$("#replydate"+order).hide("fast");
 					
 					console.log("클래스명 변경하기 전에~~~ 클래스명 봐보자!!",$("#replyModifyBn"+order).attr("class"));
 					$(".replymodify").attr("class","btn btn-primary modifydisplay");
@@ -440,6 +456,39 @@
 		});			
 		
 		
+		//그 해당내용 수정취소 버튼 클릭했을때
+		$("#replylist").on("click",".replymodifyCancel",function(){
+			var replyViewChoice=$("#replyViewChoice option:selected").val();
+			console.log("현재 선택된 댓글목록 보여주는 순서 등록순(1),최신순(2) : ",replyViewChoice);
+			
+			if(replyViewChoice==1){
+				console.log($(this).attr('id'));  //수정취소버튼의 ID이름 => replyModifyCancelBn1						
+				var order=$(this).attr('id').substring(19);   //몇번째 인지, 숫자값
+				console.log("수정취소 버튼 순서",order);
+				var modifyCancelrno=$(this).val();
+				console.log("해당 글번호",modifyCancelrno);
+				
+				alert(modifyCancelrno+"번글 수정이 취소되었습니다.");
+				//$("#replyModifyCancelBn"+order).hide("fast");
+				//$("#replydate"+order).show("fast");
+				show();
+			}else{
+				console.log($(this).attr('id'));  //수정취소버튼의 ID이름 => replyModifyCancelBn1						
+				var order=$(this).attr('id').substring(19);   //몇번째 인지, 숫자값
+				console.log("수정취소 버튼 순서",order);
+				var modifyCancelrno=$(this).val();
+				console.log("해당 글번호",modifyCancelrno);
+				
+				alert(modifyCancelrno+"번글 수정이 취소되었습니다.");
+				//$("#replyModifyCancelBn"+order).hide("fast");
+				//$("#replydate"+order).show("fast");
+				show2();				
+			}
+			
+		});
+		
+		
+		
 		//삭제 버튼 클릭했을때
 		$("#replylist").on("click",".replyremove",function(){		
 			var replyViewChoice=$("#replyViewChoice option:selected").val();
@@ -496,9 +545,7 @@
 			}else{
 				show2();
 			}			
-		});
-		
-		
+		});				
 		
 		
 		function show2(){
@@ -520,11 +567,14 @@
 									"</textarea>"+
 								"</div>"+
 								"<div class='col-sm-2-3' style='text-align: right;'>"+								
-									"<span style='margin-right: 10px;' >"+
+									"<span style='margin-right: 10px;' id='replydate"+(i+1)+"'>"+
 										replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' ,data[i].updatedate) +
 									"</span>"+
 									"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
 										"<span class='text'>수정</span>"+
+									"</button>"+
+									"<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;display: none;' id='replyModifyCancelBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
+										"<span class='text'>수정취소</span>"+
 									"</button>"+
 									"<button class='btn btn-danger replyremove' value='" +data[i].rno+ "'>"+									
 										"<span class='text'>삭제</span>"+
