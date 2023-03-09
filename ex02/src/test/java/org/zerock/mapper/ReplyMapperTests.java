@@ -25,7 +25,7 @@ public class ReplyMapperTests {
 		ReplyVO vo = new ReplyVO();
 		vo.setBno(1L);
 		vo.setReply("댓글내용~");
-		vo.setReplyer("나는 댓글맨");
+		vo.setReplyer("나는 댓글맨1111");
 		vo.setReplypw("1111");
 //		mapper.insert(vo);
 		log.info("삽입된 행의 개수 : "+mapper.insert(vo));
@@ -58,9 +58,10 @@ public class ReplyMapperTests {
 	@Test
 	public void testUpdate() {
 		ReplyVO vo = new ReplyVO();
-		vo.setRno(2L);
-		vo.setReply("내용수정해보자~");
-		vo.setReplyer("댓글맨 수정한다아~~");
+		vo.setRno(1L);
+		vo.setReply("내용수정되지?");
+		vo.setReplyer("댓글맨 수정해~~");
+		//vo.setReplypw("1111");
 		log.info("수정된 행의 개수 : "+mapper.update(vo));
 	}
 	
@@ -75,6 +76,17 @@ public class ReplyMapperTests {
 		mapper.getList(1183L).forEach(vo->log.info(vo));	//하나의 글에 대응하는 댓글 목록 읽기 (등록순)	
 		mapper.getList2(1183L).forEach(vo->log.info(vo));	//하나의 글에 대응하는 댓글 목록 읽기 (최신순)
 	}
+	
+	@Test
+	public void testReplypwCheck() {
+		ReplyVO vo = new ReplyVO();
+		vo.setRno(1L);
+		vo.setReplypw("111");
+		log.info("리턴값이 객체인데 어떻게 찍힐까???"+mapper.replypwCheck(vo));
+	}
+	
+	
+	
 	
 	@Test
 	public void testMyBatis() {

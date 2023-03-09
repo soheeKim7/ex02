@@ -185,21 +185,41 @@
 			var replyerdata=$("#replyerdata").val();			
 			var replydata=$("#replydata").val();
 			var replypwdata=$("#replypwdata").val();
-			//console.log("댓글입력값",replydata,replyerdata);
-			if(replyerdata && replydata && replypwdata){      //작성한 내용이 있을때만 댓글 등록 가능하게!
-				replyService.add({bno:bnodata,reply:replydata,replyer:replyerdata,replypw:replypwdata},function(data){
-					//alert(data);
-					show();         //위치가 여기인 이유 : 자바스크립트가 ajax,time 관련해서는 비동기처리되기 때문
-									//그래서 콜백함수안에서 다끝내고 show 보여주기 위해서!
-				});				//콜백함수
-				//작성된 내용 지우기
-				$("#replyerdata").val("");
-				$("#replydata").val("");
-				$("#replypwdata").val("");
+			console.log("댓글입력값 확인해보자~~ 왜 안나오지?",replydata,replyerdata,replypwdata);
+			
+			var replyViewChoice=$("#replyViewChoice option:selected").val();
+			console.log("현재 선택된 댓글목록 보여주는 순서 등록순(1),최신순(2) : ",replyViewChoice);	
+			
+			if(replyViewChoice==1){
+				if(replyerdata && replydata && replypwdata){      //작성한 내용이 있을때만 댓글 등록 가능하게!
+					replyService.add({bno:bnodata,reply:replydata,replyer:replyerdata,replypw:replypwdata},function(data){
+						alert("댓글이 등록되었습니다.");
+						show();         //위치가 여기인 이유 : 자바스크립트가 ajax,time 관련해서는 비동기처리되기 때문
+										//그래서 콜백함수안에서 다끝내고 show 보여주기 위해서!
+					});				//콜백함수
+					//작성된 내용 지우기
+					$("#replyerdata").val("");
+					$("#replydata").val("");
+					$("#replypwdata").val("");
+				}else{
+					alert("닉네임, 비밀번호, 댓글 내용을 모두 입력해주세요.")
+				};
+				//show();  //이렇게 콜백함수 밖에있으면 ajax는 실행이 길어지면 show먼저 보여줄수도 있어!		
 			}else{
-				alert("닉네임, 비밀번호, 댓글 내용을 모두 입력해주세요.")
-			};
-			//show();  //이렇게 콜백함수 밖에있으면 ajax는 실행이 길어지면 show먼저 보여줄수도 있어!			
+				if(replyerdata && replydata && replypwdata){      //작성한 내용이 있을때만 댓글 등록 가능하게!
+					replyService.add({bno:bnodata,reply:replydata,replyer:replyerdata,replypw:replypwdata},function(data){
+						alert("댓글이 등록되었습니다.");
+						show2();         //위치가 여기인 이유 : 자바스크립트가 ajax,time 관련해서는 비동기처리되기 때문
+										//그래서 콜백함수안에서 다끝내고 show 보여주기 위해서!
+					});				//콜백함수
+					//작성된 내용 지우기
+					$("#replyerdata").val("");
+					$("#replydata").val("");
+					$("#replypwdata").val("");
+				}else{
+					alert("닉네임, 비밀번호, 댓글 내용을 모두 입력해주세요.")
+				};
+			}
 		});
 		
 		
@@ -207,18 +227,24 @@
 		// 1. 일단 그 해당 댓글의 readonly 해제 하기
 		$("#replylist").on("click",".replymodify",function(){
 			var replyViewChoice=$("#replyViewChoice option:selected").val();
-			console.log("현재 선택된 댓글목록 보여주는 순서 등록순(1),최신순(2) : ",replyViewChoice);
+			console.log("현재 선택된 댓글목록 보여주는 순서 등록순(1),최신순(2) : ",replyViewChoice);			
+			
 			//등록순 일때
 			if(replyViewChoice==1){
 				console.log($(this).attr('id'));  //수정버튼의 ID이름 => replyModifyBn1		
 				//console.log("누른 버튼의 부모 html~~~~~~",$(this).parent().html());
-				var order=$(this).attr('id').charAt($(this).attr('id').length-1);   //몇번째 인지, 숫자값
-				console.log("첫번째 수정버튼 순서",order);
+				var order=$(this).attr('id').substring(13);   //몇번째 인지, 숫자값
+				console.log("첫번째 수정버튼의 순서",order);		
+				
+				var replypwKey=prompt("댓글 작성시에 입력한 비밀번호를 입력해주세요.");		
+				console.log("입력한 비밀번호 : ",replypwKey);
+				var modifyrnoKey=$(this).val();
+				console.log("버튼에서 가져오는 value 값 여기는 읽히나??? 모야? modifyrnoKey : ",modifyrnoKey);				
 				
 				replyService.getList(${board.bno},function(data){
 					//data에 댓글 내용 리스트
 					//len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
-					
+										
 					var htmlStr="";
 					for(var i=0;i<len;i++){			
 						htmlStr+="<div class='form-group row'>"+
@@ -246,10 +272,18 @@
 					}			
 					//console.log(data);
 					//console.log("잘만들어졌나",htmlStr);
-					$("#reply").html(htmlStr);
+					$("#reply").html(htmlStr);					
 					
-					$("#replyerdataModify"+order).attr("readonly", false);				
-					$("#replydataModify"+order).attr("readonly", false);				
+					replyService.replypwCheck({rno:modifyrnoKey,replypw:replypwKey},function(data){
+						//alert("가져온 데이터 "+data);  //success , fail
+						if(data=="success"){
+							$("#replyerdataModify"+order).attr("readonly", false);				
+							$("#replydataModify"+order).attr("readonly", false);
+						}else{
+							alert("비밀번호가 틀립니다.")
+							show();
+						}						
+					});								
 					
 					console.log("클래스명 변경하기 전에~~~ 클래스명 봐보자!!",$("#replyModifyBn"+order).attr("class"));
 					$(".replymodify").attr("class","btn btn-primary modifydisplay");
@@ -272,13 +306,19 @@
 				});		
 			}else{ //최신순 일때
 				console.log($(this).attr('id'));  //수정버튼의 ID이름 => replyModifyBn1		
-				var order=$(this).attr('id').charAt($(this).attr('id').length-1);   //몇번째 인지, 숫자값
-				console.log("첫번째 수정버튼 순서",order);
+				//console.log("누른 버튼의 부모 html~~~~~~",$(this).parent().html());
+				var order=$(this).attr('id').substring(13);   //몇번째 인지, 숫자값
+				console.log("첫번째 수정버튼의 순서",order);		
+				
+				var replypwKey=prompt("댓글 작성시에 입력한 비밀번호를 입력해주세요.");		
+				console.log("입력한 비밀번호 : ",replypwKey);
+				var modifyrnoKey=$(this).val();
+				console.log("버튼에서 가져오는 value 값 여기는 읽히나??? 모야? modifyrnoKey : ",modifyrnoKey);				
 				
 				replyService.getList2(${board.bno},function(data){
 					//data에 댓글 내용 리스트
 					//len=data.length || 0;  //or는 앞에 참이면 바로 앞 내용 적용
-					
+										
 					var htmlStr="";
 					for(var i=0;i<len;i++){			
 						htmlStr+="<div class='form-group row'>"+
@@ -297,7 +337,7 @@
 										"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value='" +data[i].rno+ "'>"+							
 											"<span class='text'>수정</span>"+
 										"</button>"+									
-										"<button class='btn btn-danger replyremove' id='replyRemoveBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
+										"<button class='btn btn-danger replyremove'  id='replyRemoveBn"+(i+1)+"' value='" +data[i].rno+ "'>"+									
 											"<span class='text'>삭제</span>"+
 										"</button>"+
 									"</div>"+			
@@ -306,10 +346,18 @@
 					}			
 					//console.log(data);
 					//console.log("잘만들어졌나",htmlStr);
-					$("#reply").html(htmlStr);
+					$("#reply").html(htmlStr);					
 					
-					$("#replyerdataModify"+order).attr("readonly", false);				
-					$("#replydataModify"+order).attr("readonly", false);				
+					replyService.replypwCheck({rno:modifyrnoKey,replypw:replypwKey},function(data){
+						//alert("가져온 데이터 "+data);  //success , fail
+						if(data=="success"){
+							$("#replyerdataModify"+order).attr("readonly", false);				
+							$("#replydataModify"+order).attr("readonly", false);
+						}else{
+							alert("비밀번호가 틀립니다.")
+							show2();
+						}						
+					});								
 					
 					console.log("클래스명 변경하기 전에~~~ 클래스명 봐보자!!",$("#replyModifyBn"+order).attr("class"));
 					$(".replymodify").attr("class","btn btn-primary modifydisplay");
@@ -319,9 +367,8 @@
 					var replyerdataModify=$("#replyerdataModify"+order).val();			
 					var replydataModify=$("#replydataModify"+order).val();
 					console.log("입력되기 전, 불러온값~~~작성자~~~",replyerdataModify);
-					console.log("입력된 전, 불러온값~~~~내용~~~",replydataModify);			
+					console.log("입력된 전, 불러온값~~~~내용~~~",replydataModify);		
 					
-					//$("#replyModifyBn2").attr("disabled", true);
 					for(var i=1;i<=len;i++){
 						if(i!=order){
 							$("#replyModifyBn"+i).attr("disabled", true);
@@ -330,9 +377,8 @@
 					}
 					
 					$("#replycount").text(len);		 //전체 댓글개수 찍어줌					
-				});	
-			}		
-			
+				});				
+			}			
 			
 		});
 			
@@ -344,7 +390,7 @@
 			
 			if(replyViewChoice==1){
 				console.log($(this).attr('id'));  //수정버튼의 ID이름 => replyModifyBn1						
-				var order=$(this).attr('id').charAt($(this).attr('id').length-1);   //몇번째 인지, 숫자값
+				var order=$(this).attr('id').substring(13);   //몇번째 인지, 숫자값
 				console.log("두번째 수정버튼 순서",order);
 				
 				var modifyrno=$(this).val();
@@ -369,7 +415,7 @@
 				//console.log("수정되구 후의 값~~~~내용~~~",replydataModify);
 			}else{
 				console.log($(this).attr('id'));  //수정버튼의 ID이름 => replyModifyBn1						
-				var order=$(this).attr('id').charAt($(this).attr('id').length-1);   //몇번째 인지, 숫자값
+				var order=$(this).attr('id').substring(13);   //몇번째 인지, 숫자값
 				console.log("두번째 수정버튼 순서",order);
 				
 				var modifyrno=$(this).val();
@@ -387,14 +433,10 @@
 					$(".modifydisplay").attr("class","btn btn-primary replymodify");
 					//console.log("제대로 바뀌었나? 테스트중 ",$(".modifydisplay").attr("class"));
 					//console.log("제대로 바뀌었겠지!! 이건 후훗",$(".replymodify").attr("class"));
-					console.log("왜 여기가 여러번 실행되지? 왜지?");
+					//console.log("왜 여기가 여러번 실행되지? 왜지?");
 					show2();
-				});			
-				
-			}
-			
-			
-			
+				});				
+			}			
 		});			
 		
 		
@@ -406,19 +448,41 @@
 			if(replyViewChoice==1){
 				var removerno=$(this).val();
 				console.log(removerno);  
-				replyService.remove(removerno,function(){
-					alert(removerno+"번글 삭제완료 되었습니다.");
-					console.log(removerno,"번 삭제 완료");
-					show();			
-				});
+				var replypwKey=prompt("댓글 작성시에 입력한 비밀번호를 입력해주세요.");		
+				console.log("입력한 비밀번호 : ",replypwKey);
+				
+				replyService.replypwCheck({rno:removerno,replypw:replypwKey},function(data){
+					//alert("가져온 데이터 "+data);  //success , fail
+					if(data=="success"){
+						replyService.remove(removerno,function(){
+							alert(removerno+"번글 삭제완료 되었습니다.");
+							console.log(removerno,"번 삭제 완료");
+							show();			
+						});						
+					}else{
+						alert("비밀번호가 틀립니다.")
+						show1();
+					}						
+				});					
 			}else{
 				var removerno=$(this).val();
 				console.log(removerno);  
-				replyService.remove(removerno,function(){
-					alert(removerno+"번글 삭제완료 되었습니다.");
-					console.log(removerno,"번 삭제 완료");
-					show2();			
-				});
+				var replypwKey=prompt("댓글 작성시에 입력한 비밀번호를 입력해주세요.");		
+				console.log("입력한 비밀번호 : ",replypwKey);
+				
+				replyService.replypwCheck({rno:removerno,replypw:replypwKey},function(data){
+					//alert("가져온 데이터 "+data);  //success , fail
+					if(data=="success"){
+						replyService.remove(removerno,function(){
+							alert(removerno+"번글 삭제완료 되었습니다.");
+							console.log(removerno,"번 삭제 완료");
+							show2();			
+						});						
+					}else{
+						alert("비밀번호가 틀립니다.")
+						show2();
+					}						
+				});	
 			}
 		});
 		
@@ -431,8 +495,7 @@
 				show();
 			}else{
 				show2();
-			}
-			
+			}			
 		});
 		
 		
@@ -490,10 +553,17 @@
 
 <script>
 	//댓글등록 테스트
+	//replyService.add({reply:"테스트...내용..",replyer:"작성자...",bno:1221,replypw:"rksk111"},function(data){   
+		//alert("결과 확인 : "+data);
+//	});
+	
+	replyService.add({bno:1142,reply:"테스트 내용~~~",replyer:"작성자 테스트~~",replypw:"rksk111"},function(data){
+		console.log("데이터값 다 잘 가져오나 다 보자",data)
+		alert("댓글이 등록되었습니다.");
+		show();         //위치가 여기인 이유 : 자바스크립트가 ajax,time 관련해서는 비동기처리되기 때문
+						//그래서 콜백함수안에서 다끝내고 show 보여주기 위해서!
+	});	
 	/*
-	replyService.add({reply:"테스트...내용..",replyer:"작성자...",bno:1184},function(data){   
-		alert("결과 확인 : "+data);
-	});
 	
 	
 	replyService.mytest(3,4);    //콘솔로그에 합은 7이다
@@ -520,8 +590,13 @@
 	replyService.remove(51,function(data){
 		alert("댓글 삭제 성공",data);
 	});
-	*/
+	
+	//해당 댓글의 비번 체크
+	replyService.replypwCheck({rno:1,replypw:"111"},function(data){
+		alert("가져온 데이터 "+data);  //success , fail
+	});
 
+	*/
 
 </script>
 

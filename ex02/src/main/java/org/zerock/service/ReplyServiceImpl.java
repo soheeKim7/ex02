@@ -44,4 +44,10 @@ public class ReplyServiceImpl implements ReplyService {
 		return mapper.getList2(bno);
 	}
 
+	@Override
+	public boolean replypwCheck(ReplyVO vo) {
+		
+		return mapper.replypwCheck(vo)!=null ? true : false;
+	}
+
 }

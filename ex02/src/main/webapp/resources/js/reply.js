@@ -147,13 +147,33 @@ var replyService=(function(){
 			replyDate.getDate()>9? '':0,replyDate.getDate(),"/",day[replyDate.getDay()] ].join('');		
 		}
 	};
+	
+	
+	//해당댓글의 비밀번호 체크 성공유무
+	function replypwCheck(reply,callback,error){
+		console.log("해당댓글의 비밀번호 체크 성공유무 js 실행");
+		$.ajax({  
+			type: "post" ,
+			url: "/replies/replypwCheck",
+			data: JSON.stringify(reply) , //json 포맷의 댓글데이터, 객체 reply를 넣어주면, ajax에서 json으로 바꿔줌
+			contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)            
+					callback(data);         
+			} ,
+			error: function(xhr,status,er){   
+				if(error)
+					error();
+			}			
+		});
+	};	
 		
 	
 	function mytest(num1,num2){
 		console.log("합은 "+(num1+num2)+"이다");		
 	};
 	
-	return {add:add, getList:getList, getList2:getList2, get:get, modify:modify, remove:remove, time:displayTime, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
+	return {add:add, getList:getList, getList2:getList2, get:get, modify:modify, remove:remove, time:displayTime, replypwCheck:replypwCheck, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
 })();
 
 //replyService.add(reply,callback,error);   //callback함수

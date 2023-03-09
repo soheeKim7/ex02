@@ -10,7 +10,7 @@
 	</insert>
 	
 	<update id="update">
-		update tbl_reply set reply=#{reply},replyer=#{replyer},updatedate=sysdate where rno=#{rno}
+		update tbl_reply set reply=#{reply},replyer=#{replyer},updatedate=sysdate where rno=#{rno}  <!-- and replypw=#{replypw} -->  
 	</update>
 
 	<delete id="delete">
@@ -27,6 +27,10 @@
 	
 	<select id="getList2" resultType="org.zerock.domain.ReplyVO">
 		select * from tbl_reply where bno=#{bno} order by rno desc
+	</select>	
+	
+	<select id="replypwCheck" resultType="org.zerock.domain.ReplyVO">
+		select * from tbl_reply where rno=#{rno} and replypw=#{replypw}
 	</select>	
 	
 	<select id="testMybatis" resultType="org.zerock.domain.ReplyVO">

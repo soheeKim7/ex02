@@ -18,6 +18,7 @@ import org.zerock.domain.ReplyVO;
 import org.zerock.service.ReplyService;
 
 import lombok.AllArgsConstructor;
+import oracle.jdbc.proxy.annotation.Post;
 
 @AllArgsConstructor
 @RestController
@@ -32,9 +33,10 @@ public class ReplyController {
 //		return service.register(vo)==1 ? "true" : "false";				    //@RequestBody 어노테이션을 해야지 이값을 보내줌!		
 //	}
 	
+	//{bno:1121,reply:"테스트 내용~~~",replyer:"작성자 테스트~~",replypw:"rksk111"}
 	//등록 (등록할 댓글을 json으로 만들어서 보내줌) -> 정상일때 success 문자 보내줌(200), 실패시 글자X,에러상태(500)
 	@PostMapping(value="/new", produces=MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {  
+	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		return service.register(vo)==1 ? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR) ;     
 										//new ResponseEntity<>(보낼데이터, 상태값)	200,500
 	}	
@@ -69,6 +71,12 @@ public class ReplyController {
 	@GetMapping("/pages2/{bno}")  //produces=MediaType.APPLICATION_JSON_VALUE    json타입!
 	public List<ReplyVO> getList2(@PathVariable("bno")Long bno){		
 		return service.getList2(bno);
+	}
+	
+	//해당글의 댓글비밀번호가 맞는지 확인
+	@PostMapping("replypwCheck")
+	public String replypwCheck(@RequestBody ReplyVO vo){
+		return service.replypwCheck(vo) ? "success" : "fail" ;		
 	}
 	
 	
