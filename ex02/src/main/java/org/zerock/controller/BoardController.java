@@ -40,7 +40,8 @@ public class BoardController {
 		log.info("url list....");
 		log.info("현재 amount : "+cri.getAmount());		
 
-		model.addAttribute("list",service.getlist(cri));
+//		model.addAttribute("list",service.getlist(cri));
+		model.addAttribute("list",service.getListPlusReplyCountWithPaging(cri));
 		//페이지 정보 전달
 //		PageDTO pageDTO =new PageDTO(service.count(), cri);
 //		log.info("페이지 정보"+pageDTO);

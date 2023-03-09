@@ -12,4 +12,7 @@ public class BoardVO {
 	private Date regdate;
 	private Date updatedate;
 	private Long click;
+	private Long replycn;
+	private Long goodclick;
+	private Long badclick;
 }

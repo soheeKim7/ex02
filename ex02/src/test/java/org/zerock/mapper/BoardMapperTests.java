@@ -1,6 +1,7 @@
 package org.zerock.mapper;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -166,6 +167,19 @@ public class BoardMapperTests {
 	public void testWriterRank() {
 		mapper.writerRank().forEach(vo -> log.info(vo));
 		log.info(mapper.writerRank());
+	}
+	
+	//댓글수 추가해서 게시글 목록 가져오기
+	@Test
+	public void testGetListPlusReplyCount() {
+		mapper.getListPlusReplyCount().forEach(vo -> log.info(vo));
+	}
+	
+	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
+	@Test
+	public void testGetListPlusReplyCountWithPaging() {
+		Criteria cri=new Criteria();
+		mapper.getListPlusReplyCountWithPaging(cri).forEach(vo -> log.info(vo));
 	}
 	
 }

@@ -34,7 +34,7 @@ public interface BoardMapper {
 	//게시글 읽기(조회)
 	BoardVO read(Long bno);
 	
-	//게시글 등록시 등록된 번호 알아서 글 등록하기  //return int 등록된 글의 개수
+	//게시글 등록시 등록된 번호 알아서 글 등록하기    //return int 등록된 글의 개수
 	int insertSelectKey(BoardVO vo);
 	
 	//bonus 등록할 글번호 확인하기  //return long 등록할 글번호
@@ -71,5 +71,14 @@ public interface BoardMapper {
 	
 	//5등까지 글쓴이, 등록글 가져오기
 	List<WriterRank> writerRank();
+	
+	//댓글수 추가해서 게시글 목록 가져오기 
+	List<BoardVO> getListPlusReplyCount();
+	
+	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
+	List<BoardVO> getListPlusReplyCountWithPaging(Criteria cri);
+	
+	
+	
 	
 }

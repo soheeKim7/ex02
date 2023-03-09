@@ -64,4 +64,10 @@ public interface BoardService {
 	//5등까지 글쓴이, 등록글 가져오기
 	ChartWriterRank chartWriterRank();
 	
+	//댓글수 추가해서 게시판 목록 가져오기
+	List<BoardVO> getListWithReplyCount();
+	
+	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
+	List<BoardVO> getListPlusReplyCountWithPaging(Criteria cri);
+	
 }

@@ -143,5 +143,19 @@ public class BoardServiceTests {
 		log.info("개수들 : "+chart.getMydata());      //배열은 toString 안되어 있어서 주소값이 나옴
 		log.info("만든 객체값 전부 확인 : "+chart);
 	}
+	
+	
+	//댓글수 추가해서 게시판 목록 가져오기	
+	@Test
+	public void testGetListWithReplyCount() {
+		service.getListWithReplyCount().forEach(vo -> log.info(vo));
+	}
+
+	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
+	@Test
+	public void testGetListPlusReplyCountWithPaging() {
+		Criteria cri=new Criteria();
+		service.getListPlusReplyCountWithPaging(cri).forEach(vo -> log.info(vo));
+	}
 
 }

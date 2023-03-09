@@ -5,6 +5,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.BoardMapper">
 
+	<!-- 게시물 목록 가져오기 -->
 	<!-- id는 메소드 이름!(해당 인터페이스에서) -->
 	<!-- resultType 은 마이바티스에서 제공하는 타입 String는 string 소문자로! -->
 	<!-- 객체 앞글자를 소문자로, 기본타입은 _추가 (마이바티스 데이터타입) -->
@@ -59,9 +60,8 @@
 	   </trim> 	
 	</sql>
 	
-	
-	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
-	
+	<!-- 게시물 목록 가져오기 + 페이징 처리 -->
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">	
 	<![CDATA[		
 	select bno,title,writer,regdate,updatedate,click 
 	from(select /*+INDEX_ASC(tbl_board tbl_board_index1)*/             
@@ -74,22 +74,51 @@
 	      rownum<=#{pageNum}*#{amount})
 	where rn>(#{pageNum}-1)*#{amount} 
 	]]>
-	</select>
+	</select>	
 	
+	<!-- 댓글수 추가해서 게시글 목록 가져오기  -->
+	<select id="getListPlusReplyCount" resultType="org.zerock.domain.BoardVO">
+		select bno,title,content,writer,regdate,updatedate,click,goodclick,badclick,nvl(replycn,0) replycn from tbl_board 
+		left outer join (select bno,count(*) replycn from tbl_reply group by bno)
+		using(bno) order by bno desc
+	</select>	
+	
+	<!-- 댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리  -->
+	<select id="getListPlusReplyCountWithPaging" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[
+	select bno,title,content,writer,regdate,updatedate,click,goodclick,badclick,replycn
+	from(select /*+INDEX_ASC(tbl_board tbl_board_index1)*/ rownum rn,bno,title,content,writer,regdate,updatedate,click,goodclick,badclick,replycn
+	    from(select bno,title,content,writer,regdate,updatedate,click,goodclick,badclick,nvl(replycn,0) replycn from tbl_board 
+             left outer join (select bno,count(*) replycn from tbl_reply group by bno)
+	             using(bno) order by bno desc) where 
+	             ]]>
+	                     
+	                <include refid="criteria" />
+	                    
+	             <![CDATA[
+	      rownum<=#{pageNum}*#{amount})
+	where rn>(#{pageNum}-1)*#{amount} 
+	]]>
+	</select>	
+	
+	<!-- 게시글 등록 -->
 	<insert id="insert">
-		insert into tbl_board(bno,title,content,writer,click) 
-		values(seq_board.nextval,#{title},#{content},#{writer},0)
+		insert into tbl_board(bno,title,content,writer,click,goodclick,badclick) 
+		values(seq_board.nextval,#{title},#{content},#{writer},0,0,0)
 	</insert>	
 	
+	<!-- 게시글 수정 -->
 	<update id="update">
 		update tbl_board set title=#{title},content=#{content},
 		writer=#{writer},updatedate=sysdate where bno=#{bno}
 	</update>
 	
+	<!-- 게시글 삭제 -->
 	<delete id="delete">
 		delete from tbl_board where bno=#{bno}
 	</delete>
 	
+	<!-- 체크된거 삭제  -->
 	<delete id="checkDelete" >  <!-- array 는 배열/ arraylist 는 어레이리스트 -->
 		delete from tbl_board where bno in
 		<foreach collection="array" item="bno"  open="(" close=")" separator=",">
@@ -97,28 +126,33 @@
         </foreach>
 	</delete>
 	
+	<!-- 게시글 읽기(조회) -->
 	<select id="read" resultType="org.zerock.domain.BoardVO">
 		select * from tbl_board where bno=#{bno}
 	</select>		
 	
+	<!-- 게시글 등록시 등록된 번호 알아서 글 등록하기 -->
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
 			select seq_board.nextval from dual
 		</selectKey>
 	
-		insert into tbl_board(bno,title,content,writer,click) 
-		values(#{bno},#{title},#{content},#{writer},0)
+		insert into tbl_board(bno,title,content,writer,click,goodclick,badclick) 
+		values(#{bno},#{title},#{content},#{writer},0,0,0)
 	</insert>	
 	
+	<!-- bonus 등록할 글번호 확인하기  -->
 	<select id="mySelectKey" resultType="long">
 		select seq_board.nextval from dual	
 	</select>
 	
+	<!-- bonus 확인된 글번호로 글 등록하기 -->
 	<insert id="myInsert">
-		insert into tbl_board(bno,title,content,writer,click) 
-		values(#{bno},#{title},#{content},#{writer},0)
+		insert into tbl_board(bno,title,content,writer,click,goodclick,badclick) 
+		values(#{bno},#{title},#{content},#{writer},0,0,0)
 	</insert>
 	
+	<!-- 전체글 개수 확인 -->
 	<select id="count" resultType="long">
 		<!-- select count(*) from tbl_board -->
 		<!-- select /*+INDEX_FFS(tbl_board tbl_board_index1)*/ count(*) from tbl_board -->
@@ -128,16 +162,19 @@
 		bno>0
 	</select>
 	
+	<!-- 오늘의 게시글 목록 가져오기 -->
 	<select id="getTodayList" resultType="org.zerock.domain.BoardVO">
 		select * from tbl_board where to_char(regdate, 'yyyy-mm-dd')=(select to_char(sysdate, 'yyyy-mm-dd') from dual) order by bno desc
 	</select>	
 	
+	<!-- 오늘의 게시글 갯수 가져오기 -->
 	<select id="countTodayList" resultType="long">
 		select count(*) from tbl_board where 
 		<include refid="criteria" />		
 		to_char(regdate, 'yyyy-mm-dd')=(select to_char(sysdate, 'yyyy-mm-dd') from dual)
 	</select>	
 	
+	<!-- 가장 많이 작성한 작성자 가져오기 -->
 	<select id="manyWriter" resultType="string">	
 		<!-- 1번 쿼리 	
 		select writer from (select writer,count(*) ct from tbl_board group by writer) t1 
@@ -153,30 +190,35 @@
 		where rn=1
 	</select>	
 	
+	<!-- 가장 많이 작성한 작성자,글갯수 가져오기 -->
 	<select id="manyWirterCount" resultType="org.zerock.domain.RankVO">
 		select DENSE_RANK() OVER (ORDER BY count(*) DESC) as ranking,writer,count(*) as count from tbl_board 
 		group by writer order by count desc,writer asc
 	</select>
 	
+	<!-- 가장 최근에 작성된 글제목 가져오기 -->
 	<select id="lastTitle" resultType="string">
 		select title from tbl_board where regdate=(select max(regdate) from tbl_board) 
 	</select>
 	
+	<!-- 해당 글의 조회수 읽어오기 -->
 	<update id="click">
 		update tbl_board set click=(select click+1 as click from tbl_board where bno=#{bno}) where bno=#{bno}
 	</update>	
 	
+	<!-- 해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다 -->
 	<select id="clickCount" resultType="long">
 		select click from tbl_board where bno=#{bno}  
 	</select>
 	
-	
+	<!-- 5등까지 글쓴이, 등록글 가져오기 -->
 	<select id="writerRank" resultType="org.zerock.domain.WriterRank">
 		<![CDATA[
 		select writer,cn from (select writer,count(*) cn from tbl_board group by writer order by cn desc)
 		where rownum<6
 		]]>	  	
 	</select>
+	
 	
 	
 </mapper>

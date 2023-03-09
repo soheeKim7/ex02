@@ -49,8 +49,7 @@ public class BoardServiceImpl implements BoardService {
 		log.info("getList ... ");
 		mapper.getListWithPaging(cri).forEach(vo -> log.info(vo));
 		return mapper.getListWithPaging(cri);
-	}
-	
+	}	
 	
 	
 	//2. 게시글 등록 (게시글 번호 알아오려고 번호 알아오는 메소드로 이용)
@@ -216,6 +215,22 @@ public class BoardServiceImpl implements BoardService {
 		chart.setMydata(mydata);
 				
 		return chart;
+	}
+
+	//댓글수 추가해서 게시판 목록 가져오기	
+	@Override
+	public List<BoardVO> getListWithReplyCount() {
+		log.info("getListWithReplyCount....");
+		mapper.getListPlusReplyCount().forEach(vo -> log.info(vo));
+		return mapper.getListPlusReplyCount();
+	}
+
+	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
+	@Override
+	public List<BoardVO> getListPlusReplyCountWithPaging(Criteria cri) {
+		log.info("getListPlusReplyCountWithPaging....");
+		mapper.getListPlusReplyCountWithPaging(cri).forEach(vo -> log.info(vo));
+		return mapper.getListPlusReplyCountWithPaging(cri);
 	}
 
 

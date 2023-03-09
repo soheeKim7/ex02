@@ -79,6 +79,8 @@
 										<th>제목</th>
 										<th width="9%">작성자</th>
 										<th width="5%">조회수</th>							
+										<th width="5%">좋아요/싫어요</th>							
+										<th width="5%">댓글수</th>							
 										<th width="15%">작성일</th>
 										<th width="15%">수정일</th>
 									</tr>
@@ -94,6 +96,8 @@
 											<td><a href="/board/get?bno=${board.bno }&pageNum=${pageDTO.cri.pageNum}&amount=${pageDTO.cri.amount}"><c:out value="${board.title }" /></a></td>															
 											<td><c:out value="${board.writer }" /></td>
 											<td><c:out value="${board.click}" /></td>		
+											<td><c:out value="${board.goodclick}/${board.badclick }" /></td>		
+											<td><c:out value="${board.replycn}" /></td>		
 											<td><fmt:formatDate pattern="yy년MM월dd일 a hh:mm:ss"
 													value="${board.regdate }" /></td>
 											<c:if test="${board.regdate==board.updatedate }">
