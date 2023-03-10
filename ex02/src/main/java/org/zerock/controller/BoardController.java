@@ -48,8 +48,7 @@ public class BoardController {
 //		model.addAttribute(pageDTO);  //이렇게 이름 안실어서 보내면 자동으로 보내지는 객체이름의 소문자로 즉 같은 이름인 pageDTO로 간다	
 		model.addAttribute(new PageDTO(service.count(cri), cri));
 //		model.addAttribute(new PageDTO(144L, cri));
-	}
-		
+	}		
 	
 	//2. 게시글 등록
 	@GetMapping("register")
@@ -84,9 +83,7 @@ public class BoardController {
 		else
 			rttr.addFlashAttribute("removebno",-1);
 		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount(); 
-	}	
-	
-
+	}		
 		
 	/*
 	@PostMapping("remove")  //삭제
@@ -97,8 +94,7 @@ public class BoardController {
 		rttr.addFlashAttribute("removebno",bno);
 		return "redirect:/board/list"; 
 	}
-	*/
-		
+	*/		
 	
 	//4. 게시글 수정 (정상동작여부 확인)
 	@GetMapping("modify")
@@ -124,10 +120,11 @@ public class BoardController {
 	public void get(Long bno,Model model,Criteria cri) {
 		log.info("url get.......");
 		model.addAttribute("board",service.get(bno));		
-		model.addAttribute("click",service.clickCount(bno)+1);
 		model.addAttribute("cri",cri);                          //페이지 정보를 유지하기 위해 보냄
-		service.click(bno);
-		log.info(service.clickCount(bno)+1);
+		service.click(bno);    //db에 현재 조회수+1 수정등록해줌
+		
+		
+		
 	}
 		
 	//보너스 - 전체글 개수를 알려주는 서비스

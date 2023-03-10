@@ -150,7 +150,7 @@ public class BoardMapperTests {
 		log.info("해당 글의 조회수 : "+mapper.clickCount(61L));
 	}	
 	
-	//해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다
+	//해당 글의 현재 조회수에 +1해서 등록/조회수 늘리기
 	@Test
 	public void testClick() {
 		log.info("등록된 행의 개수 : "+mapper.click(61L));
@@ -181,5 +181,19 @@ public class BoardMapperTests {
 		Criteria cri=new Criteria();
 		mapper.getListPlusReplyCountWithPaging(cri).forEach(vo -> log.info(vo));
 	}
+	
+	//해당 글의 좋아요+1 늘리기
+	@Test
+	public void testGoodclick() {
+		log.info("등록된 행의 개수 : "+mapper.goodclick(1244L));
+	}
+	
+	//해당 글의 싫어요+1 늘리기
+	@Test
+	public void testBadclick() {
+		log.info("등록된 행의 개수 : "+mapper.badclick(1244L));
+	}
+	
+	
 	
 }

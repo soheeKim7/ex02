@@ -66,7 +66,7 @@ public interface BoardMapper {
 	//해당 글의 조회수 읽어오기
 	Long clickCount(Long bno);
 	
-	//해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다
+	//해당 글의 현재 조회수에 +1해서 등록/조회수 늘리기
 	int click(Long bno);
 	
 	//5등까지 글쓴이, 등록글 가져오기
@@ -78,6 +78,11 @@ public interface BoardMapper {
 	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
 	List<BoardVO> getListPlusReplyCountWithPaging(Criteria cri);
 	
+	//해당 글의 좋아요 +1 늘리기
+	int goodclick(Long bno);
+	
+	//해당 글의 싫어요 +1 늘리기
+	int badclick(Long bno);
 	
 	
 	

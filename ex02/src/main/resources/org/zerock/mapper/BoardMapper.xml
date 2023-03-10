@@ -202,15 +202,15 @@
 	</select>
 	
 	<!-- 해당 글의 조회수 읽어오기 -->
-	<update id="click">
-		update tbl_board set click=(select click+1 as click from tbl_board where bno=#{bno}) where bno=#{bno}
-	</update>	
-	
-	<!-- 해당 글의 조회수 읽어와서 조회수를 +1해서 등록해준다 -->
 	<select id="clickCount" resultType="long">
 		select click from tbl_board where bno=#{bno}  
 	</select>
 	
+	<!-- 해당 글의 현재 조회수에 +1해서 등록/조회수 늘리기 -->
+	<update id="click">
+		update tbl_board set click=(select click+1 as click from tbl_board where bno=#{bno}) where bno=#{bno}
+	</update>	
+		
 	<!-- 5등까지 글쓴이, 등록글 가져오기 -->
 	<select id="writerRank" resultType="org.zerock.domain.WriterRank">
 		<![CDATA[
@@ -218,6 +218,17 @@
 		where rownum<6
 		]]>	  	
 	</select>
+	
+	<!-- 해당 글의 좋아요+1 늘리기 -->
+	<update id="goodclick">
+		update tbl_board set goodclick=(select goodclick from tbl_board where bno=#{bno})+1 where bno=#{bno}  
+	</update>
+	
+	<!-- 해당 글의 싫어요+1 늘리기 -->
+	<update id="badclick">
+		update tbl_board set badclick=(select badclick from tbl_board where bno=#{bno})+1 where bno=#{bno}  
+	</update>
+	
 	
 	
 	
