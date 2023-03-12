@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.ChartWriterRank;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.GoodBadClick;
 import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
 
@@ -146,11 +147,14 @@ public class ApiController {
 	
 	//좋아요 늘리기
 	@RequestMapping("/api/board/goodclick/{bno}")
-	public boolean goodclick(@PathVariable Long bno,HttpServletRequest request, HttpServletResponse response) {
+	public BoardVO goodclick(@PathVariable Long bno,HttpServletRequest request, HttpServletResponse response) {
+		BoardVO vo=new BoardVO();
+		GoodBadClick goodbadClick=new GoodBadClick();
 		Cookie[] allCookie=request.getCookies();
-		boolean goodCheck=false;
+//		boolean goodCheck=false;
 		if(allCookie!=null) { 
-			int Existcount=0;	//좋아요쿠키가 존재할때 카운팅
+			int Goodcount=0;	//좋아요쿠키가 존재할때 카운팅
+			int Badcount=0;     //싫어요쿠키 존재할때 카운팅			
 			for( Cookie temp  : allCookie) {				
 				log.info("좋아요 버튼 눌렀을때!!! 쿠키값들 읽어온거 봐보자~~"+temp.getName() + " : " + temp.getValue());					
 				if(!temp.getName().equals("good"+bno)) {	//good+bno 라는 쿠키가 없을때, 쿠키 만들어준다
@@ -161,22 +165,99 @@ public class ApiController {
 					response.addCookie(goodCookie);		//좋아요 쿠키 만든거 보내주기
 //						service.goodClick(bno);		//좋아요 수 늘리기
 				}else  	//좋아요 쿠키가 있을때
-					Existcount++;
-			}			
-			if(Existcount==0) { 	//쿠키들중에서 좋아요가 존재하지 않았을때, 이때에만 좋아요수를 늘려준다. 
+					Goodcount++;	
+				if(temp.getName().equals("bad"+bno)) {
+					Badcount++;
+				}				
+			}					
+			log.info("for문 끝났다~~~쿠키들 중에서 좋아요 존재안할때, 경우 카운트 한 값좀 보자 : "+Goodcount);
+			if(Goodcount==0) { 	//쿠키들중에서 좋아요가 존재하지 않았을때, 이때에만 좋아요수를 늘려준다. 
 				service.goodClick(bno);	//좋아요 수 늘리기
-				goodCheck=true;
-			}			
+				log.info("쿠키가 있는데, 좋아요 쿠키 없어서 만든 상태");
+//				goodCheck=true;
+				vo=service.get(bno);
+				vo.setGoodbadClick(goodbadClick);
+				vo.getGoodbadClick().setGoodCheck(true);
+				log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadClick());
+				return vo;
+			}else {		//쿠키가 있는데, 좋아요 쿠키 있는 상태
+				vo=service.get(bno);
+				vo.setGoodbadClick(goodbadClick);
+				log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadClick());
+				return vo;
+			}
 		}else {		//가지고 있는 쿠키가 아예 없을때도, 좋아요 쿠키 없는거니까 만들어주고, 좋아요 수 늘려준다.
 			log.info("좋아요 때 흠 그런데 쿠키들이 아예 없을 수가 있나???? 이런상황이 오긴 하나??? 이게 맞나????");
 			Cookie goodCookie=new Cookie("good"+bno, "good"+bno);
 			log.info("쿠키 자체가 없을때!!!! 쿠키 노!!!! 좋아요 쿠키이름 제대로 설정이 되었나??"+goodCookie.getName()+" : "+goodCookie.getValue());
+			goodCookie.setPath("/");
 			response.addCookie(goodCookie);		//좋아요 쿠키 만든거 보내주기
 			service.goodClick(bno);		//좋아요 수 늘리기
-			goodCheck=true;
+			log.info("쿠키가 자체가 없어서 좋아요 쿠키 만든 상태");
+			vo=service.get(bno);
+//			goodCheck=true;
+			vo.setGoodbadClick(goodbadClick);
+			vo.getGoodbadClick().setGoodCheck(true);
+			log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadClick());
+			return vo;
 		}		
-		return goodCheck;
+//		log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadCheck());
+//		return goodCheck;
 	}
+	
+	
+	//싫어요 늘리기
+	@RequestMapping("/api/board/badclick/{bno}")
+	public BoardVO badclick(@PathVariable Long bno,HttpServletRequest request, HttpServletResponse response) {
+		BoardVO vo=new BoardVO();
+		GoodBadClick goodbadClick=new GoodBadClick();
+		Cookie[] allCookie=request.getCookies();
+//			boolean goodCheck=false;
+		if(allCookie!=null) { 
+			int Badcount=0;		//싫어요쿠키가 존재할때 카운팅	
+			for( Cookie temp  : allCookie) {				
+				log.info("싫어요 버튼 눌렀을때!!! 쿠키값들 읽어온거 봐보자~~"+temp.getName() + " : " + temp.getValue());					
+				if(!temp.getName().equals("bad"+bno)) {	//bad+bno 라는 쿠키가 없을때, 쿠키 만들어준다
+					Cookie badCookie=new Cookie("bad"+bno, "bad"+bno);
+					badCookie.setPath("/");
+					log.info("쿠키들 not null일때!! 싫어요 쿠키이름 제대로 설정이 되었나??"+badCookie.getName()+" : "+badCookie.getValue());
+					log.info("경로 잘 세팅 되었나?? "+badCookie.getPath());					
+					response.addCookie(badCookie);		//싫어요 쿠키 만든거 보내주기
+				}else  	//싫어요 쿠키가 있을때
+					Badcount++;	
+			}					
+			log.info("for문 끝났다~~~쿠키들 중에서 싫어요 존재안할때, 경우 카운트 한 값좀 보자 : "+Badcount);
+			if(Badcount==0) { 	//쿠키들중에서 싫어가 존재하지 않았을때, 이때에만 좋아요수를 늘려준다. 
+				service.badClick(bno);	//싫어 수 늘리기
+				log.info("쿠키가 있는데, 싫어요 쿠키 없어서 만든 상태");
+				vo=service.get(bno);
+				vo.setGoodbadClick(goodbadClick);
+				vo.getGoodbadClick().setBadCheck(true);
+				log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadClick());
+				return vo;
+			}else {		//쿠키가 있는데, 싫어요 쿠키 있는 상태
+				vo=service.get(bno);
+				vo.setGoodbadClick(goodbadClick);
+				log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadClick());
+				return vo;
+			}
+		}else {		//가지고 있는 쿠키가 아예 없을때도, 싫어요 쿠키 없는거니까 만들어주고, 싫어요 수 늘려준다.
+			log.info("싫어요 때 흠 그런데 쿠키들이 아예 없을 때~~");
+			Cookie badCookie=new Cookie("bad"+bno, "bad"+bno);
+			log.info("쿠키 자체가 없을때!!!! 쿠키 노!!!! 싫어요 쿠키이름 제대로 설정이 되었나??"+badCookie.getName()+" : "+badCookie.getValue());
+			badCookie.setPath("/");
+			response.addCookie(badCookie);		//싫어요 쿠키 만든거 보내주기
+			service.badClick(bno);		//싫어요 수 늘리기
+			log.info("쿠키가 자체가 없어서 싫어요 쿠키 만든 상태");
+			vo=service.get(bno);
+			vo.setGoodbadClick(goodbadClick);
+			vo.getGoodbadClick().setBadCheck(true);
+			log.info("보내지는 체크값 true,false 값 봐보쟈~!!!!"+vo.getGoodbadClick());
+			return vo;
+		}		
+	}
+
+	
 	
 	
 	

@@ -15,4 +15,7 @@ public class BoardVO {
 	private Long replycn;
 	private Long goodclick;
 	private Long badclick;
+	private GoodBadClick goodbadClick;
+	
+	
 }

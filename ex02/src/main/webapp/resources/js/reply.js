@@ -187,14 +187,51 @@ var replyService=(function(){
 			}			
 		});
 	};
+	
+	//싫어요 수 늘리기
+	function badclick(bno,callback,error){
+		console.log("싫어요 클릭 js 실행");
+		$.ajax({  
+			type: "get" ,
+			url: "/api/board/badclick/"+bno ,
+			//data: 보내는 데이터 없음
+			//contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)           
+					callback(data);       
+			} ,
+			error: function(xhr,status,er){  
+				if(error)
+					error();
+			}			
+		});
+	};
 		
+	//해당글의 게시판 글정보 가져오기
+	function getboard(bno,callback,error){
+		console.log("해당글의 게시판 정보 가져오는기 js 실행");
+		$.ajax({  
+			type: "get" ,
+			url: "/api/board/bno/"+bno ,
+			//data: 보내는 데이터 없음
+			//contentType: "application/json; charset=UTF-8" ,
+			success: function(data){   
+				if(callback)           
+					callback(data);       
+			} ,
+			error: function(xhr,status,er){  
+				if(error)
+					error();
+			}			
+		});
+	};
 	
 	function mytest(num1,num2){
 		console.log("합은 "+(num1+num2)+"이다");		
 	};
 	
 	return {add:add, getList:getList, getList2:getList2, get:get, modify:modify, remove:remove, time:displayTime, 
-			goodclick:goodclick, replypwCheck:replypwCheck, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
+			goodclick:goodclick, badclick:badclick, getboard:getboard, replypwCheck:replypwCheck, mytest:mytest};  //앞에께 부르는 이름, 뒤에께 안에서 만든 함수 이름
 })();
 
 //replyService.add(reply,callback,error);   //callback함수

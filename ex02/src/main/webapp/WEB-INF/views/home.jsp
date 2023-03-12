@@ -469,6 +469,9 @@
 				alert("이미 싫어요를 눌렀습니다.");
 			}		
 		});
+		
+		현재 좋아요 수 : <span id="goodclickcount">${board.goodclick }</span>개 <button id="goodclicktest">좋아요테스트</button>  
+		현재 싫어요 수 : <span id="badclickcount">${board.badclick }</span>개 <button id="badclicktest">싫어요테스트</button> 
 	
 	--%>
 

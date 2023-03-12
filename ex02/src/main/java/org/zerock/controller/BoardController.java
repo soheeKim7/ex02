@@ -121,12 +121,12 @@ public class BoardController {
 	
 	//5. 게시글 읽기
 	@GetMapping("get") 
-	public String get(Long bno,Model model,Criteria cri,HttpServletRequest request, HttpServletResponse response) {
+	public void get(Long bno,Model model,Criteria cri) {
 		log.info("url get.......");
 		model.addAttribute("cri",cri);                          //페이지 정보를 유지하기 위해 보냄
 		service.click(bno);    //db에 현재 조회수+1 수정등록해줌
 		model.addAttribute("board",service.get(bno));		
-		
+	}
 //		if(goodCheck==null)		//좋아요,싫어요체크 값이 없다는건, 좋아요,싫어요 버튼은 누른것이 아니기때문에  false값으로 셋팅해준다.
 //			goodCheck=false;
 //		if(badCheck==null)
@@ -145,9 +145,8 @@ public class BoardController {
 		
 //		model.addAttribute("goodCheck",goodCheck);
 //		model.addAttribute("badCheck",badCheck);
-		return "/board/get";
-	}	
-	
+		
+	/*
 	//좋아요 늘리기
 	@RequestMapping("goodclick")
 	public String goodclick(Long bno,Criteria cri,HttpServletRequest request, HttpServletResponse response) {
@@ -163,17 +162,20 @@ public class BoardController {
 					log.info("쿠키들 not null일때!! 좋아요 쿠키이름 제대로 설정이 되었나??"+goodCookie.getName()+" : "+goodCookie.getValue());
 					log.info("쿠기 path가 어떻게 만들어지나 보자 기본값이 어딘지!!!!"+goodCookie.getPath());
 					log.info("쿠기 도메인이 어떻게 만들어지나 보자 기본값이 어딘지!!!!"+goodCookie.getDomain());
+					goodCookie.setPath("/");
 					response.addCookie(goodCookie);		//좋아요 쿠키 만든거 보내주기
 //					service.goodClick(bno);		//좋아요 수 늘리기
 				}else  	//좋아요 쿠키가 있을때
 					Existcount++;
-			}			
+			}		
+			log.info("for문 끝났다~~~쿠키들 중에서 좋아요 존재안할때, 경우 카운트 한 값좀 보자 : "+Existcount);
 			if(Existcount==0) 	//쿠키들중에서 좋아요가 존재하지 않았을때, 이때에만 좋아요수를 늘려준다. 
 				service.goodClick(bno);	//좋아요 수 늘리기						
 		}else {		//가지고 있는 쿠키가 아예 없을때도, 좋아요 쿠키 없는거니까 만들어주고, 좋아요 수 늘려준다.
 			log.info("좋아요 때 흠 그런데 쿠키들이 아예 없을 수가 있나???? 이런상황이 오긴 하나??? 이게 맞나????");
 			Cookie goodCookie=new Cookie("good"+bno, "good"+bno);
 			log.info("쿠키 자체가 없을때!!!! 쿠키 노!!!! 좋아요 쿠키이름 제대로 설정이 되었나??"+goodCookie.getName()+" : "+goodCookie.getValue());
+			goodCookie.setPath("/");
 			response.addCookie(goodCookie);		//좋아요 쿠키 만든거 보내주기
 			service.goodClick(bno);		//좋아요 수 늘리기
 		}
@@ -196,17 +198,21 @@ public class BoardController {
 				if(!temp.getName().equals("bad"+bno)) {	//bad+bno 라는 쿠키가 없을때, 쿠키 만들어준다
 					Cookie badCookie=new Cookie("bad"+bno, "bad"+bno);
 					log.info("not null일때!!! 싫어요 쿠키이름 제대로 설정이 되었나??"+badCookie.getName()+" : "+badCookie.getValue());
+					badCookie.setPath("/");
 					response.addCookie(badCookie);		//싫어요 쿠키 만든거 보내주기
 //					service.badClick(bno);	//싫어요 수 늘리기
 				}else 	//싫어요 쿠키가 있을때
 					Existcount++;				
 			}
+			log.info("for문 끝났다~~~쿠키들 중에서 좋아요 존재안할때, 경우 카운트 한 값좀 보자 : "+Existcount);
+
 			if(Existcount==0)   	//쿠키들중에서 싫어요가 존재하지 않았을때, 이때에만 싫어요수를 늘려준다. 
 				service.badClick(bno);	//싫어요 수 늘리기			
 		}else {		//가지고 있는 쿠키가 아예 없을때도, 싫어요 쿠키 없는거니까 만들어주고, 싫어요 수 늘려준다.
 			log.info("싫어요 때 흠 그런데 쿠키들이 아예 없을 수가 있나???? 이런상황이 오긴 하나??? 이게 맞나????");
 			Cookie badCookie=new Cookie("bad"+bno, "bad"+bno);
 			log.info("쿠키 자체가 없을때!! 싫어요 쿠키이름 제대로 설정이 되었나??"+badCookie.getName()+" : "+badCookie.getValue());
+			badCookie.setPath("/");
 			response.addCookie(badCookie);		//싫어요 쿠키 만든거 보내주기
 			service.badClick(bno);		//싫어요 수 늘리기
 		}
@@ -216,7 +222,7 @@ public class BoardController {
 //		return "redirect:/board/get?bno="+bno+"&pageNum="+cri.getPageNum()+"&amount="+cri.getAmount()+"&goodCheck="+goodCheck+"&badCheck="+badCheck;
 		return "redirect:/board/get?bno="+bno+"&pageNum="+cri.getPageNum()+"&amount="+cri.getAmount();
 	}
-	
+	*/
 		
 	//보너스 - 전체글 개수를 알려주는 서비스
 //	@GetMapping("count")   
