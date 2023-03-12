@@ -220,12 +220,12 @@
 	</select>
 	
 	<!-- 해당 글의 좋아요+1 늘리기 -->
-	<update id="goodclick">
+	<update id="goodClick">
 		update tbl_board set goodclick=(select goodclick from tbl_board where bno=#{bno})+1 where bno=#{bno}  
 	</update>
 	
 	<!-- 해당 글의 싫어요+1 늘리기 -->
-	<update id="badclick">
+	<update id="badClick">
 		update tbl_board set badclick=(select badclick from tbl_board where bno=#{bno})+1 where bno=#{bno}  
 	</update>
 	

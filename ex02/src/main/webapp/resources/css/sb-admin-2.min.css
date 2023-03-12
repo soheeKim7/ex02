@@ -2392,44 +2392,45 @@ a.btn.disabled, fieldset:disabled a.btn {
 	background-color: #41A541;
 	border-color: #41A541
 }
-
+/* 여기까지 기본버튼 색깔 바꿔줌 위에서*/
 .btn-primary:not (:disabled ):not (.disabled ).active:focus,
 	.btn-primary:not (:disabled ):not (.disabled ):active:focus, .show>.btn-primary.dropdown-toggle:focus
 	{
 	box-shadow: 0 0 0 .2rem rgba(105, 136, 228, .5)
 }
 
+/* 색깔 파랑으로 바꿔주기!! */
 .btn-secondary {
 	color: #fff;
-	background-color: #858796;
-	border-color: #858796
+	background-color: #4e73df;
+	border-color: #4e73df
 }
 
 .btn-secondary:hover {
 	color: #fff;
-	background-color: #717384;
-	border-color: #6b6d7d
+	background-color: #2e59d9;
+	border-color: #2653d4
 }
 
 .btn-secondary.focus, .btn-secondary:focus {
 	color: #fff;
-	background-color: #717384;
-	border-color: #6b6d7d;
+	background-color: #2e59d9;
+	border-color: #2653d4;
 	box-shadow: 0 0 0 .2rem rgba(151, 153, 166, .5)
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {
 	color: #fff;
-	background-color: #858796;
-	border-color: #858796
+	background-color: #4e73df;
+	border-color: #4e73df
 }
 
 .btn-secondary:not (:disabled ):not (.disabled ).active, .btn-secondary:not
 	(:disabled ):not (.disabled ):active, .show>.btn-secondary.dropdown-toggle
 	{
 	color: #fff;
-	background-color: #6b6d7d;
-	border-color: #656776
+	background-color: #2653d4;
+	border-color: #2653d4
 }
 
 .btn-secondary:not (:disabled ):not (.disabled ).active:focus,
@@ -2591,7 +2592,6 @@ a.btn.disabled, fieldset:disabled a.btn {
 	{
 	box-shadow: 0 0 0 .2rem rgba(235, 101, 88, .5)
 }
-
 .btn-light {
 	color: #3a3b45;
 	background-color: #f8f9fc;

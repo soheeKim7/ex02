@@ -3,7 +3,9 @@ package org.zerock.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,6 +144,39 @@ public class ApiController {
 	}
 	
 	
+	//좋아요 늘리기
+	@RequestMapping("/api/board/goodclick/{bno}")
+	public boolean goodclick(@PathVariable Long bno,HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] allCookie=request.getCookies();
+		boolean goodCheck=false;
+		if(allCookie!=null) { 
+			int Existcount=0;	//좋아요쿠키가 존재할때 카운팅
+			for( Cookie temp  : allCookie) {				
+				log.info("좋아요 버튼 눌렀을때!!! 쿠키값들 읽어온거 봐보자~~"+temp.getName() + " : " + temp.getValue());					
+				if(!temp.getName().equals("good"+bno)) {	//good+bno 라는 쿠키가 없을때, 쿠키 만들어준다
+					Cookie goodCookie=new Cookie("good"+bno, "good"+bno);
+					goodCookie.setPath("/");
+					log.info("쿠키들 not null일때!! 좋아요 쿠키이름 제대로 설정이 되었나??"+goodCookie.getName()+" : "+goodCookie.getValue());
+					log.info("경로 잘 세팅 되었나?? "+goodCookie.getPath());					
+					response.addCookie(goodCookie);		//좋아요 쿠키 만든거 보내주기
+//						service.goodClick(bno);		//좋아요 수 늘리기
+				}else  	//좋아요 쿠키가 있을때
+					Existcount++;
+			}			
+			if(Existcount==0) { 	//쿠키들중에서 좋아요가 존재하지 않았을때, 이때에만 좋아요수를 늘려준다. 
+				service.goodClick(bno);	//좋아요 수 늘리기
+				goodCheck=true;
+			}			
+		}else {		//가지고 있는 쿠키가 아예 없을때도, 좋아요 쿠키 없는거니까 만들어주고, 좋아요 수 늘려준다.
+			log.info("좋아요 때 흠 그런데 쿠키들이 아예 없을 수가 있나???? 이런상황이 오긴 하나??? 이게 맞나????");
+			Cookie goodCookie=new Cookie("good"+bno, "good"+bno);
+			log.info("쿠키 자체가 없을때!!!! 쿠키 노!!!! 좋아요 쿠키이름 제대로 설정이 되었나??"+goodCookie.getName()+" : "+goodCookie.getValue());
+			response.addCookie(goodCookie);		//좋아요 쿠키 만든거 보내주기
+			service.goodClick(bno);		//좋아요 수 늘리기
+			goodCheck=true;
+		}		
+		return goodCheck;
+	}
 	
 	
 	

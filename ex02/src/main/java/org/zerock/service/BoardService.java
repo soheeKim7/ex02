@@ -71,4 +71,10 @@ public interface BoardService {
 	//댓글수 추가해서 게시글 목록 가져오기 + rownum 이용한 페이징처리 + 검색처리 
 	List<BoardVO> getListPlusReplyCountWithPaging(Criteria cri);
 	
+	//좋아요 수 늘리기
+	boolean goodClick(Long bno);
+	
+	//싫어요 수 늘리기
+	boolean badClick(Long bno);
+	
 }

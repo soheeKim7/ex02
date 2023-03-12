@@ -79,10 +79,10 @@ public interface BoardMapper {
 	List<BoardVO> getListPlusReplyCountWithPaging(Criteria cri);
 	
 	//해당 글의 좋아요 +1 늘리기
-	int goodclick(Long bno);
+	int goodClick(Long bno);
 	
 	//해당 글의 싫어요 +1 늘리기
-	int badclick(Long bno);
+	int badClick(Long bno);
 	
 	
 	

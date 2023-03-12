@@ -157,5 +157,17 @@ public class BoardServiceTests {
 		Criteria cri=new Criteria();
 		service.getListPlusReplyCountWithPaging(cri).forEach(vo -> log.info(vo));
 	}
+	
+	//좋아요 수 늘리기
+	@Test
+	public void goodClick() {
+		log.info("성공여부 : "+service.goodClick(1244L));
+	}
+	
+	//싫어요 수 늘리기
+	@Test
+	public void badClick() {
+		log.info("성공여부 : "+service.badClick(1244L));
+	}
 
 }

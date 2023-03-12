@@ -185,13 +185,13 @@ public class BoardMapperTests {
 	//해당 글의 좋아요+1 늘리기
 	@Test
 	public void testGoodclick() {
-		log.info("등록된 행의 개수 : "+mapper.goodclick(1244L));
+		log.info("등록된 행의 개수 : "+mapper.goodClick(1244L));
 	}
 	
 	//해당 글의 싫어요+1 늘리기
 	@Test
 	public void testBadclick() {
-		log.info("등록된 행의 개수 : "+mapper.badclick(1244L));
+		log.info("등록된 행의 개수 : "+mapper.badClick(1244L));
 	}
 	
 	

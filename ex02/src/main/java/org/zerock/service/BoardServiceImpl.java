@@ -233,6 +233,20 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getListPlusReplyCountWithPaging(cri);
 	}
 
+	//좋아요 수 늘리기
+	@Override
+	public boolean goodClick(Long bno) {
+		log.info("goodClick......");
+		return mapper.goodClick(bno)==1;
+	}
+
+	//싫어요 수 늘리기
+	@Override
+	public boolean badClick(Long bno) {
+		log.info("badClick......");
+		return mapper.badClick(bno)==1;
+	}
+
 
 
 
