@@ -103,7 +103,7 @@ $(document).ready(function(){
 		if(originTitle == modifyTitle && originWriter==modifyWriter && originContent==modifyContent){
 			alert("수정된 데이터가 하나도 없습니다. 다시 수정해주세요.");
 		}else{
-			alert("확인");
+			//alert("확인");
 			$("#modifyForm").submit();
 		}
 	});

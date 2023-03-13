@@ -41,14 +41,8 @@
 						</span> 
 						<span class="text">싫어요 <span id="badclickcount">${board.badclick }</span> 개</span>
 					</button>			
-				</div>
-				
-				
-				
-				
-				
-			</div>
-			
+				</div>		
+			</div>			
 		</div>
 		<div class="card-body">		
 			<div class="form-group row">
@@ -117,7 +111,49 @@
 						</label>
 					</h5>
 				</div>
-				<div class="card-body" id="replylist">						
+				<div class="card-body" id="replylist">	
+					<div class='form-group row'>
+						<div class='col-sm-2'>
+							<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
+						</div>
+						<div class='col-sm-7-7'>
+							<textarea class='form-control' style='height: 38px;' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 고정값일때
+							</textarea>
+						</div>
+						<div class='col-sm-2-3' style='text-align: right;'>
+							<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn0' value='글번호rno'>
+								<span class='text'>수정</span>
+							</button>
+							<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;' id='replyModifyCancelBn0' value='글번호rno'>
+								<span class='text'>수정취소</span>
+							</button>
+							<button class='btn btn-danger replyremove' id='replyRemoveBn0' value='글번호rno'>
+								<span class='text'>삭제</span>
+							</button>
+						</div>			
+					</div>
+					<hr>					
+					<div class='form-group row'>
+						<div class='col-sm-2'>
+							<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
+						</div>
+						<div class='col-sm-7-7'>
+							<textarea class='form-control' style='' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 높이 고정값 해제해볼거야
+							</textarea>
+						</div>
+						<div class='col-sm-2-3' style='text-align: right;'>
+							<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn0' value='글번호rno'>
+								<span class='text'>수정</span>
+							</button>
+							<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;' id='replyModifyCancelBn0' value='글번호rno'>
+								<span class='text'>수정취소</span>
+							</button>
+							<button class='btn btn-danger replyremove' id='replyRemoveBn0' value='글번호rno'>
+								<span class='text'>삭제</span>
+							</button>
+						</div>			
+					</div>
+					<hr>					
 		           <span id="reply"></span>			
 		        </div>
 				<%-- <b>1. 테스트하고 잇는데??</b> -작성자(20년3월7일 4시31분) <button class="btn btn-success btn-circle">수정</button><br>   --%>        	
@@ -262,7 +298,7 @@
 		//수정 버튼 클릭했을때 수행하는 작업
 		// 1. 일단 그 해당 댓글의 readonly 해제 하기
 		$("#replylist").on("click",".replymodify",function(){
-			var replyViewChoice=$("#replyViewChoice option:selected").val();
+			var replyViewChoice=$("#replyViewChoice option:selected").val();	
 			console.log("현재 선택된 댓글목록 보여주는 순서 등록순(1),최신순(2) : ",replyViewChoice);			
 			
 			//등록순 일때
@@ -307,25 +343,29 @@
 										"</button>"+
 									"</div>"+			
 								"</div>"+
-								"<hr>";				
+								"<hr>";						
+						
 					}			
 					//console.log(data);
 					//console.log("잘만들어졌나",htmlStr);
 					$("#reply").html(htmlStr);					
+					if(replypwKey!=null){
+						replyService.replypwCheck({rno:modifyrnoKey,replypw:replypwKey},function(data){
+							//alert("가져온 데이터 "+data);  //success , fail
+							if(data=="success"){
+								$("#replyerdataModify"+order).attr("readonly", false);				
+								$("#replydataModify"+order).attr("readonly", false);
+								$("#replyModifyCancelBn"+order).show("fast");		//비밀번호 일치할때만, 수정취소 버튼 보이게!
+								$("#replydate"+order).hide("fast");
+							}else{
+								alert("비밀번호가 틀립니다.")
+								show();
+							}						
+						});								
+					}else{
+						show();
+					}
 					
-					replyService.replypwCheck({rno:modifyrnoKey,replypw:replypwKey},function(data){
-						//alert("가져온 데이터 "+data);  //success , fail
-						if(data=="success"){
-							$("#replyerdataModify"+order).attr("readonly", false);				
-							$("#replydataModify"+order).attr("readonly", false);
-						}else{
-							alert("비밀번호가 틀립니다.")
-							show();
-						}						
-					});								
-					
-					$("#replyModifyCancelBn"+order).show("fast");
-					$("#replydate"+order).hide("fast");
 					
 					console.log("클래스명 변경하기 전에~~~ 클래스명 봐보자!!",$("#replyModifyBn"+order).attr("class"));
 					$(".replymodify").attr("class","btn btn-primary modifydisplay");
@@ -393,19 +433,22 @@
 					//console.log("잘만들어졌나",htmlStr);
 					$("#reply").html(htmlStr);					
 					
-					replyService.replypwCheck({rno:modifyrnoKey,replypw:replypwKey},function(data){
-						//alert("가져온 데이터 "+data);  //success , fail
-						if(data=="success"){
-							$("#replyerdataModify"+order).attr("readonly", false);				
-							$("#replydataModify"+order).attr("readonly", false);
-						}else{
-							alert("비밀번호가 틀립니다.")
-							show2();
-						}						
-					});							
-					
-					$("#replyModifyCancelBn"+order).show("fast");
-					$("#replydate"+order).hide("fast");
+					if(replypwKey!=null){
+						replyService.replypwCheck({rno:modifyrnoKey,replypw:replypwKey},function(data){
+							//alert("가져온 데이터 "+data);  //success , fail
+							if(data=="success"){
+								$("#replyerdataModify"+order).attr("readonly", false);				
+								$("#replydataModify"+order).attr("readonly", false);
+								$("#replyModifyCancelBn"+order).show("fast");		//비밀번호 일치할때만, 수정취소 버튼 보이게!
+								$("#replydate"+order).hide("fast");
+							}else{
+								alert("비밀번호가 틀립니다.")
+								show2();
+							}						
+						});							
+					}else{
+						show2();
+					}
 					
 					console.log("클래스명 변경하기 전에~~~ 클래스명 봐보자!!",$("#replyModifyBn"+order).attr("class"));
 					$(".replymodify").attr("class","btn btn-primary modifydisplay");
