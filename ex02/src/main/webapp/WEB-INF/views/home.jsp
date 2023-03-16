@@ -473,6 +473,38 @@
 		현재 좋아요 수 : <span id="goodclickcount">${board.goodclick }</span>개 <button id="goodclicktest">좋아요테스트</button>  
 		현재 싫어요 수 : <span id="badclickcount">${board.badclick }</span>개 <button id="badclicktest">싫어요테스트</button> 
 	
+	
+	
+	
+	htmlStr+="<div class='form-group row'>"+
+								"<div class='col-sm-2'>"+								
+									"<input type='text' class='form-control form-control-user' value=' <c:out value='"+ data[i].replyer +"'/>' readonly id='replyerdataModify"+(i+1)+"'>"+
+								"</div>"+
+								"<div class='col-sm-7-7'>"+
+									"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+										"<c:out value='"+data[i].reply +"'/>"+
+									"</textarea>"+
+								"</div>"+
+								"<div class='col-sm-2-3' style='text-align: right;'>"+								
+									"<span style='margin-right: 10px;' id='replydate"+(i+1)+"'>"+
+										replyService.time( '<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}"/>' , "<c:out value='"+data[i].updatedate) +"'/>"+
+									"</span>"+
+									"<button class='btn btn-primary replymodify' style='margin-right: 10px;' id='replyModifyBn"+(i+1)+"' value=' <c:out value='" +data[i].rno+ "'/> '>"+									
+										"<span class='text'>수정</span>"+
+									"</button>"+
+									"<button class='btn btn-primary replymodifyCancel' style='margin-right: 10px;display: none;' id='replyModifyCancelBn"+(i+1)+"' value=' <c:out value='" +data[i].rno+ "'/> '>"+									
+										"<span class='text'>수정취소</span>"+
+									"</button>"+
+									"<button class='btn btn-danger replyremove'  id='replyRemoveBn"+(i+1)+"' value=' <c:out value='" +data[i].rno+ "'/> '>"+									
+										"<span class='text'>삭제</span>"+
+									"</button>"+
+								"</div>"+			
+							"</div>";
+	
+	
+	
+	
+	
 	--%>
 
 </body>

@@ -138,7 +138,7 @@
 							<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
 						</div>
 						<div class='col-sm-7-7'>
-							<textarea class='form-control' style='' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 높이 고정값 해제해볼거야
+							<textarea class='form-control' style='' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 높이 고정값 해제해볼거야 그래서 이건 짱 긴 글이야~~ 긴글~~
 							</textarea>
 						</div>
 						<div class='col-sm-2-3' style='text-align: right;'>
