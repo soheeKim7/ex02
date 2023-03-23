@@ -17,6 +17,10 @@
 
 
 	<%--
+	style="text-align: center"
+	style="justify-content:center;"
+	style="float:right"
+	
 	<span class="testCenter" style="text-align: center"><h1>테스트중</h1></span>
 	 
 	<div class="dataTables_paginate paging_simple_numbers"
@@ -503,7 +507,8 @@
 	
 	
 	
-	
+	<textarea rows="2" class="form-control textareaTest" name="reply" placeholder="댓글 내용을 써주세요." id="replydata"></textarea>
+	"<textarea class='form-control textareaTest' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
 	
 	--%>
 

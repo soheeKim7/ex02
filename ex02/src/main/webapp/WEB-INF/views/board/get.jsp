@@ -117,7 +117,7 @@
 							<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
 						</div>
 						<div class='col-sm-7-7'>
-							<textarea class='form-control' style='height: 38px;' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 고정값일때
+							<textarea class='form-control textareaTest' style='height: 38px;' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 고정값일때
 							</textarea>
 						</div>
 						<div class='col-sm-2-3' style='text-align: right;'>
@@ -138,7 +138,7 @@
 							<input type='text' class='form-control form-control-user' value='테스트 작성자' readonly id='replyerdataModify0'>
 						</div>
 						<div class='col-sm-7-7'>
-							<textarea class='form-control' style='' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 높이 고정값 해제해볼거야 그래서 이건 짱 긴 글이야~~ 긴글~~
+							<textarea class='form-control textareaTest' style='' readonly id='replydataModify0'>테스트 댓글이야~~지금 보이는거 높이 고정해놨더니만 아주그냥 한줄로만 보여 이거 수정할거야 지금 높이 고정값 해제해볼거야 그래서 이건 짱 긴 글이야~~ 긴글~~
 							</textarea>
 						</div>
 						<div class='col-sm-2-3' style='text-align: right;'>
@@ -172,7 +172,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<textarea rows="2" class="form-control" name="reply" placeholder="댓글 내용을 써주세요." id="replydata"></textarea>
+						<textarea class="form-control textareaTest" name="reply" placeholder="댓글 내용을 써주세요." id="replydata"></textarea>
 					</div>
 					<button class="btn btn-primary"style="margin-right: 10px; float:right" id="replyInsert">
 						<span class="icon text-white-50">
@@ -202,6 +202,23 @@
 
 <script> 
 	$(document).ready(function(){
+		const rowCount = value.split(/\r\n|\r|\n/).length;
+		const targetTextarea = document.querySelector(".textareaTest");
+
+		if(rowCount < 4)
+		     targetTextarea.style.height="52px"; //특정 줄 수 보다 작아지면 height가 이것보다 작아지지 않았으면 한다
+		else
+		    targetTextarea.style.height= (rowCount * 18) + "px";
+		
+	
+
+	});
+
+
+</script>
+
+<script> 
+	$(document).ready(function(){
 		show();
 		//show2();
 		function show(){
@@ -218,7 +235,7 @@
 									"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
 								"</div>"+
 								"<div class='col-sm-7-7'>"+
-									"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+									"<textarea class='form-control textareaTest' readonly id='replydataModify"+(i+1)+"'>"+
 										data[i].reply +
 									"</textarea>"+
 								"</div>"+
@@ -324,7 +341,7 @@
 										"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
 									"</div>"+
 									"<div class='col-sm-7-7'>"+
-										"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+										"<textarea class='form-control textareaTest' readonly id='replydataModify"+(i+1)+"'>"+
 											data[i].reply +
 										"</textarea>"+
 									"</div>"+
@@ -408,7 +425,7 @@
 										"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
 									"</div>"+
 									"<div class='col-sm-7-7'>"+
-										"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+										"<textarea class='form-control textareaTest' readonly id='replydataModify"+(i+1)+"'>"+
 											data[i].reply +
 										"</textarea>"+
 									"</div>"+
@@ -637,7 +654,7 @@
 									"<input type='text' class='form-control form-control-user' value='"+ data[i].replyer +"' readonly id='replyerdataModify"+(i+1)+"'>"+
 								"</div>"+
 								"<div class='col-sm-7-7'>"+
-									"<textarea class='form-control' style='height: 38px;' readonly id='replydataModify"+(i+1)+"'>"+
+									"<textarea class='form-control textareaTest' readonly id='replydataModify"+(i+1)+"'>"+
 										data[i].reply +
 									"</textarea>"+
 								"</div>"+
