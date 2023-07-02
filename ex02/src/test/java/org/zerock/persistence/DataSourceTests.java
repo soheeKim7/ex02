@@ -38,7 +38,7 @@ public class DataSourceTests {
 			fail();
 		}
 	}
-	
+	 
 	@Autowired
 	SqlSessionFactory sqlSessionFactoryBean;
 	
